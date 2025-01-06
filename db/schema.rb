@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_06_142506) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_06_144351) do
   create_table "occupations", force: :cascade do |t|
     t.string "major"
     t.string "major_label"
@@ -20,6 +20,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_06_142506) do
     t.string "minor_label"
     t.string "unit"
     t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "people", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "country_of_birth"
+    t.string "country_of_residence"
+    t.string "country_of_profession"
+    t.string "profession"
+    t.boolean "pep"
+    t.boolean "sanctioned"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
