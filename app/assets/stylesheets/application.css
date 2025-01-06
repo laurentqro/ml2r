@@ -8,3 +8,11 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+html {
+  font-family: sans-serif;
+}
+
+h1 {
+  color: #333;
+}

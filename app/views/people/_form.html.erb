@@ -23,22 +23,22 @@
 
   <div>
     <%= form.label :country_of_birth, style: "display: block" %>
-    <%= form.text_field :country_of_birth %>
+    <%= form.collection_select :country_of_birth, ISO3166::Country.all.sort, :alpha2, :iso_short_name, { prompt: "Select a country" } %>
   </div>
 
   <div>
     <%= form.label :country_of_residence, style: "display: block" %>
-    <%= form.text_field :country_of_residence %>
+    <%= form.collection_select :country_of_residence, ISO3166::Country.all.sort, :alpha2, :iso_short_name, { prompt: "Select a country" } %>
   </div>
 
   <div>
     <%= form.label :country_of_profession, style: "display: block" %>
-    <%= form.text_field :country_of_profession %>
+    <%= form.collection_select :country_of_profession, ISO3166::Country.all.sort, :alpha2, :iso_short_name, { prompt: "Select a country" } %>
   </div>
 
   <div>
     <%= form.label :profession, style: "display: block" %>
-    <%= form.text_field :profession %>
+    <%= form.collection_select :profession, Occupation.all, :unit, :long_description, { prompt: "Select an occupation" } %>
   </div>
 
   <div>

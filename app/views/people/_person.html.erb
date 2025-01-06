@@ -11,22 +11,22 @@
 
   <p>
     <strong>Country of birth:</strong>
-    <%= person.country_of_birth %>
+    <%= ISO3166::Country[person.country_of_birth].iso_short_name %>
   </p>
 
   <p>
     <strong>Country of residence:</strong>
-    <%= person.country_of_residence %>
+    <%= ISO3166::Country[person.country_of_residence].iso_short_name %>
   </p>
 
   <p>
     <strong>Country of profession:</strong>
-    <%= person.country_of_profession %>
+    <%= ISO3166::Country[person.country_of_profession].iso_short_name %>
   </p>
 
   <p>
     <strong>Profession:</strong>
-    <%= person.profession %>
+    <%= Occupation.find_by(unit: person.profession).description %>
   </p>
 
   <p>
