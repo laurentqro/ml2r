@@ -4,13 +4,41 @@
 
 <h1 class="py-4">Clients</h1>
 
-<div id="people">
-  <% @people.each do |person| %>
-    <%= render person %>
-    <p>
-      <%= link_to "Show this person", person %>
-    </p>
-  <% end %>
+<div class="px-4 sm:px-6 lg:px-8">
+  <div class="sm:flex sm:items-center">
+    <div class="sm:flex-auto">
+      <h1 class="text-base font-semibold text-gray-900">Persons</h1>
+    </div>
+  </div>
+
+  <div class="mt-8 flow-root border-black">
+    <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+        <table class="min-w-full divide-y divide-gray-300">
+          <thead>
+            <tr>
+              <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Last Name</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Profession</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">PEP</th>
+              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Sanctioned</th>
+              <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-0">
+                <span class="sr-only">Edit</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+            <% @people.each do |person| %>
+              <tr>
+                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"><%= link_to person.last_first_name, person %></td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= Occupation.find_by(unit: person.profession).description %></td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= person.pep %></td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= person.sanctioned %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>
 
-<%= link_to "New person", new_person_path %>
