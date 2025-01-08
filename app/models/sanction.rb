@@ -1,0 +1,2 @@
+class Sanction < ApplicationRecord
+end
