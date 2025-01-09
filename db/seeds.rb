@@ -82,9 +82,7 @@ PROFESSIONS = [
     country_of_birth: countries_pool.sample,
     country_of_residence: countries_pool.sample,
     country_of_profession: countries_pool.sample,
-    profession: profession[0], # Store ISCO code
-    pep: is_pep,
-    sanctioned: is_sanctioned
+    profession: profession[0] # Store ISCO code
   )
 end
 
