@@ -30,7 +30,7 @@
             <% @people.each do |person| %>
               <tr>
                 <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"><%= link_to person.last_first_name, person %></td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= Occupation.find_by(unit: person.profession).description %></td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= Occupation.find_by(unit: person.profession)&.description %></td>
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= person.pep %></td>
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= person.sanctioned %></td>
               </tr>

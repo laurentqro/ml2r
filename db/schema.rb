@@ -10,7 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_08_163036) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_09_161210) do
+  create_table "companies", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "matches", force: :cascade do |t|
+    t.integer "measure_id"
+    t.integer "screening_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["screening_id"], name: "index_matches_on_screening_id"
+  end
+
   create_table "occupations", force: :cascade do |t|
     t.string "major"
     t.string "major_label"
@@ -56,4 +70,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_08_163036) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "screenings", force: :cascade do |t|
+    t.integer "screenable_id"
+    t.string "screenable_type"
+    t.string "query"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["screenable_id", "screenable_type"], name: "index_screenings_on_screenable_id_and_screenable_type"
+  end
+
+  add_foreign_key "matches", "screenings"
 end
