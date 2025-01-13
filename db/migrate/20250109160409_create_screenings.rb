@@ -8,6 +8,6 @@ class CreateScreenings < ActiveRecord::Migration[8.0]
       t.timestamps
     end
 
-    add_index :screenings, [:screenable_id, :screenable_type]
+    add_index :screenings, [ :screenable_id, :screenable_type ]
   end
 end

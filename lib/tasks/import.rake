@@ -49,26 +49,26 @@ namespace :import do
 end
 
 def fetch_sanctions
-  require 'net/http'
-  require 'uri'
-  require 'fileutils'
+  require "net/http"
+  require "uri"
+  require "fileutils"
 
-  url = URI('https://geldefonds.gouv.mc/directdownload/sanctions.json')
-  file_path = File.join('lib', 'sanctions.json')
+  url = URI("https://geldefonds.gouv.mc/directdownload/sanctions.json")
+  file_path = File.join("lib", "sanctions.json")
 
   begin
     response = Net::HTTP.get_response(url)
 
     if response.is_a?(Net::HTTPSuccess)
       # Force encoding to UTF-8 and handle invalid characters
-      content = response.body.force_encoding('UTF-8')
+      content = response.body.force_encoding("UTF-8")
 
       content = content.encode(
-        'UTF-8',
-        'UTF-8',
+        "UTF-8",
+        "UTF-8",
         invalid: :replace,
         undef: :replace,
-        replace: ''
+        replace: ""
       )
 
       File.write(file_path, content)

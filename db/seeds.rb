@@ -38,19 +38,19 @@ HIGH_RISK_COUNTRIES = [
 # ISCO-08 codes and corresponding job titles for relevant professions
 # Format: [ISCO code, title, pep_likely (boolean)]
 PROFESSIONS = [
-  [1112, 'Senior Government Official', true],
-  [1114, 'Senior Political Party Official', true],
-  [1113, 'Traditional Chief or Head of Village', true],
-  [2422, 'Policy Administration Professional', true],
-  [2612, 'Judge', true],
-  [0110, 'Military Officer', true], # Commissioned armed forces officers
-  [1120, 'Managing Director or Chief Executive', false],
-  [2611, 'Lawyer', false],
-  [2211, 'Medical Doctor', false],
-  [2413, 'Financial Analyst', false],
-  [3311, 'Investment Broker', false],
-  [2120, 'Mathematician or Actuary', false],
-  [2631, 'Economist', false]
+  [ 1112, 'Senior Government Official', true ],
+  [ 1114, 'Senior Political Party Official', true ],
+  [ 1113, 'Traditional Chief or Head of Village', true ],
+  [ 2422, 'Policy Administration Professional', true ],
+  [ 2612, 'Judge', true ],
+  [ 0110, 'Military Officer', true ], # Commissioned armed forces officers
+  [ 1120, 'Managing Director or Chief Executive', false ],
+  [ 2611, 'Lawyer', false ],
+  [ 2211, 'Medical Doctor', false ],
+  [ 2413, 'Financial Analyst', false ],
+  [ 3311, 'Investment Broker', false ],
+  [ 2120, 'Mathematician or Actuary', false ],
+  [ 2631, 'Economist', false ]
 ]
 
 # Create 100 people records

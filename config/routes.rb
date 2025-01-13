@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
   resources :people do
-    resources :screenings, only: [:create] do
-      resources :matches, only: [:index, :show]
+    resources :screenings, only: [ :create ] do
+      resources :matches, only: [ :index, :show ]
     end
   end
 
   resources :companies do
-    resources :screenings, only: [:create] do
-      resources :matches, only: [:index, :show]
+    resources :screenings, only: [ :create ] do
+      resources :matches, only: [ :index, :show ]
     end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
