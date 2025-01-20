@@ -25,30 +25,32 @@
           <div class="flex h-24 items-center justify-between">
             <div class="flex items-center">
               <div class="">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 100" width="200">
-                  <!-- Radar outline -->
-                  <circle cx="50" cy="50" r="40" fill="none" stroke="#A5D6A7" stroke-width="2"/>
+                <%= link_to root_path do %>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 100" width="200">
+                    <!-- Radar outline -->
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="#A5D6A7" stroke-width="2"/>
 
-                  <!-- Radar scanning lines -->
-                  <circle cx="50" cy="50" r="30" fill="none" stroke="#A5D6A7" stroke-width="1"/>
-                  <circle cx="50" cy="50" r="20" fill="none" stroke="#A5D6A7" stroke-width="1"/>
+                    <!-- Radar scanning lines -->
+                    <circle cx="50" cy="50" r="30" fill="none" stroke="#A5D6A7" stroke-width="1"/>
+                    <circle cx="50" cy="50" r="20" fill="none" stroke="#A5D6A7" stroke-width="1"/>
 
-                  <!-- Radar sweep line -->
-                  <line x1="50" y1="50" x2="50" y2="10" stroke="#A5D6A7" stroke-width="2"/>
-                  <path d="M50 50 L50 10 A40 40 0 0 1 85 65" fill="none" stroke="#A5D6A7" stroke-width="1" opacity="0.6"/>
+                    <!-- Radar sweep line -->
+                    <line x1="50" y1="50" x2="50" y2="10" stroke="#A5D6A7" stroke-width="2"/>
+                    <path d="M50 50 L50 10 A40 40 0 0 1 85 65" fill="none" stroke="#A5D6A7" stroke-width="1" opacity="0.6"/>
 
-                  <!-- Checkmark symbol in bright white -->
-                  <path d="M35 50 L45 60 L65 40" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"/>
+                    <!-- Checkmark symbol in bright white -->
+                    <path d="M35 50 L45 60 L65 40" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"/>
 
-                  <!-- App name in light colors -->
-                  <text x="110" y="45" font-family="Arial" font-size="22" font-weight="bold" fill="#E8F5E9">
-                    ML Risk Radar
-                  </text>
+                    <!-- App name in light colors -->
+                    <text x="110" y="45" font-family="Arial" font-size="22" font-weight="bold" fill="#E8F5E9">
+                      ML Risk Radar
+                    </text>
 
-                  <text x="110" y="70" font-family="Arial" font-size="12" font-weight="bold" fill="#E8F5E9">
-                    Compliance Monitoring System
-                  </text>
-                </svg>
+                    <text x="110" y="70" font-family="Arial" font-size="12" font-weight="bold" fill="#E8F5E9">
+                      Compliance Monitoring System
+                    </text>
+                  </svg>
+                <% end %>
               </div>
               <div class="hidden md:block">
                 <div class="ml-10 flex items-baseline space-x-4">
