@@ -10,11 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_09_161210) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_20_150343) do
+  create_table "business_relationships", force: :cascade do |t|
+    t.string "clientable_type"
+    t.integer "clientable_id"
+    t.datetime "started_at"
+    t.datetime "ended_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["clientable_id", "clientable_type"], name: "idx_on_clientable_id_clientable_type_025a21bc81"
+    t.index ["clientable_type", "clientable_id"], name: "index_business_relationships_on_clientable"
+  end
+
   create_table "companies", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "sanctioned"
+    t.string "country"
   end
 
   create_table "matches", force: :cascade do |t|
