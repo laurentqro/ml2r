@@ -43,12 +43,9 @@ namespace :import do
 
   desc "Import Sanctions list"
   task sanctions: :environment do
-    require "json"
-
-    fetch_sanctions
-    sanctions = JSON.parse(File.read("lib/sanctions.json"))
-
     Sanction.delete_all
+
+    sanctions = fetch_sanctions
 
     sanctions.each do |sanction|
       Sanction.create!(
@@ -75,10 +72,9 @@ end
 def fetch_sanctions
   require "net/http"
   require "uri"
-  require "fileutils"
+  require "json"
 
   url = URI("https://geldefonds.gouv.mc/directdownload/sanctions.json")
-  file_path = File.join("lib", "sanctions.json")
 
   begin
     response = Net::HTTP.get_response(url)
@@ -95,8 +91,7 @@ def fetch_sanctions
         replace: ""
       )
 
-      File.write(file_path, content)
-      puts "Successfully saved sanctions.json to #{file_path}"
+      JSON.parse(content)
     else
       puts "Failed to download: #{response.code} #{response.message}"
     end
