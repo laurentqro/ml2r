@@ -19,7 +19,7 @@ namespace :import do
 
   desc "Import sanctioned people and entities"
   task sanctioned: :environment do
-    BusinessRelationship.delete_all
+    Client.delete_all
     Person.delete_all
     Company.delete_all
 
@@ -31,13 +31,13 @@ namespace :import do
         nationality: sanction.nationality
       )
 
-      BusinessRelationship.create!(clientable: p)
+      Client.create!(clientable: p)
     end
 
     Sanction.where(nature: "Personne morale").all.each do |sanction|
       c = Company.create!(name: sanction.last_name)
 
-      BusinessRelationship.create!(clientable: c)
+      Client.create!(clientable: c)
     end
   end
 

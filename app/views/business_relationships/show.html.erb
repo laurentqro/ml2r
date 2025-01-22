@@ -1,9 +1,0 @@
-<p style="color: green"><%= notice %></p>
-
-  <p>
-    <strong>Client since:</strong>
-    <%= @client.created_at.strftime("%B %d, %Y") %>
-  </p>
-
-<%= render "people/person", person: @client.clientable if @client.clientable_type == "Person" %>
-<%= render "companies/company", company: @client.clientable if @client.clientable_type == "Company" %>
