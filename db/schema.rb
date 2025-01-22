@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_20_150343) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_22_144707) do
   create_table "business_relationships", force: :cascade do |t|
     t.string "clientable_type"
     t.integer "clientable_id"
@@ -62,6 +62,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_20_150343) do
     t.boolean "sanctioned"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "nationality"
   end
 
   create_table "sanctions", force: :cascade do |t|

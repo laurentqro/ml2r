@@ -17,7 +17,31 @@ namespace :import do
     end
   end
 
-  desc "Import Sanctions from lib/sanctions.json"
+  desc "Import sanctioned people and entities"
+  task sanctioned: :environment do
+    BusinessRelationship.delete_all
+    Person.delete_all
+    Company.delete_all
+
+    Sanction.where(nature: "Personne physique").all.each do |sanction|
+      p = Person.create!(
+        last_name: sanction.last_name,
+        first_name: sanction.first_name,
+        country_of_birth: sanction.place_of_birth,
+        nationality: sanction.nationality
+      )
+
+      BusinessRelationship.create!(clientable: p)
+    end
+
+    Sanction.where(nature: "Personne morale").all.each do |sanction|
+      c = Company.create!(name: sanction.last_name)
+
+      BusinessRelationship.create!(clientable: c)
+    end
+  end
+
+  desc "Import Sanctions list"
   task sanctions: :environment do
     require "json"
 
