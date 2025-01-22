@@ -8,6 +8,6 @@ class CreateBusinessRelationships < ActiveRecord::Migration[8.0]
       t.timestamps
     end
 
-    add_index :business_relationships, [:clientable_id, :clientable_type]
+    add_index :business_relationships, [ :clientable_id, :clientable_type ]
   end
 end
