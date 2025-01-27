@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_22_144707) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_27_132259) do
   create_table "clients", force: :cascade do |t|
     t.string "clientable_type"
     t.integer "clientable_id"
@@ -18,7 +18,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_22_144707) do
     t.datetime "ended_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["clientable_id", "clientable_type"], name: "idx_on_clientable_id_clientable_type_025a21bc81"
+    t.index ["clientable_id", "clientable_type"], name: "index_clients_on_clientable_id_and_clientable_type"
     t.index ["clientable_type", "clientable_id"], name: "index_clients_on_clientable"
   end
 
@@ -83,6 +83,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_22_144707) do
     t.string "expiration_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "measure_id"
+    t.index ["measure_id"], name: "index_sanctions_on_measure_id"
   end
 
   create_table "screenings", force: :cascade do |t|

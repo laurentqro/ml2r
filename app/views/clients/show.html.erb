@@ -5,13 +5,30 @@
   <%= @client.created_at.strftime("%B %d, %Y") %>
 </div>
 
-<div>
+<div class="py-4">
   <%= render "people/person", person: @client.clientable if @client.clientable_type == "Person" %>
   <%= render "companies/company", company: @client.clientable if @client.clientable_type == "Company" %>
 </div>
 
-<div>
-  <%= button_to "Screen for sanctions",
-  business_relationship_screenings_path(@screening),
-  class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
-</div>
+<h2>Screenings</h2>
+
+<% @client.clientable.screenings.reverse.each do |screening| %>
+  <div>
+    <div>
+      <strong>Date:</strong>
+      <%= link_to screening.created_at.strftime("%B %d, %Y at %I:%M:%S %p"), client_screening_path(@client, screening) %>
+    </div>
+  </div>
+<% end %>
+
+
+<%= form_with(model: [@client, @screening], data: { turbo: false }) do |form| %>
+  <%= form.label :query %>
+  <%= form.text_field :query, value: @client.clientable.last_name.downcase %>
+
+  <%= form.hidden_field :screenable_id, value: @client.clientable_id %>
+  <%= form.hidden_field :screenable_type, value: @client.clientable_type %>
+
+  <%= form.submit "Run a new screening", class: "btn btn-primary" %>
+<% end %>
+

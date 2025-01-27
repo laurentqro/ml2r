@@ -49,6 +49,7 @@ namespace :import do
 
     sanctions.each do |sanction|
       Sanction.create!(
+        measure_id: sanction["mesureId"],
         nature: sanction["nature"],
         title: sanction["mesureDetails"]["titre"],
         last_name: sanction["nom"],

@@ -28,14 +28,4 @@
     <strong>Profession:</strong>
     <%= Occupation.find_by(unit: person.profession)&.description %>
   </p>
-
-  <p>
-    <strong>Pep:</strong>
-    <%= person.pep %>
-  </p>
-
-  <p>
-    <strong>Sanctioned:</strong>
-    <%= person.sanctioned %>
-  </p>
 </div>
