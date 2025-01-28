@@ -1,5 +1,5 @@
 <% if collection.total_pages > 1 %>
-  <nav class="flex items-center justify-between py-4" aria-label="Pagination">
+  <nav class="flex items-center justify-between py-3" aria-label="Pagination">
     <div class="hidden sm:block">
       <p class="text-sm text-gray-700">
         Showing
@@ -8,16 +8,17 @@
         <span class="font-medium"><%= [collection.current_page * 25, collection.total_count].min %></span>
         of
         <span class="font-medium"><%= collection.total_count %></span>
+        <%= params[:nature]&.pluralize || "people" %>
       </p>
     </div>
     <div class="flex flex-1 justify-between sm:justify-end">
-      <%= link_to "Previous", 
-          url_for(page: collection.prev_page), 
+      <%= link_to "Previous",
+          url_for(page: collection.prev_page, nature: params[:nature]),
           class: "relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus-visible:outline-offset-0 #{collection.prev_page ? '' : 'opacity-50 cursor-not-allowed'}", 
           disabled: collection.prev_page.nil? %>
       
-      <%= link_to "Next", 
-          url_for(page: collection.next_page), 
+      <%= link_to "Next",
+          url_for(page: collection.next_page, nature: params[:nature]),
           class: "relative ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 focus-visible:outline-offset-0 #{collection.next_page ? '' : 'opacity-50 cursor-not-allowed'}", 
           disabled: collection.next_page.nil? %>
     </div>
