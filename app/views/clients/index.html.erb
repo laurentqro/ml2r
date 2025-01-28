@@ -4,20 +4,15 @@
 
 <h1 class="py-4">Clients</h1>
 
-<div class="px-4 sm:px-6 lg:px-8">
-  <div class="sm:flex sm:items-center">
-    <div class="sm:flex-auto">
-      <h1 class="text-base font-semibold text-gray-900">Persons</h1>
-    </div>
-  </div>
-
+<div class="px-2 sm:px-6 lg:px-4">
   <div class="mt-8 flow-root border-black">
     <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
       <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+        <%= render 'shared/pagination', collection: @clients %>
         <table class="min-w-full divide-y divide-gray-300">
           <thead>
             <tr>
-              <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Last Name</th>
+              <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Name</th>
               <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Type</th>
               <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Country</th>
             </tr>
@@ -27,7 +22,7 @@
               <% clientable = client.clientable %>
               <tr>
                 <td class="text-wrap whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                  <%= link_to clientable.name, client %>
+                  <%= link_to clientable.display_name, client %>
                 </td>
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                   <%= client.clientable_type %>
@@ -39,8 +34,8 @@
             <% end %>
           </tbody>
         </table>
+        <%= render 'shared/pagination', collection: @clients %>
       </div>
     </div>
   </div>
 </div>
-

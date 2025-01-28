@@ -5,6 +5,10 @@ class Person < ApplicationRecord
   has_many :business_relationships, class_name: "Client", as: :clientable
 
   def name
+    last_name
+  end
+
+  def display_name
     "#{last_name}, #{first_name}"
   end
 

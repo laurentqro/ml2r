@@ -3,7 +3,7 @@ class Screening < ApplicationRecord
   has_many :matches, dependent: :destroy
 
   def run
-    Sanction.where("last_name LIKE ?", "%#{self.query}%").each do |sanction|
+    Sanction.where("last_name LIKE ?", "#{self.query}%").each do |sanction|
       self.matches.create!(measure_id: sanction.measure_id)
     end
   end

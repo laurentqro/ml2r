@@ -9,7 +9,7 @@ class ScreeningsController < ApplicationController
   end
 
   def create
-    @client = Client.find_by(clientable_id: screening_params[:screenable_id])
+    @client = Client.find(screening_params[:screenable_id])
     @screening = Screening.new(screening_params)
 
     if @screening.save

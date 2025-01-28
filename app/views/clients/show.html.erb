@@ -24,7 +24,7 @@
 
 <%= form_with(model: [@client, @screening], data: { turbo: false }) do |form| %>
   <%= form.label :query %>
-  <%= form.text_field :query, value: @client.clientable.last_name.downcase %>
+  <%= form.text_field :query, value: @client.clientable.name.downcase %>
 
   <%= form.hidden_field :screenable_id, value: @client.clientable_id %>
   <%= form.hidden_field :screenable_type, value: @client.clientable_type %>

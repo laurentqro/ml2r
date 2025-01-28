@@ -1,6 +1,8 @@
 class ClientsController < ApplicationController
+  include Pagination
+
   def index
-    @clients = Client.all
+    @clients = paginate(Client.all)
   end
 
   def show
