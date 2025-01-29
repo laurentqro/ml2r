@@ -5,7 +5,7 @@ class ScreeningsController < ApplicationController
 
   def show
     @client = Client.find(params[:client_id])
-    @screening = Screening.find(params[:id])
+    @screening = Screening.includes(:sanctions).find(params[:id])
   end
 
   def create

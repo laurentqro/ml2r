@@ -6,7 +6,7 @@
 Screening run on <%= @screening.created_at.strftime("%B %d, %Y at %I:%M%p") %> for query <em>"<%= @screening.query %>"</em>
 </p>
 
-<% Sanction.where(measure_id: @screening.matches.pluck(:measure_id)).each do |sanction| %>
+<% @screening.sanctions.each do |sanction| %>
   <div class="py-4">
     <div>
       <strong>Nature:</strong>
@@ -14,7 +14,7 @@ Screening run on <%= @screening.created_at.strftime("%B %d, %Y at %I:%M%p") %> f
     </div>
 
     <div>
-      <strong>title:</strong>
+      <strong>Title:</strong>
       <%= sanction.title %>
     </div>
 

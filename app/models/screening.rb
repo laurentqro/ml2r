@@ -1,6 +1,7 @@
 class Screening < ApplicationRecord
   belongs_to :screenable, polymorphic: true
   has_many :matches, dependent: :destroy
+  has_many :sanctions, -> { distinct }, through: :matches, source: :sanction
 
   def run
     case screenable_type
