@@ -7,4 +7,6 @@ class Company < ApplicationRecord
   def display_name
     name
   end
+
+  def pep?;end
 end

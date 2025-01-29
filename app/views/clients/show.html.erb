@@ -6,9 +6,23 @@
 
 <div class="max-w-3xl mx-auto space-y-8">
   <div class="bg-white shadow rounded-lg p-6">
-    <h1 class="text-2xl font-bold text-gray-900 mb-4">
-      <%= @client.clientable.display_name %>
-    </h1>
+    <div class="flex items-center justify-between mb-4">
+      <h1 class="text-2xl font-bold text-gray-900">
+        <%= @client.clientable.display_name %>
+      </h1>
+      <div class="flex gap-2">
+        <% if @client.clientable.pep? %>
+          <span class="px-3 py-1 text-sm font-semibold text-white bg-red-600 rounded-full">
+            PEP
+          </span>
+        <% end %>
+        <% if @client.clientable.sanctioned? %>
+          <span class="px-3 py-1 text-sm font-semibold text-white bg-red-600 rounded-full">
+            Sanctioned
+          </span>
+        <% end %>
+      </div>
+    </div>
 
     <div class="mb-4">
       <span class="font-semibold text-gray-700">Client since:</span>
@@ -26,11 +40,15 @@
 
     <div class="space-y-2 mb-6">
       <% @client.clientable.screenings.reverse.each do |screening| %>
-        <div class="flex items-center">
-          <div class="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
-          <%= link_to screening.created_at.strftime("%B %d, %Y at %I:%M:%S %p"),
-                      client_screening_path(@client, screening),
-                      class: "text-blue-600 hover:text-blue-800 hover:underline" %>
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <div class="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
+            <%= link_to screening.created_at.strftime("%B %d, %Y at %I:%M:%S %p"),
+                        client_screening_path(@client, screening),
+                        class: "text-blue-600 hover:text-blue-800 hover:underline" %>
+          </div>
+          <span class="text-sm text-gray-600">
+            <%= pluralize(screening.matches.count, 'match') %>
         </div>
       <% end %>
     </div>

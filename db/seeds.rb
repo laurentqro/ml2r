@@ -8,7 +8,6 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-Sanction.delete_all
 Client.delete_all
 Person.delete_all
 Company.delete_all
@@ -55,7 +54,7 @@ PROFESSIONS = [
   [ 2631, 'Economist', false ]
 ]
 
-# Create 100 people records
+# Create 100 people
 100.times do |i|
   # 10% chance of being from a high-risk country
   countries_pool = rand < 0.1 ? HIGH_RISK_COUNTRIES : COMMON_COUNTRIES
@@ -95,23 +94,6 @@ end
     country: HIGH_RISK_COUNTRIES.sample
   )
 
-  Client.create!(
-    clientable: company,
-    started_at: Faker::Date.between(from: 2.years.ago, to: Date.today)
-  )
-end
-
-company_sanctions = Sanction.companies.limit(50)
-
-company_sanctions.each do |sanction|
-  # Create company with sanction data
-  company = Company.create!(
-    name: sanction.last_name,
-    country: HIGH_RISK_COUNTRIES.sample,
-    sanctioned: true
-  )
-
-  # Create a client record for this company
   Client.create!(
     clientable: company,
     started_at: Faker::Date.between(from: 2.years.ago, to: Date.today)

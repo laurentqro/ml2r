@@ -39,7 +39,7 @@
 
               <div class="space-y-1">
                 <p class="text-sm font-medium text-gray-500">Nationality</p>
-                <p class="text-gray-900"><%= match.sanction.nationality %></p>
+                <p class="text-gray-900"><%= ISO3166::Country[match.sanction.nationality]&.iso_short_name %></p>
               </div>
 
               <div class="space-y-1">
