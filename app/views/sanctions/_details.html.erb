@@ -3,7 +3,7 @@
     <% if sanction.send(field).present? %>
       <div class="<%= %w[address motive additional_info].include?(field) ? 'col-span-2' : '' %>">
         <strong><%= field.titleize %>:</strong>
-        <%= sanction.send(field) %>
+        <%= field == 'legal_basis' ? legal_basis_links(sanction.legal_basis) : sanction.send(field) %>
       </div>
     <% end %>
   <% end %>
