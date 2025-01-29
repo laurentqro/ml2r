@@ -1,59 +1,66 @@
-<h2>
-  Screening results for <%= @client.clientable.display_name %>
-</h2>
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <h2 class="text-2xl font-bold text-gray-900 sm:text-3xl">
+    Screening results for <%= @client.clientable.display_name %>
+  </h2>
 
-<p class="py-4">
-  Screening run on <%= @screening.created_at.strftime("%B %d, %Y at %I:%M%p") %>
-</p>
+  <p class="mt-2 text-sm text-gray-600">
+    Screening run on <%= @screening.created_at.strftime("%B %d, %Y at %I:%M%p") %>
+  </p>
 
-<% @matches.each do |match| %>
-  <div class="py-4 border-b border-gray-200">
-    <div class="flex justify-between items-start">
-      <div class="flex-grow">
-        <div class="text-lg font-semibold">
-          Match Score: <span class="text-<%= match.score >= 70 ? 'red' : 'orange' %>-600"><%= match.score %></span>
-        </div>
-        
-        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <strong>Nature:</strong>
-            <%= match.sanction.nature %>
-          </div>
-
-          <div>
-            <strong>Name:</strong>
-            <%= match.sanction.last_name %><%= ", #{match.sanction.first_name}" if match.sanction.first_name.present? %>
-          </div>
-
-          <% if match.sanction.alias.present? %>
-            <div class="col-span-2">
-              <strong>Alias:</strong>
-              <%= match.sanction.alias %>
+  <div class="mt-8 space-y-6">
+    <% @matches.each do |match| %>
+      <div class="bg-white rounded-lg shadow p-6 border border-gray-200">
+        <div class="flex justify-between items-start">
+          <div class="flex-grow">
+            <div class="flex items-center space-x-2">
+              <span class="text-lg font-medium">Match Score:</span>
+              <span class="px-3 py-1 rounded-full <%= match_score_classes(match.score) %>">
+                <%= match.score %>
+              </span>
             </div>
-          <% end %>
+            
+            <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="space-y-1">
+                <p class="text-sm font-medium text-gray-500">Nature</p>
+                <p class="text-gray-900"><%= match.sanction.nature %></p>
+              </div>
 
-          <div>
-            <strong>Nationality:</strong>
-            <%= match.sanction.nationality %>
-          </div>
+              <div class="space-y-1">
+                <p class="text-sm font-medium text-gray-500">Name</p>
+                <p class="text-gray-900"><%= match.sanction.last_name %><%= ", #{match.sanction.first_name}" if match.sanction.first_name.present? %></p>
+              </div>
 
-          <div>
-            <strong>Date of Birth:</strong>
-            <%= match.sanction.date_of_birth %>
-          </div>
-        </div>
+              <% if match.sanction.alias.present? %>
+                <div class="col-span-2 space-y-1">
+                  <p class="text-sm font-medium text-gray-500">Alias</p>
+                  <p class="text-gray-900"><%= match.sanction.alias %></p>
+                </div>
+              <% end %>
 
-        <div class="mt-4">
-          <button class="text-sm text-blue-600 hover:text-blue-800" 
-                  onclick="document.getElementById('details-<%= match.id %>').classList.toggle('hidden')">
-            Show/Hide Full Details
-          </button>
-          
-          <div id="details-<%= match.id %>" class="hidden mt-2">
-            <%= render "sanctions/details", sanction: match.sanction %>
+              <div class="space-y-1">
+                <p class="text-sm font-medium text-gray-500">Nationality</p>
+                <p class="text-gray-900"><%= match.sanction.nationality %></p>
+              </div>
+
+              <div class="space-y-1">
+                <p class="text-sm font-medium text-gray-500">Date of Birth</p>
+                <p class="text-gray-900"><%= match.sanction.date_of_birth %></p>
+              </div>
+            </div>
+
+            <div class="mt-6">
+              <button class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                      onclick="document.getElementById('details-<%= match.id %>').classList.toggle('hidden')">
+                <span>Show/Hide Full Details</span>
+              </button>
+
+              <div id="details-<%= match.id %>" class="hidden mt-4">
+                <%= render "sanctions/details", sanction: match.sanction %>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    <% end %>
   </div>
-<% end %>
+</div>
