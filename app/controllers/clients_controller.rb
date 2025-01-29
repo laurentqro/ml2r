@@ -11,7 +11,7 @@ class ClientsController < ApplicationController
   end
 
   def show
-    @client = Client.find(params[:id])
+    @client = Client.includes(clientable: { screenings: :sanctions }).find(params[:id])
     @screening = Screening.new(screenable: @client)
   end
 end
