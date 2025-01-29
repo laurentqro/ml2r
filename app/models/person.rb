@@ -9,7 +9,7 @@ class Person < ApplicationRecord
   end
 
   def display_name
-    "#{last_name}, #{first_name}"
+    "#{last_name}, #{first_name}".strip.chomp(",")
   end
 
   def country

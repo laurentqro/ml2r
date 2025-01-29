@@ -1,42 +1,57 @@
-<p style="color: green"><%= notice %></p>
+<% if notice %>
+  <div class="p-4 mb-4 text-green-700 bg-green-100 rounded-lg">
+    <%= notice %>
+  </div>
+<% end %>
 
 <% content_for :title, "Clients" %>
 
-<h1 class="py-4">Clients</h1>
+  <div class="sm:flex sm:items-center py-6">
+    <div class="sm:flex-auto">
+      <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">Clients</h1>
+    </div>
+  </div>
 
-<div class="px-2 sm:px-6 lg:px-4">
   <div class="border-b border-gray-200">
     <nav class="-mb-px flex space-x-8" aria-label="Tabs">
       <%= link_to "Persons", clients_path(nature: 'person'),
-          class: "#{params[:nature].nil? || params[:nature] == 'person' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium" %>
+          class: "#{params[:nature].nil? || params[:nature] == 'person' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium" %>
       <%= link_to "Companies", clients_path(nature: 'company'),
-          class: "#{params[:nature] == 'company' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium" %>
+          class: "#{params[:nature] == 'company' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium" %>
     </nav>
   </div>
 
-  <div class="mt-8 flow-root border-black">
+  <div class="mt-8 flow-root">
     <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-      <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+      <div class="inline-block min-w-full py-2 align-middle">
         <%= render 'shared/pagination', collection: @clients %>
-        <table class="min-w-full divide-y divide-gray-300">
-          <thead>
-            <tr>
-              <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Name</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-gray-200">
-            <% @clients.each do |client| %>
-              <% clientable = client.clientable %>
-              <tr>
-                <td class="text-wrap whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
-                  <%= link_to clientable.display_name, client %>
-                </td>
+
+        <div class="bg-white shadow ring-1 ring-gray-300 sm:rounded-lg overflow-hidden">
+          <table class="min-w-full divide-y divide-gray-300">
+            <thead class="bg-gray-50">
+              <tr class="border-x border-gray-300">
+                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 first:sm:rounded-tl-lg last:sm:rounded-tr-lg">
+                  Name
+                </th>
               </tr>
-            <% end %>
-          </tbody>
-        </table>
+            </thead>
+            <tbody class="divide-y divide-gray-200 bg-white">
+              <% @clients.each_with_index do |client, index| %>
+                <% clientable = client.clientable %>
+                <tr class="hover:bg-gray-50 border-x border-gray-300">
+                  <td class="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 <%= 'sm:rounded-bl-lg' if index == @clients.size - 1 %>">
+                    <div class="max-w-md line-clamp-2">
+                      <%= link_to clientable.display_name, client,
+                          class: "text-blue-600 hover:text-blue-800" %>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+
         <%= render 'shared/pagination', collection: @clients %>
       </div>
     </div>
   </div>
-</div>
