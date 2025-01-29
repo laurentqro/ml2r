@@ -1,86 +1,59 @@
 <h2>
-  Screening results for <%= @client.clientable.name %>
+  Screening results for <%= @client.clientable.display_name %>
 </h2>
 
 <p class="py-4">
-Screening run on <%= @screening.created_at.strftime("%B %d, %Y at %I:%M%p") %> for query <em>"<%= @screening.query %>"</em>
+  Screening run on <%= @screening.created_at.strftime("%B %d, %Y at %I:%M%p") %> for query <em>"<%= @screening.query %>"</em>
 </p>
 
-<% @screening.sanctions.each do |sanction| %>
-  <div class="py-4">
-    <div>
-      <strong>Nature:</strong>
-      <%= sanction.nature %>
-    </div>
+<% @matches.each do |match| %>
+  <div class="py-4 border-b border-gray-200">
+    <div class="flex justify-between items-start">
+      <div class="flex-grow">
+        <div class="text-lg font-semibold">
+          Match Score: <span class="text-<%= match.score >= 70 ? 'red' : 'orange' %>-600"><%= match.score %></span>
+        </div>
+        
+        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <strong>Nature:</strong>
+            <%= match.sanction.nature %>
+          </div>
 
-    <div>
-      <strong>Title:</strong>
-      <%= sanction.title %>
-    </div>
+          <div>
+            <strong>Name:</strong>
+            <%= match.sanction.last_name %><%= ", #{match.sanction.first_name}" if match.sanction.first_name.present? %>
+          </div>
 
-    <div>
-      <strong>Last Name:</strong>
-      <%= sanction.last_name %>
-    </div>
+          <% if match.sanction.alias.present? %>
+            <div class="col-span-2">
+              <strong>Alias:</strong>
+              <%= match.sanction.alias %>
+            </div>
+          <% end %>
 
-    <div>
-      <strong>First Name:</strong>
-      <%= sanction.first_name %>
-    </div>
+          <div>
+            <strong>Nationality:</strong>
+            <%= match.sanction.nationality %>
+          </div>
 
-    <div>
-      <strong>Sex:</strong>
-      <%= sanction.sex %>
-    </div>
+          <div>
+            <strong>Date of Birth:</strong>
+            <%= match.sanction.date_of_birth %>
+          </div>
+        </div>
 
-    <div>
-      <strong>Date of Birth:</strong>
-      <%= sanction.date_of_birth %>
-    </div>
-
-    <div>
-      <strong>Place of Birth:</strong>
-      <%= sanction.place_of_birth %>
-    </div>
-
-    <div>
-      <strong>Nationality:</strong>
-      <%= sanction.nationality %>
-    </div>
-
-    <div>
-      <strong>Address:</strong>
-      <%= sanction.address %>
-    </div>
-
-    <div>
-      <strong>Alias:</strong>
-      <%= sanction.alias %>
-    </div>
-
-    <div>
-      <strong>Authority:</strong>
-      <%= sanction.authority %>
-    </div>
-
-    <div>
-      <strong>Motive:</strong>
-      <%= sanction.motive %>
-    </div>
-
-    <div>
-      <strong>Legal Basis:</strong>
-      <%= sanction.legal_basis %>
-    </div>
-
-    <div>
-      <strong>Additional Info:</strong>
-      <%= sanction.additional_info %>
-    </div>
-
-    <div>
-      <strong>Expiration Date:</strong>
-      <%= sanction.expiration_date %>
+        <div class="mt-4">
+          <button class="text-sm text-blue-600 hover:text-blue-800" 
+                  onclick="document.getElementById('details-<%= match.id %>').classList.toggle('hidden')">
+            Show/Hide Full Details
+          </button>
+          
+          <div id="details-<%= match.id %>" class="hidden mt-2">
+            <%= render "sanctions/details", sanction: match.sanction %>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 <% end %>

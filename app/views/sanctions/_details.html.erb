@@ -1,0 +1,10 @@
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 pl-4 text-sm">
+  <% %w[title sex place_of_birth address authority motive legal_basis additional_info expiration_date].each do |field| %>
+    <% if sanction.send(field).present? %>
+      <div class="<%= %w[address motive additional_info].include?(field) ? 'col-span-2' : '' %>">
+        <strong><%= field.titleize %>:</strong>
+        <%= sanction.send(field) %>
+      </div>
+    <% end %>
+  <% end %>
+</div> 

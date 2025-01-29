@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_27_132259) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_28_000001) do
   create_table "clients", force: :cascade do |t|
     t.string "clientable_type"
     t.integer "clientable_id"
@@ -35,6 +35,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_27_132259) do
     t.integer "screening_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "score", default: 0
     t.index ["screening_id"], name: "index_matches_on_screening_id"
   end
 

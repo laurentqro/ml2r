@@ -43,6 +43,7 @@ gem "thruster", require: false
 gem "csv", "~> 3.0"
 gem "countries", "~> 7.1"
 gem "faker", "~> 3.5"
+gem "amatch"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
