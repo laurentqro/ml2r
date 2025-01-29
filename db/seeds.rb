@@ -8,8 +8,10 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-# Seed data for people table with standardized country and occupation codes
-# require 'faker'
+Sanction.delete_all
+Client.delete_all
+Person.delete_all
+Company.delete_all
 
 # Common countries with ISO 3166-1 alpha-2 codes
 COMMON_COUNTRIES = [
@@ -61,13 +63,6 @@ PROFESSIONS = [
   # 15% chance of being a PEP
   is_pep = rand < 0.15
 
-  # 5% chance of being sanctioned, higher if from high-risk country
-  is_sanctioned = if HIGH_RISK_COUNTRIES.include?(countries_pool.first)
-    rand < 0.3  # 30% chance if from high-risk country
-  else
-    rand < 0.05 # 5% chance otherwise
-  end
-
   # Select profession based on PEP status
   profession = if is_pep
     # PEPs more likely to have government/political roles
@@ -76,22 +71,101 @@ PROFESSIONS = [
     PROFESSIONS.sample
   end
 
-  Person.create!(
+  person = Person.create!(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
     country_of_birth: countries_pool.sample,
     country_of_residence: countries_pool.sample,
     country_of_profession: countries_pool.sample,
-    profession: profession[0] # Store ISCO code
+    profession: profession[0], # Store ISCO code
+    pep: is_pep
+  )
+
+  # Create a client record for this person
+  Client.create!(
+    clientable: person,
+    started_at: Faker::Date.between(from: 2.years.ago, to: Date.today)
   )
 end
 
-# Log summary statistics
-total_peps = Person.where(pep: true).count
-total_sanctioned = Person.where(sanctioned: true).count
-high_risk_residents = Person.where(country_of_residence: HIGH_RISK_COUNTRIES).count
+# Create 100 companies
+100.times do |i|
+  company = Company.create!(
+    name: Faker::Company.name,
+    country: HIGH_RISK_COUNTRIES.sample
+  )
 
-puts "Created 100 people records:"
-puts "- #{total_peps} PEPs"
-puts "- #{total_sanctioned} sanctioned individuals"
-puts "- #{high_risk_residents} residents of high-risk countries"
+  Client.create!(
+    clientable: company,
+    started_at: Faker::Date.between(from: 2.years.ago, to: Date.today)
+  )
+end
+
+company_sanctions = Sanction.companies.limit(50)
+
+company_sanctions.each do |sanction|
+  # Create company with sanction data
+  company = Company.create!(
+    name: sanction.last_name,
+    country: HIGH_RISK_COUNTRIES.sample,
+    sanctioned: true
+  )
+
+  # Create a client record for this company
+  Client.create!(
+    clientable: company,
+    started_at: Faker::Date.between(from: 2.years.ago, to: Date.today)
+  )
+end
+
+# Create 50 sanctioned people
+person_sanctions = Sanction.individuals.limit(50)
+
+person_sanctions.each do |sanction|
+  # 40% chance of being a PEP for sanctioned individuals
+  is_pep = rand < 0.4
+
+  # Select profession based on PEP status
+  profession = if is_pep
+    PROFESSIONS.select { |p| p[2] }.sample
+  else
+    PROFESSIONS.sample
+  end
+
+  # Create person with sanction data
+  person = Person.create!(
+    first_name: sanction.first_name,
+    last_name: sanction.last_name,
+    country_of_birth: sanction.place_of_birth,
+    country_of_residence: HIGH_RISK_COUNTRIES.sample,
+    country_of_profession: HIGH_RISK_COUNTRIES.sample,
+    profession: profession[0], # Store ISCO code
+    nationality: HIGH_RISK_COUNTRIES.sample,
+    pep: is_pep,
+    sanctioned: true
+  )
+
+  # Create a client record for this person
+  Client.create!(
+    clientable: person,
+    started_at: Faker::Date.between(from: 2.years.ago, to: Date.today)
+  )
+end
+
+# Create 50 companies from sanctions data
+company_sanctions = Sanction.companies.limit(50)
+
+company_sanctions.each do |sanction|
+  # Create company with sanction data
+  company = Company.create!(
+    name: sanction.last_name,
+    country: HIGH_RISK_COUNTRIES.sample,
+    sanctioned: true
+  )
+
+  # Create a client record for this company
+  Client.create!(
+    clientable: company,
+    started_at: Faker::Date.between(from: 2.years.ago, to: Date.today)
+  )
+end
