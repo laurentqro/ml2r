@@ -1,16 +1,6 @@
 <div id="<%= dom_id company %>">
   <p>
-    <strong>Name:</strong>
-    <%= company.name %>
-  </p>
-
-  <p>
     <strong>Country:</strong>
     <%= ISO3166::Country[company.country]&.iso_short_name %>
-  </p>
-
-  <p>
-    <strong>Sanctioned:</strong>
-    <%= company.sanctioned %>
   </p>
 </div>

@@ -1,34 +1,49 @@
-<p style="color: green"><%= notice %></p>
-
-<div>
-  <strong>Client since:</strong>
-  <%= @client.created_at.strftime("%B %d, %Y") %>
-</div>
-
-<div class="py-4">
-  <%= render "people/person", person: @client.clientable if @client.clientable_type == "Person" %>
-  <%= render "companies/company", company: @client.clientable if @client.clientable_type == "Company" %>
-</div>
-
-<h2>Screenings</h2>
-
-<% @client.clientable.screenings.reverse.each do |screening| %>
-  <div>
-    <div>
-      <strong>Date:</strong>
-      <%= link_to screening.created_at.strftime("%B %d, %Y at %I:%M:%S %p"), client_screening_path(@client, screening) %>
-    </div>
+<% if notice %>
+  <div class="p-4 mb-4 text-green-700 bg-green-100 rounded-lg">
+    <%= notice %>
   </div>
 <% end %>
 
+<div class="max-w-3xl mx-auto space-y-8">
+  <div class="bg-white shadow rounded-lg p-6">
+    <h1 class="text-2xl font-bold text-gray-900 mb-4">
+      <%= @client.clientable.display_name %>
+    </h1>
 
-<%= form_with(model: [@client, @screening], data: { turbo: false }) do |form| %>
-  <%= form.label :query %>
-  <%= form.text_field :query, value: @client.clientable.name.downcase %>
+    <div class="mb-4">
+      <span class="font-semibold text-gray-700">Client since:</span>
+      <span class="text-gray-600"><%= @client.created_at.strftime("%B %d, %Y") %></span>
+    </div>
 
-  <%= form.hidden_field :screenable_id, value: @client.clientable_id %>
-  <%= form.hidden_field :screenable_type, value: @client.clientable_type %>
+    <div class="border-t pt-4">
+      <%= render "people/person", person: @client.clientable if @client.clientable_type == "Person" %>
+      <%= render "companies/company", company: @client.clientable if @client.clientable_type == "Company" %>
+    </div>
+  </div>
 
-  <%= form.submit "Run a new screening", class: "btn btn-primary" %>
-<% end %>
+  <div class="bg-white shadow rounded-lg p-6">
+    <h2 class="text-xl font-bold text-gray-900 mb-4">Screenings</h2>
 
+    <div class="space-y-2 mb-6">
+      <% @client.clientable.screenings.reverse.each do |screening| %>
+        <div class="flex items-center">
+          <div class="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
+          <%= link_to screening.created_at.strftime("%B %d, %Y at %I:%M:%S %p"),
+                      client_screening_path(@client, screening),
+                      class: "text-blue-600 hover:text-blue-800 hover:underline" %>
+        </div>
+      <% end %>
+    </div>
+
+    <%= form_with(model: [@client, @screening], data: { turbo: false }, class: "mt-4") do |form| %>
+      <%= form.hidden_field :query, value: @client.clientable.name.downcase %>
+      <%= form.hidden_field :screenable_id, value: @client.clientable_id %>
+      <%= form.hidden_field :screenable_type, value: @client.clientable_type %>
+
+      <%= form.submit "Run a new screening",
+          class: "w-full sm:w-auto px-4 py-2 bg-blue-600 text-white rounded-lg
+                 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500
+                 focus:ring-offset-2 transition-colors" %>
+    <% end %>
+  </div>
+</div>
