@@ -4,64 +4,68 @@
   </div>
 <% end %>
 
-<div class="max-w-3xl mx-auto space-y-8">
-  <div class="bg-white shadow rounded-lg p-6">
-    <div class="flex items-center justify-between mb-4">
-      <h1 class="text-2xl font-bold text-gray-900">
-        <%= @client.clientable.display_name %>
-      </h1>
-      <div class="flex gap-2">
-        <% if @client.clientable.pep? %>
-          <span class="px-3 py-1 text-sm font-semibold text-white bg-red-600 rounded-full">
-            PEP
-          </span>
-        <% end %>
-        <% if @client.clientable.sanctioned? %>
-          <span class="px-3 py-1 text-sm font-semibold text-white bg-red-600 rounded-full">
-            Sanctioned
-          </span>
-        <% end %>
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="max-w-3xl mx-auto space-y-8">
+    <div class="bg-white shadow rounded-lg p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h1 class="text-2xl font-bold text-gray-900">
+          <%= @client.clientable.display_name %>
+        </h1>
+        <div class="flex gap-2">
+          <% if @client.clientable.pep? %>
+            <span class="px-3 py-1 text-sm font-semibold text-white bg-red-600 rounded-full">
+              PEP
+            </span>
+          <% end %>
+          <% if @client.clientable.sanctioned? %>
+            <span class="px-3 py-1 text-sm font-semibold text-white bg-red-600 rounded-full">
+              Sanctioned
+            </span>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <span class="font-semibold text-gray-700">Client since:</span>
+        <span class="text-gray-600"><%= @client.created_at.strftime("%B %d, %Y") %></span>
+      </div>
+
+      <div class="border-t pt-4">
+        <%= render "people/person", person: @client.clientable if @client.clientable_type == "Person" %>
+        <%= render "companies/company", company: @client.clientable if @client.clientable_type == "Company" %>
       </div>
     </div>
 
-    <div class="mb-4">
-      <span class="font-semibold text-gray-700">Client since:</span>
-      <span class="text-gray-600"><%= @client.created_at.strftime("%B %d, %Y") %></span>
-    </div>
+    <div class="bg-white shadow rounded-lg p-6">
+      <h2 class="text-xl font-bold text-gray-900 mb-4">Screenings</h2>
 
-    <div class="border-t pt-4">
-      <%= render "people/person", person: @client.clientable if @client.clientable_type == "Person" %>
-      <%= render "companies/company", company: @client.clientable if @client.clientable_type == "Company" %>
-    </div>
-  </div>
-
-  <div class="bg-white shadow rounded-lg p-6">
-    <h2 class="text-xl font-bold text-gray-900 mb-4">Screenings</h2>
-
-    <div class="space-y-2 mb-6">
-      <% @client.clientable.screenings.reverse.each do |screening| %>
-        <div class="flex items-center justify-between">
-          <div class="flex items-center">
-            <div class="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
-            <%= link_to screening.created_at.strftime("%B %d, %Y at %I:%M:%S %p"),
-                        client_screening_path(@client, screening),
-                        class: "text-blue-600 hover:text-blue-800 hover:underline" %>
+      <div class="space-y-2 mb-6">
+        <% @client.clientable.screenings.reverse.each do |screening| %>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <div class="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
+              <%= link_to screening.created_at.strftime("%B %d, %Y at %I:%M:%S %p"),
+                          client_screening_path(@client, screening),
+                          class: "text-blue-600 hover:text-blue-800 hover:underline" %>
+            </div>
+            <span class="text-sm text-gray-600">
+              <%= pluralize(screening.matches.count, 'match') %>
           </div>
-          <span class="text-sm text-gray-600">
-            <%= pluralize(screening.matches.count, 'match') %>
-        </div>
+        <% end %>
+      </div>
+
+      <%= form_with(model: [@client, @screening], data: { turbo: false }, class: "mt-4") do |form| %>
+        <%= form.hidden_field :query, value: @client.clientable.name.downcase %>
+        <%= form.hidden_field :screenable_id, value: @client.clientable_id %>
+        <%= form.hidden_field :screenable_type, value: @client.clientable_type %>
+
+        <%= form.submit "Run a new screening",
+            class: "w-full sm:w-auto px-4 py-2 bg-blue-600 text-white rounded-lg
+                   hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500
+                   focus:ring-offset-2 transition-colors" %>
       <% end %>
     </div>
 
-    <%= form_with(model: [@client, @screening], data: { turbo: false }, class: "mt-4") do |form| %>
-      <%= form.hidden_field :query, value: @client.clientable.name.downcase %>
-      <%= form.hidden_field :screenable_id, value: @client.clientable_id %>
-      <%= form.hidden_field :screenable_type, value: @client.clientable_type %>
-
-      <%= form.submit "Run a new screening",
-          class: "w-full sm:w-auto px-4 py-2 bg-blue-600 text-white rounded-lg
-                 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500
-                 focus:ring-offset-2 transition-colors" %>
-    <% end %>
+    <%= render "risk_assessment", client: @client %>
   </div>
 </div>

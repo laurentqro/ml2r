@@ -1,0 +1,78 @@
+<div class="bg-white shadow rounded-lg p-6 mt-6">
+  <h2 class="text-xl font-bold text-gray-900 mb-4">Risk Assessment</h2>
+  
+  <% if client.blacklisted? %>
+    <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-6">
+      <div class="flex">
+        <div class="ml-3">
+          <p class="text-sm text-red-700">
+            <strong class="font-bold">Prohibited Client</strong>
+            <br>
+            This client has ties to GAFI blacklisted countries.
+            <br>
+            Terminate business relationship immediately.
+          </p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="flex items-center mb-6">
+    <span class="text-lg font-medium mr-2">Overall Risk Score:</span>
+    <span class="px-3 py-1 rounded-full text-sm font-medium <%= risk_badge_class(client.risk_score) %>">
+      <%= client.risk_score %>
+    </span>
+  </div>
+
+  <div class="space-y-4">
+    <% if client.country_of_residence.present? %>
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm font-medium text-gray-500">
+            <%= client.clientable_type == "Company" ? "Country of Incorporation" : "Country of Residence" %>
+          </p>
+          <p class="text-gray-900"><%= country_name(client.country_of_residence) %></p>
+        </div>
+        <span class="px-3 py-1 rounded-full text-sm font-medium <%= risk_badge_class(::CountryRiskScorer.calculate_risk_score(client.country_of_residence)) %>">
+          <%= ::CountryRiskScorer.calculate_risk_score(client.country_of_residence) %>
+        </span>
+      </div>
+    <% end %>
+
+    <% if client.nationality.present? %>
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm font-medium text-gray-500">Nationality</p>
+          <p class="text-gray-900"><%= country_name(client.nationality) %></p>
+        </div>
+        <span class="px-3 py-1 rounded-full text-sm font-medium <%= risk_badge_class(::CountryRiskScorer.calculate_risk_score(client.nationality)) %>">
+          <%= ::CountryRiskScorer.calculate_risk_score(client.nationality) %>
+        </span>
+      </div>
+    <% end %>
+
+    <% if client.country_of_profession.present? %>
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm font-medium text-gray-500">Professional Location</p>
+          <p class="text-gray-900"><%= country_name(client.country_of_profession) %></p>
+        </div>
+        <span class="px-3 py-1 rounded-full text-sm font-medium <%= risk_badge_class(::CountryRiskScorer.calculate_risk_score(client.country_of_profession)) %>">
+          <%= ::CountryRiskScorer.calculate_risk_score(client.country_of_profession) %>
+        </span>
+      </div>
+    <% end %>
+
+    <% if client.country_of_birth.present? %>
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm font-medium text-gray-500">Country of Birth</p>
+          <p class="text-gray-900"><%= country_name(client.country_of_birth) %></p>
+        </div>
+        <span class="px-3 py-1 rounded-full text-sm font-medium <%= risk_badge_class(::CountryRiskScorer.calculate_risk_score(client.country_of_birth)) %>">
+          <%= ::CountryRiskScorer.calculate_risk_score(client.country_of_birth) %>
+        </span>
+      </div>
+    <% end %>
+  </div>
+</div> 
