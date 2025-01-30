@@ -2,7 +2,7 @@ class Client < ApplicationRecord
   belongs_to :clientable, polymorphic: true
   has_many :screenings, as: :screenable
 
-  delegate :country_of_residence, :nationality, :country_of_profession, 
+  delegate :country_of_residence, :nationality, :country_of_profession,
            :country_of_birth, to: :clientable, allow_nil: true
 
   validate :no_blacklisted_countries
@@ -40,7 +40,7 @@ class Client < ApplicationRecord
   end
 
   def blacklisted?
-    [country_of_residence, nationality, country_of_profession, country_of_birth].compact.any? do |country|
+    [ country_of_residence, nationality, country_of_profession, country_of_birth ].compact.any? do |country|
       ::CountryRiskScorer.gafi_status(country) == :black
     end
   end

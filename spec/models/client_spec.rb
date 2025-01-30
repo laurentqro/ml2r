@@ -35,7 +35,7 @@ RSpec.describe Client do
     it 'handles missing country data' do
       person.country_of_residence = nil
       person.nationality = nil
-      
+
       risk_score = client.risk_score
 
       # Only profession and birth country present
@@ -43,7 +43,7 @@ RSpec.describe Client do
       # SO (birth):        89 * 10 = 890
       # Total weight: 25
       # Expected: (435 + 890) / 25 = 53
-      
+
       expect(risk_score).to eq(53)
     end
 
@@ -52,7 +52,7 @@ RSpec.describe Client do
       person.nationality = nil
       person.country_of_profession = nil
       person.country_of_birth = nil
-      
+
       expect(client.risk_score).to eq(0)
     end
 
@@ -97,7 +97,7 @@ RSpec.describe Client do
         country_of_birth: 'FR'
       )
     end
-    
+
     let(:client) { described_class.new(clientable: person) }
 
     it "is invalid if client has ties to blacklisted countries" do
@@ -126,4 +126,4 @@ RSpec.describe Client do
       expect(client).not_to be_blacklisted
     end
   end
-end 
+end

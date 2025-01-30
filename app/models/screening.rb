@@ -1,6 +1,6 @@
 class Screening < ApplicationRecord
   include MatchScoring
-  
+
   belongs_to :screenable, polymorphic: true
   has_many :matches, dependent: :destroy
   has_many :sanctions, -> { distinct }, through: :matches
@@ -19,7 +19,7 @@ class Screening < ApplicationRecord
   def screen_person
     person = screenable
     Sanction.individuals
-            .where("last_name LIKE ? OR first_name LIKE ? OR alias LIKE ?", 
+            .where("last_name LIKE ? OR first_name LIKE ? OR alias LIKE ?",
                   "#{query}%", "#{query}%", "%#{query}%")
             .find_each do |sanction|
       score = calculate_person_match_score(person, sanction)
@@ -30,7 +30,7 @@ class Screening < ApplicationRecord
   def screen_company
     company = screenable
     Sanction.companies
-            .where("last_name LIKE ? OR alias LIKE ?", 
+            .where("last_name LIKE ? OR alias LIKE ?",
                   "#{query}%", "%#{query}%")
             .find_each do |sanction|
       score = calculate_company_match_score(company, sanction)

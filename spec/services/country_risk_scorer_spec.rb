@@ -44,4 +44,4 @@ RSpec.describe CountryRiskScorer do
       expect(described_class.calculate_risk_score('SO')).to eq(89) # 100 - 11
     end
   end
-end 
+end

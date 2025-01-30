@@ -11,4 +11,4 @@ module ClientsHelper
   def country_name(code)
     ISO3166::Country[code]&.iso_short_name || code
   end
-end 
+end
