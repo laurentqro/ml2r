@@ -73,6 +73,19 @@ class Client < ApplicationRecord
     end
   end
 
+  def build_clientable(type:)
+    case type.downcase
+    when "person"
+      self.clientable = Person.new
+    when "company"
+      self.clientable = Company.new
+    else
+      raise ArgumentError, "Invalid clientable type: #{type}"
+    end
+  end
+
+  accepts_nested_attributes_for :clientable
+
   private
 
   def no_blacklisted_countries
