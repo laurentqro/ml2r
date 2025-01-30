@@ -91,10 +91,14 @@ RSpec.describe Client do
   describe "validations" do
     let(:person) do
       Person.new(
+        first_name: 'John',
+        last_name: 'Doe',
         country_of_residence: 'DK',
         nationality: 'KP',  # North Korea - blacklisted
         country_of_profession: 'GB',
-        country_of_birth: 'FR'
+        country_of_birth: 'FR',
+        profession: 'Doctor',
+        pep: true
       )
     end
 
