@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :clients, only: [ :index, :show ] do
+  resources :clients do
     resources :screenings, only: [ :create, :show ] do
       resources :matches, only: [ :index, :show ]
     end
@@ -7,7 +7,6 @@ Rails.application.routes.draw do
 
   resources :sanctions, only: :show
 
-  resources :clients, only: [ :index, :show ]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

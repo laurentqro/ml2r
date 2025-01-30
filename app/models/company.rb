@@ -3,6 +3,8 @@ class Company < ApplicationRecord
   has_many :screening_matches, through: :screenings, source: :matches
   has_many :business_relationships, class_name: "Client", as: :clientable
 
+  validates :name, :country, presence: true
+
   def country_of_residence
     country
   end
@@ -23,5 +25,7 @@ class Company < ApplicationRecord
     name
   end
 
-  def pep?;end
+  def pep?
+    false
+  end
 end
