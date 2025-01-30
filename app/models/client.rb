@@ -7,6 +7,34 @@ class Client < ApplicationRecord
 
   validate :no_blacklisted_countries
 
+  scope :clear, -> {
+    where("NOT EXISTS (
+      SELECT 1 FROM people
+      WHERE people.id = clients.clientable_id
+      AND clients.clientable_type = 'Person'
+      AND people.sanctioned = true
+    ) AND NOT EXISTS (
+      SELECT 1 FROM companies
+      WHERE companies.id = clients.clientable_id
+      AND clients.clientable_type = 'Company'
+      AND companies.sanctioned = true
+    )")
+  }
+
+  scope :sanctioned, -> {
+    where("EXISTS (
+      SELECT 1 FROM people
+      WHERE people.id = clients.clientable_id
+      AND clients.clientable_type = 'Person'
+      AND people.sanctioned = true
+    ) OR EXISTS (
+      SELECT 1 FROM companies
+      WHERE companies.id = clients.clientable_id
+      AND clients.clientable_type = 'Company'
+      AND companies.sanctioned = true
+    )")
+  }
+
   def risk_score
     return Float::INFINITY if blacklisted?
 
