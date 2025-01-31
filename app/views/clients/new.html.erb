@@ -45,11 +45,11 @@
                 </div>
 
                 <div class="sm:col-span-3">
-                  <%= cf.label :country_of_birth, class: "block text-sm/6 font-medium text-gray-900" %>
+                  <%= cf.label :nationality, class: "block text-sm/6 font-medium text-gray-900" %>
                   <div class="mt-2 grid grid-cols-1">
-                    <%= cf.collection_select :country_of_birth, 
+                    <%= cf.collection_select :nationality, 
                         ISO3166::Country.all.sort_by(&:common_name), :alpha2, :common_name,
-                        { prompt: "Select country" },
+                        { prompt: "Select nationality" },
                         { required: true,
                           class: "col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 px-3 text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" } %>
                     <svg class="pointer-events-none col-start-1 row-start-1 mr-3 size-5 self-center justify-self-end text-gray-500" viewBox="0 0 20 20" fill="currentColor">
@@ -99,6 +99,41 @@
                     </svg>
                   </div>
                 </div>
+
+                <div class="sm:col-span-3">
+                  <%= cf.label :country_of_birth, class: "block text-sm/6 font-medium text-gray-900" %>
+                  <div class="mt-2 grid grid-cols-1">
+                    <%= cf.collection_select :country_of_birth,
+                        ISO3166::Country.all.sort_by(&:common_name), :alpha2, :common_name,
+                        { prompt: "Select country" },
+                        { required: true,
+                          class: "col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 px-3 text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" } %>
+                    <svg class="pointer-events-none col-start-1 row-start-1 mr-3 size-5 self-center justify-self-end text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                    </svg>
+                  </div>
+                </div>
+
+                <div class="sm:col-span-6">
+                  <div class="pb-4">
+                    <h3 class="text-base/7 font-semibold text-gray-900">Identification Documents</h3>
+                    <div data-controller="document-form">
+                      <template data-document-form-target="template">
+                        <%= cf.fields_for :identification_documents, IdentificationDocument.new, child_index: 'NEW_RECORD' do |doc| %>
+                          <%= render 'identification_document_fields', f: doc %>
+                        <% end %>
+                      </template>
+
+                      <%= cf.fields_for :identification_documents do |doc| %>
+                        <%= render 'identification_document_fields', f: doc %>
+                      <% end %>
+
+                      <button type="button" data-action="document-form#add" class="mt-4 rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                        Add Document
+                      </button>
+                    </div>
+                  </div>
+                </div>
               <% else %>
                 <div class="sm:col-span-4">
                   <%= cf.label :name, class: "block text-sm/6 font-medium text-gray-900" %>
@@ -126,7 +161,7 @@
           </div>
 
           <div data-client-form-target="step2" class="hidden">
-            <div class="pb-12">
+            <div class="pb-4">
               <h2 class="text-base/7 font-semibold text-gray-900">Risk Assessment</h2>
               <p class="mt-1 text-sm/6 text-gray-600">
                 This information is required for AML risk assessment.

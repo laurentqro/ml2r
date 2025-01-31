@@ -29,11 +29,8 @@ COMMON_COUNTRIES = [
 
 # High-risk countries
 HIGH_RISK_COUNTRIES = [
-  'IR', # Iran
-  'KP', # North Korea
   'SY', # Syria
-  'VE', # Venezuela
-  'MM'  # Myanmar
+  'VE' # Venezuela
 ]
 
 # ISCO-08 codes and corresponding job titles for relevant professions
@@ -76,6 +73,7 @@ PROFESSIONS = [
     country_of_birth: countries_pool.sample,
     country_of_residence: countries_pool.sample,
     country_of_profession: countries_pool.sample,
+    nationality: countries_pool.sample,
     profession: profession[0], # Store ISCO code
     pep: is_pep
   )
@@ -118,7 +116,7 @@ person_sanctions.each do |sanction|
   person = Person.create!(
     first_name: sanction.first_name,
     last_name: sanction.last_name,
-    country_of_birth: sanction.place_of_birth,
+    country_of_birth: HIGH_RISK_COUNTRIES.sample,
     country_of_residence: HIGH_RISK_COUNTRIES.sample,
     country_of_profession: HIGH_RISK_COUNTRIES.sample,
     profession: profession[0], # Store ISCO code

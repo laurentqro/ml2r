@@ -36,6 +36,54 @@
       </div>
     </div>
 
+    <% if @client.clientable_type == "Person" && @client.clientable.identification_documents.any? %>
+      <div class="bg-white shadow rounded-lg p-6">
+        <h2 class="text-xl font-bold text-gray-900 mb-4">Identification Documents</h2>
+
+        <div class="space-y-4">
+          <% @client.clientable.identification_documents.each do |document| %>
+            <div class="bg-gray-50 p-4 rounded-lg">
+              <div class="grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-3">
+                <div>
+                  <span class="text-sm font-medium text-gray-500">Type</span>
+                  <p class="mt-1 text-sm text-gray-900"><%= document.document_type %></p>
+                </div>
+
+                <div>
+                  <span class="text-sm font-medium text-gray-500">Number</span>
+                  <p class="mt-1 text-sm text-gray-900"><%= document.number %></p>
+                </div>
+
+                <div>
+                  <span class="text-sm font-medium text-gray-500">Expiration Date</span>
+                  <p class="mt-1 text-sm text-gray-900">
+                    <%= document.expiration_date.strftime("%d/%m/%Y") %>
+                    <% if document.expiration_date < Date.current %>
+                      <span class="ml-2 inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">
+                        Expired
+                      </span>
+                    <% elsif document.expiration_date < 6.months.from_now %>
+                      <span class="ml-2 inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">
+                        Expiring Soon
+                      </span>
+                    <% end %>
+                  </p>
+                </div>
+
+                <% if document.is_copy %>
+                  <div class="sm:col-span-3">
+                    <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
+                      Copy
+                    </span>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
     <div class="bg-white shadow rounded-lg p-6">
       <h2 class="text-xl font-bold text-gray-900 mb-4">Screenings</h2>
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_31_100730) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_31_150854) do
   create_table "clients", force: :cascade do |t|
     t.string "clientable_type"
     t.integer "clientable_id"
@@ -28,6 +28,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_31_100730) do
     t.datetime "updated_at", null: false
     t.boolean "sanctioned"
     t.string "country"
+  end
+
+  create_table "identification_documents", force: :cascade do |t|
+    t.integer "person_id", null: false
+    t.string "document_type", null: false
+    t.string "number", null: false
+    t.date "expiration_date", null: false
+    t.boolean "is_copy", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["person_id"], name: "index_identification_documents_on_person_id"
   end
 
   create_table "matches", force: :cascade do |t|
@@ -109,6 +120,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_31_100730) do
     t.index ["screenable_id", "screenable_type"], name: "index_screenings_on_screenable_id_and_screenable_type"
   end
 
+  add_foreign_key "identification_documents", "people"
   add_foreign_key "matches", "screenings"
   add_foreign_key "risk_factors", "people"
 end
