@@ -1,8 +1,8 @@
 class Person < ApplicationRecord
+  has_many :business_relationships, class_name: "Client", as: :clientable
+  has_many :risk_factors, dependent: :destroy
   has_many :screenings, as: :screenable
   has_many :screening_matches, through: :screenings, source: :matches
-
-  has_many :business_relationships, class_name: "Client", as: :clientable
 
   validates :first_name, :last_name, presence: true
   validates :country_of_birth, :country_of_residence, :country_of_profession, presence: true
