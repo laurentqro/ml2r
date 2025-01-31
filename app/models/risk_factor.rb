@@ -1,15 +1,14 @@
 class RiskFactor < ApplicationRecord
-  belongs_to :person
+  belongs_to :client
 
   enum :category, [ :business_relationship, :behavioral, :professional ]
 
-  validates :identifier, presence: true, uniqueness: { scope: [ :person_id, :category ] }
+  validates :identifier, presence: true, uniqueness: { scope: [ :client_id, :category ] }
   validates :category, presence: true
 
   scope :business_relationship_risks, -> { where(category: :business_relationship) }
   scope :behavioral_risks, -> { where(category: :behavioral) }
   scope :professional_risks, -> { where(category: :professional) }
-  scope :active, -> { where.not(identified_at: nil) }
 
   def self.identifiers_for(category)
     case category.to_sym
@@ -117,6 +116,6 @@ class RiskFactor < ApplicationRecord
   end
 
   def active?
-    identified_at.present?
+    persisted?
   end
 end

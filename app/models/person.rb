@@ -1,6 +1,5 @@
 class Person < ApplicationRecord
   has_many :business_relationships, class_name: "Client", as: :clientable
-  has_many :risk_factors, dependent: :destroy
   has_many :screenings, as: :screenable
   has_many :screening_matches, through: :screenings, source: :matches
   has_many :identification_documents, dependent: :destroy

@@ -167,44 +167,81 @@
                 This information is required for AML risk assessment.
               </p>
 
-              <div class="mt-10">
-                <% if @client.clientable_type == 'Person' %>
-                  <fieldset>
-                    <legend class="text-sm/6 font-semibold leading-6 text-gray-900">Politically Exposed Person Status</legend>
-                    <p class="mt-1 text-sm/6 text-gray-600">
-                      A politically exposed person is someone who holds a prominent public position.
-                    </p>
-                    <div class="mt-6 space-y-6">
-                      <div class="flex gap-x-3">
-                        <div class="flex h-6 items-center">
-                          <%= cf.radio_button :pep, true, required: true,
-                              class: "h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" %>
-                        </div>
-                        <div class="text-sm/6 leading-6">
-                          <%= cf.label :pep_true, "Yes, this person is politically exposed",
-                              class: "font-medium text-gray-900" %>
-                          <p class="text-gray-500">
-                            Select this if the person holds or has held a prominent public function.
-                          </p>
-                        </div>
+              <% if @client.clientable_type == 'Person' %>
+                <fieldset>
+                  <legend class="text-sm/6 font-semibold leading-6 text-gray-900">Politically Exposed Person Status</legend>
+                  <p class="mt-1 text-sm/6 text-gray-600">
+                    A politically exposed person is someone who holds a prominent public position.
+                  </p>
+                  <div class="mt-6 space-y-6">
+                    <div class="flex gap-x-3">
+                      <div class="flex h-6 items-center">
+                        <%= cf.radio_button :pep, true, required: true,
+                            class: "h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600" %>
                       </div>
-                      <div class="flex gap-x-3">
-                        <div class="flex h-6 items-center">
-                          <%= cf.radio_button :pep, false, required: true,
-                              class: "h-4 w-4 text-indigo-600 focus:ring-indigo-600" %>
-                        </div>
-                        <div class="text-sm/6 leading-6">
-                          <%= cf.label :pep_false, "No, this person is not politically exposed",
-                              class: "font-medium text-gray-900" %>
-                          <p class="text-gray-500">
-                            Select this if the person does not hold any prominent public function.
-                          </p>
-                        </div>
+                      <div class="text-sm/6 leading-6">
+                        <%= cf.label :pep_true, "Yes, this person is politically exposed",
+                            class: "font-medium text-gray-900" %>
+                        <p class="text-gray-500">
+                          Select this if the person holds or has held a prominent public function.
+                        </p>
                       </div>
                     </div>
+                    <div class="flex gap-x-3">
+                      <div class="flex h-6 items-center">
+                        <%= cf.radio_button :pep, false, required: true,
+                            class: "h-4 w-4 text-indigo-600 focus:ring-indigo-600" %>
+                      </div>
+                      <div class="text-sm/6 leading-6">
+                        <%= cf.label :pep_false, "No, this person is not politically exposed",
+                            class: "font-medium text-gray-900" %>
+                        <p class="text-gray-500">
+                          Select this if the person does not hold any prominent public function.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </fieldset>
+
+                <div class="mt-10">
+                  <fieldset>
+                    <legend class="text-sm/6 font-semibold leading-6 text-gray-900">Risk Factors</legend>
+                    <p class="mt-1 text-sm/6 text-gray-600">
+                      Select all applicable risk factors for this client.
+                    </p>
+                    <div class="mt-6 space-y-8">
+                      <% RiskFactor.categories.each do |category, _| %>
+                        <div>
+                          <h3 class="text-sm/6 font-medium text-gray-900 mb-4">
+                            <%= category.titleize %> Risk Factors
+                          </h3>
+                          <div class="space-y-4">
+                            <% RiskFactor.identifiers_for(category).each do |identifier| %>
+                              <div class="relative flex items-start">
+                                <div class="flex h-6 items-center">
+                                  <%= f.fields_for :risk_factors, RiskFactor.new(category: category, identifier: identifier) do |rf| %>
+                                    <%= rf.hidden_field :category, value: category %>
+                                    <%= rf.hidden_field :identifier, value: identifier %>
+                                    <%= rf.check_box :identified_at, { 
+                                      class: "h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600",
+                                      id: "risk_factor_#{category}_#{identifier}"
+                                    }, Time.current, nil %>
+                                  <% end %>
+                                </div>
+                                <div class="ml-3 text-sm/6 leading-6">
+                                  <label for="risk_factor_<%= category %>_<%= identifier %>" class="font-medium text-gray-900">
+                                    <%= I18n.t("risk_factors.#{category}.#{identifier}") %>
+                                  </label>
+                                </div>
+                              </div>
+                            <% end %>
+                          </div>
+                        </div>
+                      <% end %>
+                    </div>
                   </fieldset>
-                <% end %>
-              </div>
+                </div>
+              <% end %>
             </div>
           </div>
         <% end %>

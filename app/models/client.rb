@@ -1,11 +1,16 @@
 class Client < ApplicationRecord
   belongs_to :clientable, polymorphic: true
   has_many :screenings, as: :screenable
+  has_many :risk_factors, dependent: :destroy
 
   delegate :country_of_residence, :nationality, :country_of_profession,
            :country_of_birth, to: :clientable, allow_nil: true
 
   validate :no_blacklisted_countries
+
+  accepts_nested_attributes_for :clientable
+  accepts_nested_attributes_for :risk_factors, allow_destroy: true,
+    reject_if: proc { |attributes| attributes["identified_at"].blank? }
 
   scope :clear, -> {
     where("NOT EXISTS (
@@ -83,8 +88,6 @@ class Client < ApplicationRecord
       raise ArgumentError, "Invalid clientable type: #{type}"
     end
   end
-
-  accepts_nested_attributes_for :clientable
 
   private
 

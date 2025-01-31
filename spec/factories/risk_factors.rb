@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :risk_factor do
-    association :person
+    association :client
     category { :business_relationship }
     identifier { 'not_identified_personally' }
     identified_at { nil }

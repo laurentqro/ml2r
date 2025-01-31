@@ -78,15 +78,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_31_150854) do
   end
 
   create_table "risk_factors", force: :cascade do |t|
-    t.integer "person_id", null: false
+    t.integer "client_id", null: false
     t.integer "category"
     t.string "identifier"
     t.datetime "identified_at"
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["person_id", "category", "identifier"], name: "index_risk_factors_on_person_id_and_category_and_identifier", unique: true
-    t.index ["person_id"], name: "index_risk_factors_on_person_id"
+    t.index ["client_id", "category", "identifier"], name: "index_risk_factors_on_client_id_and_category_and_identifier", unique: true
+    t.index ["client_id"], name: "index_risk_factors_on_client_id"
   end
 
   create_table "sanctions", force: :cascade do |t|
@@ -122,5 +122,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_31_150854) do
 
   add_foreign_key "identification_documents", "people"
   add_foreign_key "matches", "screenings"
-  add_foreign_key "risk_factors", "people"
+  add_foreign_key "risk_factors", "clients"
 end

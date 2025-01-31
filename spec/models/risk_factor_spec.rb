@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe RiskFactor, type: :model do
   describe 'associations' do
-    it { should belong_to(:person) }
+    it { should belong_to(:client) }
   end
 
   describe 'validations' do
@@ -12,9 +12,9 @@ RSpec.describe RiskFactor, type: :model do
     describe 'uniqueness' do
       subject { create(:risk_factor) }
 
-      it 'validates uniqueness of identifier scoped to person and category' do
+      it 'validates uniqueness of identifier scoped to client and category' do
         should validate_uniqueness_of(:identifier)
-          .scoped_to([ :person_id, :category ])
+          .scoped_to([ :client_id, :category ])
       end
     end
   end
@@ -72,13 +72,13 @@ RSpec.describe RiskFactor, type: :model do
   end
 
   describe '#active?' do
-    it 'returns true when identified_at is present' do
-      risk_factor = build(:risk_factor, identified_at: Time.current)
+    it 'returns true when persisted' do
+      risk_factor = create(:risk_factor)
       expect(risk_factor).to be_active
     end
 
-    it 'returns false when identified_at is nil' do
-      risk_factor = build(:risk_factor, identified_at: nil)
+    it 'returns false when not persisted' do
+      risk_factor = build(:risk_factor)
       expect(risk_factor).not_to be_active
     end
   end
