@@ -53,6 +53,7 @@
               </h3>
               <div class="space-y-4">
                 <% @client.risk_factor_class.identifiers_for(category).each do |identifier| %>
+                  <% checkbox_id = "risk_factor_#{category}_#{identifier}" %>
                   <% risk_factor = @client.risk_factor_class.find_by(client_id: @client.id, category: category, identifier: identifier) || @client.risk_factor_class.new(client_id: @client.id, category: category, identifier: identifier) %>
                   <div class="relative flex items-start">
                     <div class="flex h-6 items-center">
@@ -61,13 +62,14 @@
                         <%= rf.hidden_field :identifier %>
                         <%= rf.check_box :identified_at, {
                           class: "h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600",
-                          checked: risk_factor.persisted?
+                          checked: risk_factor.persisted?,
+                          id: checkbox_id
                         }, Time.current, nil %>
                       <% end %>
                     </div>
                     <div class="ml-3 text-sm/6 leading-6">
-                      <label class="font-medium text-gray-900">
-                        <%= t("risk_factors.#{@client.clientable_type.downcase}.#{category}.#{identifier}") %>
+                      <label for="<%= checkbox_id %>" class="font-medium text-gray-900">
+                        <%= risk_factor.description %>
                       </label>
                     </div>
                   </div>
