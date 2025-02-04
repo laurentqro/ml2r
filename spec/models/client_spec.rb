@@ -4,27 +4,29 @@ RSpec.describe Client do
   describe '#risk_score' do
     let(:person) do
       Person.new(
+        first_name: 'John',
+        last_name: 'Doe',
         country_of_residence: 'DK',    # Low risk (90)
         nationality: 'VN',             # Medium risk + greylist
         country_of_profession: 'GB',   # Low risk
-        country_of_birth: 'SO'         # High risk
+        country_of_birth: 'SO',         # High risk
+        profession: 'Doctor',
+        pep: false
       )
     end
 
     let(:client) { described_class.new(clientable: person) }
 
     it 'calculates weighted risk score from all countries' do
-      risk_score = client.risk_score
-
       # Expected calculations:
       # DK (residence):    10 * 40 = 400     (100 - 90 = 10)
       # VN (nationality):  118 * 35 = 4130   ((100 - 41) * 2 = 118)
       # GB (profession):   29 * 15 = 435     (100 - 71 = 29)
       # SO (birth):        89 * 10 = 890     (100 - 11 = 89)
       # Total weight: 100
-      # Expected score: (400 + 4130 + 435 + 890) / 100 = 5855 / 100 = 58.55 ≈ 59
+      # Expected country score: (400 + 4130 + 435 + 890) / 100 = 5855 / 100 = 58.55 ≈ 59
 
-      expect(risk_score).to eq(59)
+      expect(client.risk_score).to eq(59)
     end
 
     it 'returns infinity for blacklisted countries' do
@@ -47,7 +49,7 @@ RSpec.describe Client do
       expect(risk_score).to eq(53)
     end
 
-    it 'returns 0 when no country data is present' do
+    it 'returns 0 when no data is present' do
       person.country_of_residence = nil
       person.nationality = nil
       person.country_of_profession = nil
@@ -84,6 +86,32 @@ RSpec.describe Client do
       it 'returns 0 when no country data is present' do
         company.country = nil
         expect(client.risk_score).to eq(0)
+      end
+    end
+
+    context 'with risk factors' do
+      before do
+        client.save!
+        create(:person_risk_factor,
+          client: client,
+          category: :business_relationship,
+          identifier: :remote_relationship
+        )
+        create(:person_risk_factor,
+          client: client,
+          category: :behavioral,
+          identifier: :rushed_transactions
+        )
+      end
+
+      it 'calculates combined risk score' do
+        risk_score = client.risk_score
+
+        # Country score: 59 (from existing test)
+        # Risk factors score: 2 factors * 25 = 50
+        # Final score: (59 + 50) = 109
+
+        expect(risk_score).to eq(109)
       end
     end
   end

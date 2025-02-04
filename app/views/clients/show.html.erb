@@ -103,12 +103,19 @@
       <div class="space-y-8">
         <% @client.available_risk_categories.each do |category| %>
           <% risk_factors = @client.risk_factor_class.where(client: @client, category: category) %>
+          <% category_score = @client.category_risk_score(category) %>
 
           <% if risk_factors.any? %>
             <div>
-              <h3 class="text-sm font-bold text-gray-900 mb-4">
-                <%= category.titleize %> Risk Factors
-              </h3>
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-sm font-bold text-gray-900">
+                  <%= category.titleize %> Risk Factors
+                </h3>
+                <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(category_score) %>">
+                  Score: <%= category_score %>
+                </span>
+              </div>
+
               <div class="space-y-3">
                 <% risk_factors.each do |risk_factor| %>
                   <div class="flex items-start gap-x-3">
@@ -135,6 +142,17 @@
               </div>
             </div>
           <% end %>
+        <% end %>
+
+        <% if @client.total_risk_factors_score > 0 %>
+          <div class="border-t pt-4">
+            <div class="flex items-center justify-between">
+              <span class="text-sm font-bold text-gray-900">Total Risk Factor Score</span>
+              <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(@client.total_risk_factors_score) %>">
+                <%= @client.total_risk_factors_score %>
+              </span>
+            </div>
+          </div>
         <% end %>
       </div>
     </div>

@@ -57,6 +57,43 @@ class Client < ApplicationRecord
   def risk_score
     return Float::INFINITY if blacklisted?
 
+    calculate_country_risk_score + calculate_risk_factors_score
+  end
+
+  def category_risk_score(category)
+    risk_factors.where(category: category).count * 25
+  end
+
+  def total_risk_factors_score
+    available_risk_categories.sum { |category| category_risk_score(category) }
+  end
+
+  def blacklisted?
+    [ country_of_residence, nationality, country_of_profession, country_of_birth ].compact.any? do |country|
+      ::CountryRiskScorer.gafi_status(country) == :black
+    end
+  end
+
+  def build_clientable(type:)
+    case type.downcase
+    when "person"
+      self.clientable = Person.new
+    when "company"
+      self.clientable = Company.new
+    else
+      raise ArgumentError, "Invalid clientable type: #{type}"
+    end
+  end
+
+  private
+
+  def no_blacklisted_countries
+    if blacklisted?
+      errors.add(:base, "Cannot onboard clients with ties to GAFI blacklisted countries")
+    end
+  end
+
+  def calculate_country_risk_score
     scores = []
     weights = []
 
@@ -86,28 +123,7 @@ class Client < ApplicationRecord
     (weighted_sum / weights.sum).round
   end
 
-  def blacklisted?
-    [ country_of_residence, nationality, country_of_profession, country_of_birth ].compact.any? do |country|
-      ::CountryRiskScorer.gafi_status(country) == :black
-    end
-  end
-
-  def build_clientable(type:)
-    case type.downcase
-    when "person"
-      self.clientable = Person.new
-    when "company"
-      self.clientable = Company.new
-    else
-      raise ArgumentError, "Invalid clientable type: #{type}"
-    end
-  end
-
-  private
-
-  def no_blacklisted_countries
-    if blacklisted?
-      errors.add(:base, "Cannot onboard clients with ties to GAFI blacklisted countries")
-    end
+  def calculate_risk_factors_score
+    total_risk_factors_score
   end
 end
