@@ -5,38 +5,37 @@ class CompanyRiskFactor < RiskFactor
   scope :behavioral_risks, -> { where(category: :behavioral) }
   scope :activity_risks, -> { where(category: :activity) }
 
+  DESCRIPTIONS = {
+    financing: {
+      financed_by_beneficial_owners: "Financed by beneficial owners",
+      financed_by_parent_company: "Financed by parent company",
+      financed_by_settlor: "Financed by settlor",
+      publicly_traded: "Publicly traded"
+    },
+    behavioral: {
+      subject_of_legal_proceedings: "Subject of legal proceedings",
+      corruption_risk: "Company operates in country with high risk of corruption",
+      cheque_deposits: "Cheque deposits"
+    },
+    activity: {
+      government_related: "Government or public sector related",
+      holding_company: "Holding company",
+      charity_trust: "Charity-oriented trust",
+      construction_related: "Active in construction/public works",
+      cash_intensive: "Cash-intensive business operations",
+      virtual_assets: "Virtual asset service provider",
+      offshore_business: "Offshore business activities",
+      complex_structure: "Complex business structure",
+      shell_company: "Shell company characteristics",
+      high_risk_jurisdiction: "Operations in high-risk jurisdictions"
+    }
+  }
+
   def self.identifiers_for(category)
-    case category.to_sym
-    when :financing
-      %w[
-        financed_by_beneficial_owners
-        financed_by_parent_company
-        financed_by_settlor
-        publicly_traded
-      ]
-    when :behavioral
-      %w[
-        subject_of_legal_proceedings
-        corruption_risk
-        cheque_deposits
-      ]
-    when :activity
-      %w[
-        government_related
-        holding_company
-        charity_trust
-        construction_related
-        cash_intensive
-        virtual_assets
-        offshore_business
-        complex_structure
-        shell_company
-        high_risk_jurisdiction
-      ]
-    end
+    DESCRIPTIONS[category.to_sym].keys
   end
 
   def description
-    I18n.t("risk_factors.company.#{category}.#{identifier}")
+    DESCRIPTIONS[category.to_sym][identifier.to_sym]
   end
 end
