@@ -31,14 +31,23 @@ class ClientsController < ApplicationController
 
     # Only process risk factors if they're present in the params
     if client_params[:risk_factors_attributes].present?
-      @client.risk_factors_attributes = client_params[:risk_factors_attributes].values.map do |attrs|
+      risk_factors = client_params[:risk_factors_attributes].values.map do |attrs|
         next if attrs[:identified_at].blank?
-        {
+
+        @client.risk_factor_class.new(
+          client: @client,
           category: attrs[:category],
           identifier: attrs[:identifier],
           identified_at: Time.current
-        }
+        )
       end.compact
+
+      # Assign the risk factors to the correct association
+      if @client.clientable_type == "Person"
+        @client.person_risk_factors = risk_factors
+      else
+        @client.company_risk_factors = risk_factors
+      end
     end
 
     if @client.save
@@ -70,7 +79,7 @@ class ClientsController < ApplicationController
         end
 
         # Delete unchecked risk factors
-        @client.risk_factors.each do |risk_factor|
+        @client.risk_factor_class.where(client: @client).each do |risk_factor|
           matching_submission = submitted_risk_factors.find { |category, identifier, checked|
             category == risk_factor.category && identifier == risk_factor.identifier
           }
@@ -84,7 +93,8 @@ class ClientsController < ApplicationController
         client_params[:risk_factors_attributes].values.each do |attrs|
           next if attrs[:identified_at].blank?
 
-          @client.risk_factors.find_or_create_by!(
+          @client.risk_factor_class.find_or_create_by!(
+            client: @client,
             category: attrs[:category],
             identifier: attrs[:identifier]
           ) do |rf|

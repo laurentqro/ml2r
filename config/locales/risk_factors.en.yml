@@ -1,23 +1,50 @@
 ---
 en:
   risk_factors:
-    business_relationship:
-      not_identified_personally: "The person has not been identified personally by us / but presented by AML intermediary"
-      remote_relationship: "Relationship entry with client not physically present / remote relationship entry"
-      non_eu_intermediary: "Relationship established through intermediaries who are not themselves entities subject to EU Directive 2015/849"
-      unregulated_intermediary: "Relationship established through unregulated intermediaries"
-      short_time_introducer: "The introducer known only for short time"
+    person:
+      business_relationship:
+        not_identified_personally: "The person has not been identified personally"
+        remote_relationship: "Remote business relationship"
+        non_eu_intermediary: "Non-EU intermediary"
+        unregulated_intermediary: "Unregulated intermediary"
+        short_time_introducer: "Short-time introducer"
 
-    behavioral:
-      rushed_transactions: "Requests unusually rushed transaction completions"
-      disproportionate_funds: "Has disproportionate funds to circumstances"
-      avoids_meetings: "Avoids face-to-face meetings, evasive, difficult to contact"
-      unusual_credit_terms: "Unusual credit agreement terms"
+      behavioral:
+        rushed_transactions: "Rushed transactions"
+        disproportionate_funds: "Disproportionate funds"
+        avoids_meetings: "Avoids meetings"
+        unusual_credit_terms: "Unusual credit terms"
 
-    professional:
-      precious_stones_dealer: "Precious stones dealer"
-      antiques_art_dealer: "Antiques/artwork dealer"
-      sensitive_materials_trader: "Sensitive materials trader (oil, raw materials, arms)"
-      construction_influence: "Influence in construction/public works"
-      gaming_establishment_owner: "Casino/gaming establishment owners"
-      cash_intensive_business: "Cash-intensive business"
+      professional:
+        precious_stones_dealer: "Precious stones dealer"
+        antiques_art_dealer: "Antiques/artwork dealer"
+        sensitive_materials_trader: "Sensitive materials trader (oil, raw materials, arms)"
+        construction_influence: "Influence in construction/public works"
+        gaming_establishment_owner: "Casino/gaming establishment owners"
+        cash_intensive_business: "Cash-intensive business"
+
+    company:
+      financing:
+        financed_by_beneficial_owners: "Financed by beneficial owners"
+        financed_by_parent_company: "Financed by parent company"
+        financed_by_settlor: "Financed by settlor"
+        publicly_traded: "Publicly traded"
+
+      behavioral:
+        subject_of_legal_proceedings: "Subject of legal proceedings"
+        corruption_risk: "Company operates in country with high risk of corruption"
+        cheque_deposits: "Cheque deposits"
+
+      activity:
+        government_related: "Government or public sector related"
+        holding_company: "Holding company"
+        charity_trust: "Charity-oriented trust"
+        construction_related: "Active in construction/public works"
+        cash_intensive: "Cash-intensive business operations"
+        virtual_assets: "Virtual asset service provider"
+        offshore_business: "Offshore business activities"
+        complex_structure: "Complex business structure"
+        shell_company: "Shell company characteristics"
+        high_risk_jurisdiction: "Operations in high-risk jurisdictions"
+        
+

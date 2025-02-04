@@ -4,6 +4,10 @@ class RiskFactorsController < ApplicationController
   def edit
   end
 
+  def index
+    @risk_factors = @client.risk_factor_class.where(client: @client)
+  end
+
   def update
     ActiveRecord::Base.transaction do
       # Update PEP status if present
@@ -19,7 +23,8 @@ class RiskFactorsController < ApplicationController
         risk_factors_params[:risk_factors_attributes].values.each do |risk_factor_params|
           next if risk_factor_params[:identified_at].blank?
 
-          @client.risk_factors.create_or_find_by!(
+          @client.risk_factor_class.create_or_find_by!(
+            client: @client,
             category: risk_factor_params[:category],
             identifier: risk_factor_params[:identifier]
           ).update!(identified_at: Time.current)

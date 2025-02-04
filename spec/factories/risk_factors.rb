@@ -14,4 +14,18 @@ FactoryBot.define do
       notes { "Important risk factor notes" }
     end
   end
+
+  factory :person_risk_factor do
+    client
+    category { :behavioral }
+    identifier { 'rushed_transactions' }
+    identified_at { Time.current }
+  end
+
+  factory :company_risk_factor do
+    client
+    category { :financing }
+    identifier { 'financed_by_beneficial_owners' }
+    identified_at { Time.current }
+  end
 end

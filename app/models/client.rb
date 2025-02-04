@@ -2,6 +2,8 @@ class Client < ApplicationRecord
   belongs_to :clientable, polymorphic: true
   has_many :screenings, as: :screenable
   has_many :risk_factors, dependent: :destroy
+  has_many :person_risk_factors, dependent: :destroy
+  has_many :company_risk_factors, dependent: :destroy
 
   delegate :country_of_residence, :nationality, :country_of_profession,
            :country_of_birth, to: :clientable, allow_nil: true
@@ -11,6 +13,18 @@ class Client < ApplicationRecord
   accepts_nested_attributes_for :clientable
   accepts_nested_attributes_for :risk_factors, allow_destroy: true,
     reject_if: proc { |attributes| attributes["identified_at"].blank? }
+
+  def risk_factor_class
+    case clientable_type
+    when "Person" then PersonRiskFactor
+    when "Company" then CompanyRiskFactor
+    else raise "Unknown clientable type: #{clientable_type}"
+    end
+  end
+
+  def available_risk_categories
+    risk_factor_class.categories.keys
+  end
 
   scope :clear, -> {
     where("NOT EXISTS (

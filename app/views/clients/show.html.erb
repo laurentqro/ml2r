@@ -101,8 +101,8 @@
       </div>
 
       <div class="space-y-8">
-        <% RiskFactor.categories.each do |category, _| %>
-          <% risk_factors = @client.risk_factors.where(category: category) %>
+        <% @client.available_risk_categories.each do |category| %>
+          <% risk_factors = @client.risk_factor_class.where(client: @client, category: category) %>
 
           <% if risk_factors.any? %>
             <div>
