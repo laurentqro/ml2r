@@ -90,14 +90,6 @@ class Client < ApplicationRecord
     end
   end
 
-  private
-
-  def no_blacklisted_countries
-    if blacklisted?
-      errors.add(:base, "Cannot onboard clients with ties to GAFI blacklisted countries")
-    end
-  end
-
   def calculate_country_risk_score
     scores = []
     weights = []
@@ -130,5 +122,13 @@ class Client < ApplicationRecord
 
   def calculate_risk_factors_score
     total_risk_factors_score
+  end
+
+  private
+
+  def no_blacklisted_countries
+    if blacklisted?
+      errors.add(:base, "Cannot onboard clients with ties to GAFI blacklisted countries")
+    end
   end
 end

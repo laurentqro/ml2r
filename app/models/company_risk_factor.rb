@@ -15,7 +15,7 @@ class CompanyRiskFactor < RiskFactor
       charity_trust: "Charity-oriented trust",
       construction_related: "Active in construction/public works",
       cash_intensive: "Cash-intensive business operations",
-      complex_structure: "Complex business structure",
+      complex_structure: "Complex business structure"
     },
     products_and_services_risk: {
       new_build_sale: "Client is selling or buying a new build property",

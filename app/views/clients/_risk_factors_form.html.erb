@@ -2,13 +2,13 @@
   <fieldset>
     <legend class="text-sm/6 font-semibold leading-6 text-gray-900">Risk Factors</legend>
     <p class="mt-1 text-sm/6 text-gray-600">
-      Select all applicable risk factors for this <%= client.clientable_type.downcase %>.
+      Select all applicable <%= client.clientable_type.downcase %> factors.
     </p>
     <div class="mt-6 space-y-8">
       <% client.risk_factor_class.categories.each do |category, _| %>
         <div>
-          <h3 class="text-sm/6 font-medium text-gray-900 mb-4">
-            <%= category.titleize %> Risk Factors
+          <h3 class="text-sm/6 font-bold text-gray-900 mb-4">
+            <%= category.titleize %> Factors
           </h3>
           <div class="space-y-4">
             <% client.risk_factor_class.identifiers_for(category).each do |identifier| %>
