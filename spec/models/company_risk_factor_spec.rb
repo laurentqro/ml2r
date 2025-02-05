@@ -9,42 +9,51 @@ RSpec.describe CompanyRiskFactor, type: :model do
   end
 
   describe 'enums' do
-    it { should define_enum_for(:category).with_values([ :financing, :behavioral, :activity ]) }
+    it { should define_enum_for(:category).with_values([ :client_risk, :products_and_services_risk, :distribution_channel_risk, :transaction_risk ]) }
   end
 
   describe '.identifiers_for' do
-    it 'returns correct identifiers for financing category' do
-      identifiers = described_class.identifiers_for(:financing)
-      expect(identifiers).to match_array([
-        :financed_by_beneficial_owners,
-        :financed_by_parent_company,
-        :financed_by_settlor,
-        :publicly_traded
-      ])
-    end
-
-    it 'returns correct identifiers for behavioral category' do
-      identifiers = described_class.identifiers_for(:behavioral)
+    it 'returns correct identifiers for client_risk category' do
+      identifiers = described_class.identifiers_for(:client_risk)
       expect(identifiers).to match_array([
         :subject_of_legal_proceedings,
         :corruption_risk,
-        :cheque_deposits
-      ])
-    end
-
-    it 'returns correct identifiers for activity category' do
-      identifiers = described_class.identifiers_for(:activity)
-      expect(identifiers).to match_array([
         :government_related,
         :holding_company,
         :charity_trust,
         :construction_related,
         :cash_intensive,
-        :virtual_assets,
-        :offshore_business,
-        :complex_structure,
-        :shell_company,
-        :high_risk_jurisdiction
+        :complex_structure
+      ])
+    end
+
+    it 'returns correct identifiers for products_and_services_risk category' do
+      identifiers = described_class.identifiers_for(:products_and_services_risk)
+      expect(identifiers).to match_array([
+        :new_build_sale,
+        :existing_build_sale,
+        :main_residence_rental_above_10_000_euros,
+        :secondary_residence_rental_above_10_000_euros
+      ])
+    end
+
+    it 'returns correct identifiers for distribution_channel_risk category' do
+      identifiers = described_class.identifiers_for(:distribution_channel_risk)
+      expect(identifiers).to match_array([
+        :remote_relationship,
+        :presence_of_intermediary
+      ])
+    end
+
+    it 'returns correct identifiers for transaction_risk category' do
+      identifiers = described_class.identifiers_for(:transaction_risk)
+      expect(identifiers).to match_array([
+        :means_of_payment,
+        :transaction_amount,
+        :transaction_frequency,
+        :fractioned_payments,
+        :complex_transactions,
+        :manipulation_of_property_value
       ])
     end
   end
@@ -53,11 +62,11 @@ RSpec.describe CompanyRiskFactor, type: :model do
     it 'returns the correct translation' do
       risk_factor = create(:company_risk_factor,
         client: client,
-        category: :financing,
-        identifier: :financed_by_beneficial_owners
+        category: :client_risk,
+        identifier: :subject_of_legal_proceedings
       )
 
-      expect(risk_factor.description).to eq("Financed by beneficial owners")
+      expect(risk_factor.description).to eq("Subject of legal proceedings")
     end
   end
 end
