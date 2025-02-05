@@ -5,7 +5,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :sanctions, only: :show
   resources :people
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
