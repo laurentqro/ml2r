@@ -66,7 +66,7 @@ class Client < ApplicationRecord
   end
 
   def category_risk_score(category)
-    risk_factors.where(category: category).count * 25
+    risk_factor_class.where(client: self, category: category).count * 25
   end
 
   def total_risk_factors_score

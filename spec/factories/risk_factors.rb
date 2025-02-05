@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :risk_factor do
     association :client
-    category { :business_relationship }
-    identifier { 'not_identified_personally' }
+    category { "client_risk" }
+    identifier { "rushed_transactions" }
     identified_at { nil }
     notes { nil }
 
@@ -17,15 +17,15 @@ FactoryBot.define do
 
   factory :person_risk_factor do
     client
-    category { :behavioral }
-    identifier { 'rushed_transactions' }
+    category { "client_risk" }
+    identifier { "rushed_transactions" }
     identified_at { Time.current }
   end
 
   factory :company_risk_factor do
     client
-    category { :financing }
-    identifier { 'financed_by_beneficial_owners' }
+    category { "products_and_services_risk" }
+    identifier { "new_build_sale" }
     identified_at { Time.current }
   end
 end

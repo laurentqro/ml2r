@@ -109,7 +109,7 @@
             <div>
               <div class="flex items-center justify-between mb-4">
                 <h3 class="text-sm font-bold text-gray-900">
-                  <%= category.titleize %> Risk Factors
+                  <%= category.titleize %> Factors
                 </h3>
                 <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(category_score) %>">
                   Score: <%= category_score %>
@@ -147,7 +147,7 @@
         <% if @client.total_risk_factors_score > 0 %>
           <div class="border-t pt-4">
             <div class="flex items-center justify-between">
-              <span class="text-sm font-bold text-gray-900">Total Risk Factor Score</span>
+              <span class="text-sm font-bold text-gray-900">Total Score</span>
               <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(@client.total_risk_factors_score) %>">
                 <%= @client.total_risk_factors_score %>
               </span>

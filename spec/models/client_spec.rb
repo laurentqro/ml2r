@@ -94,12 +94,13 @@ RSpec.describe Client do
         client.save!
         create(:person_risk_factor,
           client: client,
-          category: :business_relationship,
+          category: :distribution_channel_risk,
           identifier: :remote_relationship
         )
+
         create(:person_risk_factor,
           client: client,
-          category: :behavioral,
+          category: :client_risk,
           identifier: :rushed_transactions
         )
       end
