@@ -54,6 +54,11 @@ class Client < ApplicationRecord
     )")
   }
 
+  scope :pep, -> {
+    joins("LEFT JOIN people ON clients.clientable_id = people.id AND clients.clientable_type = 'Person'")
+      .where("people.pep = ?", true)
+  }
+
   def risk_score
     return Float::INFINITY if blacklisted?
 
