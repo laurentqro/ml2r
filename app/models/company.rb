@@ -28,4 +28,8 @@ class Company < ApplicationRecord
   def pep?
     false
   end
+
+  def identification_documents
+    []
+  end
 end
