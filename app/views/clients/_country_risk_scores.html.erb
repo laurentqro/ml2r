@@ -53,8 +53,8 @@
     <div class="border-t pt-4 mt-4">
       <div class="flex items-center justify-between">
         <span class="text-base font-bold text-gray-900">Total</span>
-        <span class="inline-flex items-center rounded-md px-3 py-1.5 text-sm font-medium <%= risk_badge_class(client.calculate_country_risk_score) %>">
-          <%= client.calculate_country_risk_score %>
+        <span class="inline-flex items-center rounded-md px-3 py-1.5 text-sm font-medium <%= risk_badge_class(client.country_risk_score) %>">
+          <%= client.country_risk_score %>
         </span>
       </div>
     </div>

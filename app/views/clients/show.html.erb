@@ -46,11 +46,18 @@
 
     <% if @client.available_risk_categories.any? { |category| @client.risk_factor_class.where(client: @client, category: category).any? } %>
       <div class="bg-white shadow rounded-lg p-6 mt-4">
-        <div class="flex items-center justify-between">
-          <span class="text-lg font-bold text-gray-900">Overall Risk Score</span>
-          <span class="inline-flex items-center rounded-md px-4 py-2 text-base font-medium <%= risk_badge_class(@client.risk_score) %>">
-            <%= @client.risk_score %>
-          </span>
+        <div class="flex flex-col">
+          <div class="flex items-center justify-between">
+            <div>
+              <span class="text-lg font-bold text-gray-900">Overall Risk Score</span>
+              <p class="mt-1 text-xs text-gray-500">
+                Calculated on <%= @client.risk_scoresheets.last.created_at.strftime("%B %d, %Y") %>
+              </p>
+            </div>
+            <span class="inline-flex items-center rounded-md px-4 py-2 text-base font-medium <%= risk_badge_class(@client.total_risk_score) %>">
+              <%= @client.risk_scoresheets.current.total_risk_score %>
+            </span>
+          </div>
         </div>
       </div>
     <% end %>

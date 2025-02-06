@@ -16,7 +16,7 @@ module ClientsHelper
     return 0 if client.risk_score.zero?
     return Float::INFINITY if client.risk_score == Float::INFINITY
 
-    client.calculate_country_risk_score
+    client.country_risk_score
   end
 
   def risk_factors_score(client)

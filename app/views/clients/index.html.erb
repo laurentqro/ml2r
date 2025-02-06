@@ -87,8 +87,8 @@
                   </div>
                 </td>
                 <td class="px-3 py-4 text-sm text-gray-500 text-center">
-                  <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(client.calculate_country_risk_score) %>">
-                    <%= client.calculate_country_risk_score %>
+                  <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(client.country_risk_score) %>">
+                    <%= client.country_risk_score %>
                   </span>
                 </td>
                 <td class="px-3 py-4 text-sm text-gray-500 text-center">
@@ -112,8 +112,8 @@
                   </span>
                 </td>
                 <td class="px-3 py-4 text-sm text-gray-500 text-center">
-                  <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(client.risk_score) %>">
-                    <%= client.risk_score %>
+                  <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(client.total_risk_score) %>">
+                    <%= client.total_risk_score %>
                   </span>
                 </td>
               </tr>

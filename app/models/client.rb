@@ -1,9 +1,11 @@
 class Client < ApplicationRecord
   belongs_to :clientable, polymorphic: true
+
   has_many :screenings, as: :screenable
   has_many :risk_factors, dependent: :destroy
   has_many :person_risk_factors, dependent: :destroy
   has_many :company_risk_factors, dependent: :destroy
+  has_many :risk_scoresheets, dependent: :destroy
 
   delegate :country_of_residence, :nationality, :country_of_profession,
            :country_of_birth, to: :clientable, allow_nil: true
@@ -59,18 +61,34 @@ class Client < ApplicationRecord
       .where("people.pep = ?", true)
   }
 
-  def risk_score
+  def total_risk_score
     return Float::INFINITY if blacklisted?
 
-    calculate_country_risk_score + calculate_risk_factors_score
-  end
-
-  def category_risk_score(category)
-    risk_factor_class.where(client: self, category: category).count * 25
+    country_risk_score + total_risk_factors_score
   end
 
   def total_risk_factors_score
     available_risk_categories.sum { |category| category_risk_score(category) }
+  end
+
+  def client_risk_score
+    category_risk_score(:client_risk)
+  end
+
+  def products_and_services_risk_score
+    category_risk_score(:products_and_services_risk)
+  end
+
+  def distribution_channel_risk_score
+    category_risk_score(:distribution_channel_risk)
+  end
+
+  def transaction_risk_score
+    category_risk_score(:transaction_risk)
+  end
+
+  def category_risk_score(category)
+    risk_factor_class.where(client: self, category: category).count * 25
   end
 
   def blacklisted?
@@ -90,7 +108,7 @@ class Client < ApplicationRecord
     end
   end
 
-  def calculate_country_risk_score
+  def country_risk_score
     scores = []
     weights = []
 
@@ -118,10 +136,6 @@ class Client < ApplicationRecord
 
     weighted_sum = scores.zip(weights).sum { |score, weight| score.to_f * weight }
     (weighted_sum / weights.sum).round
-  end
-
-  def calculate_risk_factors_score
-    total_risk_factors_score
   end
 
   private

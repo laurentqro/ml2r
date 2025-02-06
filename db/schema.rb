@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_31_150854) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_31_160000) do
   create_table "clients", force: :cascade do |t|
     t.string "clientable_type"
     t.integer "clientable_id"
@@ -89,6 +89,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_31_150854) do
     t.index ["client_id"], name: "index_risk_factors_on_client_id"
   end
 
+  create_table "risk_scoresheets", force: :cascade do |t|
+    t.integer "client_id", null: false
+    t.integer "country_risk_score"
+    t.integer "client_risk_score"
+    t.integer "products_and_services_risk_score"
+    t.integer "distribution_channel_risk_score"
+    t.integer "transaction_risk_score"
+    t.datetime "approved_at"
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_risk_scoresheets_on_client_id"
+  end
+
   create_table "sanctions", force: :cascade do |t|
     t.string "nature"
     t.string "title"
@@ -123,4 +137,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_31_150854) do
   add_foreign_key "identification_documents", "people"
   add_foreign_key "matches", "screenings"
   add_foreign_key "risk_factors", "clients"
+  add_foreign_key "risk_scoresheets", "clients"
 end

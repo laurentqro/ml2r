@@ -51,6 +51,7 @@ class ClientsController < ApplicationController
     end
 
     if @client.save
+      RiskScoresheet.create_for_client!(@client)
       redirect_to @client, notice: "Client was successfully created."
     else
       @client.build_clientable(type: params[:nature] || "person") unless @client.clientable
