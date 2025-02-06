@@ -9,7 +9,7 @@
           <p class="text-sm text-gray-500"><%= country_name(client.country_of_residence) %></p>
         </div>
         <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(CountryRiskScorer.calculate_risk_score(client.country_of_residence)) %>">
-          Score: <%= CountryRiskScorer.calculate_risk_score(client.country_of_residence) %>
+          <%= CountryRiskScorer.calculate_risk_score(client.country_of_residence) %>
         </span>
       </div>
     <% end %>
@@ -21,7 +21,7 @@
           <p class="text-sm text-gray-500"><%= country_name(client.nationality) %></p>
         </div>
         <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(CountryRiskScorer.calculate_risk_score(client.nationality)) %>">
-          Score: <%= CountryRiskScorer.calculate_risk_score(client.nationality) %>
+          <%= CountryRiskScorer.calculate_risk_score(client.nationality) %>
         </span>
       </div>
     <% end %>
@@ -33,7 +33,7 @@
           <p class="text-sm text-gray-500"><%= country_name(client.country_of_profession) %></p>
         </div>
         <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(CountryRiskScorer.calculate_risk_score(client.country_of_profession)) %>">
-          Score: <%= CountryRiskScorer.calculate_risk_score(client.country_of_profession) %>
+          <%= CountryRiskScorer.calculate_risk_score(client.country_of_profession) %>
         </span>
       </div>
     <% end %>
@@ -45,15 +45,15 @@
           <p class="text-sm text-gray-500"><%= country_name(client.country_of_birth) %></p>
         </div>
         <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(CountryRiskScorer.calculate_risk_score(client.country_of_birth)) %>">
-          Score: <%= CountryRiskScorer.calculate_risk_score(client.country_of_birth) %>
+          <%= CountryRiskScorer.calculate_risk_score(client.country_of_birth) %>
         </span>
       </div>
     <% end %>
 
     <div class="border-t pt-4 mt-4">
       <div class="flex items-center justify-between">
-        <span class="text-sm font-bold text-gray-900">Total</span>
-        <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(client.calculate_country_risk_score) %>">
+        <span class="text-base font-bold text-gray-900">Total</span>
+        <span class="inline-flex items-center rounded-md px-3 py-1.5 text-sm font-medium <%= risk_badge_class(client.calculate_country_risk_score) %>">
           <%= client.calculate_country_risk_score %>
         </span>
       </div>
