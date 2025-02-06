@@ -38,8 +38,31 @@
         <table class="min-w-full divide-y divide-gray-300">
           <thead class="bg-gray-50">
             <tr class="border-x border-gray-300">
-              <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 first:sm:rounded-tl-lg last:sm:rounded-tr-lg">
+              <th scope="col" rowspan="2" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 first:sm:rounded-tl-lg border-r border-gray-300">
                 Name
+              </th>
+              <th scope="col" colspan="6" class="px-3 py-2 text-center text-sm font-semibold text-gray-900 border-b border-gray-300">
+                Risk Assessment
+              </th>
+            </tr>
+            <tr class="border-x border-gray-300">
+              <th scope="col" class="px-3 py-2 text-center text-sm font-semibold text-gray-900 border-r border-gray-300">
+                Country
+              </th>
+              <th scope="col" class="px-3 py-2 text-center text-sm font-semibold text-gray-900 border-r border-gray-300">
+                Client
+              </th>
+              <th scope="col" class="px-3 py-2 text-center text-sm font-semibold text-gray-900 border-r border-gray-300">
+                Services
+              </th>
+              <th scope="col" class="px-3 py-2 text-center text-sm font-semibold text-gray-900 border-r border-gray-300">
+                Distribution
+              </th>
+              <th scope="col" class="px-3 py-2 text-center text-sm font-semibold text-gray-900 border-r border-gray-300">
+                Transaction
+              </th>
+              <th scope="col" class="px-3 py-2 text-center text-sm font-semibold text-gray-900 last:sm:rounded-tr-lg">
+                Total
               </th>
             </tr>
           </thead>
@@ -62,6 +85,36 @@
                       </span>
                     <% end %>
                   </div>
+                </td>
+                <td class="px-3 py-4 text-sm text-gray-500 text-center">
+                  <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(client.calculate_country_risk_score) %>">
+                    <%= client.calculate_country_risk_score %>
+                  </span>
+                </td>
+                <td class="px-3 py-4 text-sm text-gray-500 text-center">
+                  <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(client.category_risk_score(:client_risk)) %>">
+                    <%= client.category_risk_score(:client_risk) %>
+                  </span>
+                </td>
+                <td class="px-3 py-4 text-sm text-gray-500 text-center">
+                  <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(client.category_risk_score(:products_and_services_risk)) %>">
+                    <%= client.category_risk_score(:products_and_services_risk) %>
+                  </span>
+                </td>
+                <td class="px-3 py-4 text-sm text-gray-500 text-center">
+                  <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(client.category_risk_score(:distribution_channel_risk)) %>">
+                    <%= client.category_risk_score(:distribution_channel_risk) %>
+                  </span>
+                </td>
+                <td class="px-3 py-4 text-sm text-gray-500 text-center">
+                  <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(client.category_risk_score(:transaction_risk)) %>">
+                    <%= client.category_risk_score(:transaction_risk) %>
+                  </span>
+                </td>
+                <td class="px-3 py-4 text-sm text-gray-500 text-center">
+                  <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(client.risk_score) %>">
+                    <%= client.risk_score %>
+                  </span>
                 </td>
               </tr>
             <% end %>
