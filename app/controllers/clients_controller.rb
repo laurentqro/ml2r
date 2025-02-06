@@ -126,7 +126,14 @@ class ClientsController < ApplicationController
         :country_of_residence,
         :country_of_profession,
         :profession,
-        :pep
+        :pep,
+        identification_documents_attributes: [
+          :id,
+          :document_type,
+          :number,
+          :expiration_date,
+          :is_copy
+        ]
       ],
       risk_factors_attributes: [
         :id,
