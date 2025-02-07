@@ -6,11 +6,6 @@
 #
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
-
-Client.delete_all
-Person.delete_all
-Company.delete_all
 
 # Common countries with ISO 3166-1 alpha-2 codes
 COMMON_COUNTRIES = [
@@ -21,16 +16,30 @@ COMMON_COUNTRIES = [
   'GB', # United Kingdom
   'DE', # Germany
   'US', # United States
-  'RU', # Russia
-  'CN', # China
-  'SA', # Saudi Arabia
-  'AE'  # United Arab Emirates
+  'AR', # Argentina
+  'ES', # Spain
+  'PT', # Portugal
+  'BE', # Belgium
+  'NL', # Netherlands
+  'SE', # Sweden
+  'NO', # Norway
+  'DK', # Denmark
+  'AU', # Australia
+  'NZ', # New Zealand
+  'CA', # Canada
+  'JP', # Japan
+  'KR' # South Korea
+
 ]
 
 # High-risk countries
 HIGH_RISK_COUNTRIES = [
   'SY', # Syria
-  'VE' # Venezuela
+  'VE', # Venezuela
+  'RU', # Russia
+  'CN', # China
+  'SA', # Saudi Arabia
+  'AE'  # United Arab Emirates
 ]
 
 # ISCO-08 codes and corresponding job titles for relevant professions
@@ -50,6 +59,35 @@ PROFESSIONS = [
   [ 2120, 'Mathematician or Actuary', false ],
   [ 2631, 'Economist', false ]
 ]
+
+def create_risk_scoresheet(client)
+  RiskScoresheet.create!(
+    client: client,
+    country_risk_score: client.country_risk_score,
+    client_risk_score: client.client_risk_score,
+    products_and_services_risk_score: client.products_and_services_risk_score,
+    distribution_channel_risk_score: client.distribution_channel_risk_score,
+    transaction_risk_score: client.transaction_risk_score
+  )
+end
+
+def create_random_risk_factors(client)
+  # For each risk category, randomly select 0-3 risk factors
+  client.available_risk_categories.each do |category|
+    identifiers = client.risk_factor_class.identifiers_for(category)
+    # Randomly select 0-3 identifiers
+    selected_identifiers = identifiers.sample(rand(0..3))
+
+    selected_identifiers.each do |identifier|
+      client.risk_factor_class.create!(
+        client: client,
+        category: category,
+        identifier: identifier,
+        identified_at: Time.current
+      )
+    end
+  end
+end
 
 # Create 100 people
 100.times do |i|
@@ -79,10 +117,13 @@ PROFESSIONS = [
   )
 
   # Create a client record for this person
-  Client.create!(
+  client = Client.create!(
     clientable: person,
     started_at: Faker::Date.between(from: 2.years.ago, to: Date.today)
   )
+
+  create_random_risk_factors(client)
+  create_risk_scoresheet(client)
 end
 
 # Create 100 companies
@@ -92,10 +133,13 @@ end
     country: HIGH_RISK_COUNTRIES.sample
   )
 
-  Client.create!(
+  client = Client.create!(
     clientable: company,
     started_at: Faker::Date.between(from: 2.years.ago, to: Date.today)
   )
+
+  create_random_risk_factors(client)
+  create_risk_scoresheet(client)
 end
 
 # Create 50 sanctioned people
@@ -125,27 +169,48 @@ person_sanctions.each do |sanction|
     sanctioned: true
   )
 
-  # Create a client record for this person
-  Client.create!(
+  client = Client.create!(
     clientable: person,
     started_at: Faker::Date.between(from: 2.years.ago, to: Date.today)
   )
+
+  create_random_risk_factors(client)
+  RiskScoresheet.create_for_client!(client)
+end
+
+# Create 100 companies
+100.times do |i|
+  countries_pool = rand < 0.1 ? HIGH_RISK_COUNTRIES : COMMON_COUNTRIES
+
+  company = Company.create!(
+    name: Faker::Company.name,
+    country: countries_pool.sample
+  )
+
+  client = Client.create!(
+    clientable: company,
+    started_at: Faker::Date.between(from: 2.years.ago, to: Date.today)
+  )
+
+  create_random_risk_factors(client)
+  create_risk_scoresheet(client)
 end
 
 # Create 50 companies from sanctions data
 company_sanctions = Sanction.companies.limit(50)
 
 company_sanctions.each do |sanction|
-  # Create company with sanction data
   company = Company.create!(
     name: sanction.last_name,
     country: HIGH_RISK_COUNTRIES.sample,
     sanctioned: true
   )
 
-  # Create a client record for this company
-  Client.create!(
+  client = Client.create!(
     clientable: company,
     started_at: Faker::Date.between(from: 2.years.ago, to: Date.today)
   )
+
+  create_random_risk_factors(client)
+  RiskScoresheet.create_for_client!(client)
 end
