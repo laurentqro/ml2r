@@ -107,6 +107,8 @@ class ClientsController < ApplicationController
             rf.identified_at = Time.current
           end
         end
+
+        RiskScoresheet.create_for_client!(@client)
       end
 
       redirect_to @client, notice: "Client was successfully updated."
