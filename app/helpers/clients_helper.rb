@@ -15,19 +15,10 @@ module ClientsHelper
   def sortable(column, title = nil)
     title ||= column.titleize
     direction = (column == sort_column && sort_direction == "asc") ? "desc" : "asc"
-    css_class = column == sort_column ? "text-blue-600" : "text-gray-900"
+    css_class = "#{column == sort_column ? 'text-blue-900' : 'text-gray-900'} w-full flex justify-center"
     link_to clients_path(request.params.merge(sort: column, direction: direction)), class: css_class do
-      tag.div class: "flex items-center gap-1" do
+      tag.div class: "flex gap-1" do
         concat title
-        if column == sort_column
-          concat tag.svg class: "h-4 w-4", fill: "currentColor", viewBox: "0 0 24 24" do
-            if sort_direction == "asc"
-              concat tag.path d: "M12 4l-8 8h16l-8-8z"
-            else
-              concat tag.path d: "M12 20l8-8H4l8 8z"
-            end
-          end
-        end
       end
     end
   end
