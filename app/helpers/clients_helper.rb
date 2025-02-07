@@ -12,17 +12,39 @@ module ClientsHelper
     ISO3166::Country[code]&.iso_short_name || code
   end
 
-  def country_risk_score(client)
-    return 0 if client.risk_score.zero?
-    return Float::INFINITY if client.risk_score == Float::INFINITY
-
-    client.country_risk_score
+  def sortable(column, title = nil)
+    title ||= column.titleize
+    direction = (column == sort_column && sort_direction == "asc") ? "desc" : "asc"
+    css_class = column == sort_column ? "text-blue-600" : "text-gray-900"
+    link_to clients_path(request.params.merge(sort: column, direction: direction)), class: css_class do
+      tag.div class: "flex items-center gap-1" do
+        concat title
+        if column == sort_column
+          concat tag.svg class: "h-4 w-4", fill: "currentColor", viewBox: "0 0 24 24" do
+            if sort_direction == "asc"
+              concat tag.path d: "M12 4l-8 8h16l-8-8z"
+            else
+              concat tag.path d: "M12 20l8-8H4l8 8z"
+            end
+          end
+        end
+      end
+    end
   end
 
-  def risk_factors_score(client)
-    return 0 if client.risk_score.zero?
-    return Float::INFINITY if client.risk_score == Float::INFINITY
+  def sort_column
+    %w[
+      display_name
+      country_risk_score
+      client_risk_score
+      products_and_services_risk_score
+      distribution_channel_risk_score
+      transaction_risk_score
+      total_risk_score
+    ].include?(params[:sort]) ? params[:sort] : "display_name"
+  end
 
-    client.calculate_risk_factors_score
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 end

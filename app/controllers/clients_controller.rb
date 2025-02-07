@@ -1,9 +1,10 @@
 class ClientsController < ApplicationController
   include Pagination
+  include ClientsHelper
 
   def index
     base_scope = ClientRiskSummary
-      .order(Arel.sql("display_name ASC"))
+      .order(sort_column => sort_direction)
 
     filtered_scope = if params[:nature].present?
       base_scope.where(clientable_type: params[:nature].capitalize)

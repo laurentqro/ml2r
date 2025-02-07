@@ -38,38 +38,38 @@
         <table class="min-w-full divide-y divide-gray-300">
           <thead class="bg-gray-50">
             <tr class="border-x border-gray-300">
-              <th scope="col" rowspan="2" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6 first:sm:rounded-tl-lg border-r border-gray-300">
-                Name
+              <th scope="col" rowspan="2" class="w-96 py-3.5 pl-4 pr-3 text-left text-sm font-semibold sm:pl-6 first:sm:rounded-tl-lg border-r border-gray-300">
+                <%= sortable "display_name", "Name" %>
               </th>
               <th scope="col" colspan="6" class="px-3 py-2 text-center text-sm font-semibold text-gray-900 border-b border-gray-300">
                 Risk Assessment
               </th>
             </tr>
             <tr class="border-x border-gray-300">
-              <th scope="col" class="px-3 py-2 text-center text-sm font-semibold text-gray-900 border-r border-gray-300">
-                Country
+              <th scope="col" class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-2 text-center text-sm font-semibold border-r border-gray-300">
+                <%= sortable "country_risk_score", "Country" %>
               </th>
-              <th scope="col" class="px-3 py-2 text-center text-sm font-semibold text-gray-900 border-r border-gray-300">
-                Client
+              <th scope="col" class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-2 text-center text-sm font-semibold border-r border-gray-300">
+                <%= sortable "client_risk_score", "Client" %>
               </th>
-              <th scope="col" class="px-3 py-2 text-center text-sm font-semibold text-gray-900 border-r border-gray-300">
-                Services
+              <th scope="col" class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-2 text-center text-sm font-semibold border-r border-gray-300">
+                <%= sortable "products_and_services_risk_score", "Services" %>
               </th>
-              <th scope="col" class="px-3 py-2 text-center text-sm font-semibold text-gray-900 border-r border-gray-300">
-                Distribution
+              <th scope="col" class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-2 text-center text-sm font-semibold border-r border-gray-300">
+                <%= sortable "distribution_channel_risk_score", "Distribution" %>
               </th>
-              <th scope="col" class="px-3 py-2 text-center text-sm font-semibold text-gray-900 border-r border-gray-300">
-                Transaction
+              <th scope="col" class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-2 text-center text-sm font-semibold border-r border-gray-300">
+                <%= sortable "transaction_risk_score", "Transaction" %>
               </th>
-              <th scope="col" class="px-3 py-2 text-center text-sm font-semibold text-gray-900 last:sm:rounded-tr-lg">
-                Total
+              <th scope="col" class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-2 text-center text-sm font-semibold last:sm:rounded-tr-lg">
+                <%= sortable "total_risk_score", "Total" %>
               </th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200 bg-white">
             <% @clients.each_with_index do |summary, index| %>
               <tr class="hover:bg-gray-50 border-x border-gray-300">
-                <td class="py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 <%= 'sm:rounded-bl-lg' if index == @clients.size - 1 %>">
+                <td class="w-96 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 <%= 'sm:rounded-bl-lg' if index == @clients.size - 1 %>">
                   <div class="max-w-md line-clamp-2 flex items-center gap-2">
                     <%= link_to summary.display_name, client_path(summary.client_id),
                         class: "text-blue-600 hover:text-blue-800" %>
@@ -85,32 +85,32 @@
                     <% end %>
                   </div>
                 </td>
-                <td class="px-3 py-4 text-sm text-gray-500 text-center">
+                <td class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-4 text-sm text-gray-500 text-center">
                   <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(summary.country_risk_score) %>">
                     <%= summary.country_risk_score %>
                   </span>
                 </td>
-                <td class="px-3 py-4 text-sm text-gray-500 text-center">
+                <td class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-4 text-sm text-gray-500 text-center">
                   <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(summary.client_risk_score) %>">
                     <%= summary.client_risk_score %>
                   </span>
                 </td>
-                <td class="px-3 py-4 text-sm text-gray-500 text-center">
+                <td class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-4 text-sm text-gray-500 text-center">
                   <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(summary.products_and_services_risk_score) %>">
                     <%= summary.products_and_services_risk_score %>
                   </span>
                 </td>
-                <td class="px-3 py-4 text-sm text-gray-500 text-center">
+                <td class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-4 text-sm text-gray-500 text-center">
                   <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(summary.distribution_channel_risk_score) %>">
                     <%= summary.distribution_channel_risk_score %>
                   </span>
                 </td>
-                <td class="px-3 py-4 text-sm text-gray-500 text-center">
+                <td class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-4 text-sm text-gray-500 text-center">
                   <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(summary.transaction_risk_score) %>">
                     <%= summary.transaction_risk_score %>
                   </span>
                 </td>
-                <td class="px-3 py-4 text-sm text-gray-500 text-center">
+                <td class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-4 text-sm text-gray-500 text-center">
                   <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(summary.total_risk_score) %>">
                     <%= summary.total_risk_score %>
                   </span>
