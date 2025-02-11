@@ -1,0 +1,55 @@
+<div class="relative">
+  <!-- Y-axis label -->
+  <div class="absolute -left-16 top-1/2 -rotate-90 transform -translate-y-1/2 text-sm font-medium text-gray-600">
+    Probability
+  </div>
+
+  <!-- X-axis label -->
+  <div class="absolute left-1/2 -translate-x-1/2 -top-6 text-sm font-medium text-gray-600">
+    Impact
+  </div>
+
+  <!-- Matrix grid -->
+  <div class="border border-gray-300 rounded-lg overflow-hidden">
+    <!-- Header rows -->
+    <div class="grid grid-cols-4 text-center border-b border-gray-300 bg-gray-50">
+      <div></div>
+      <div class="px-4 py-2 text-sm font-medium text-gray-600 border-l border-gray-300">Low</div>
+      <div class="px-4 py-2 text-sm font-medium text-gray-600 border-l border-gray-300">Medium</div>
+      <div class="px-4 py-2 text-sm font-medium text-gray-600 border-l border-gray-300">High</div>
+    </div>
+
+    <!-- Matrix cells -->
+    <% [:high, :medium, :low].each do |probability| %>
+      <div class="grid grid-cols-4 text-center border-b border-gray-300">
+        <div class="px-4 py-2 flex items-center justify-center border-r border-gray-300 bg-gray-50">
+          <span class="text-sm font-medium text-gray-600"><%= probability.to_s.capitalize %></span>
+        </div>
+        <% [:low, :medium, :high].each do |impact| %>
+          <% 
+            count = risk_matrix[[probability, impact]]
+            cell_color = case
+                        when probability == :high && impact == :high
+                          "bg-red-100"
+                        when (probability == :high && impact == :medium) || 
+                             (probability == :medium && impact == :high)
+                          "bg-yellow-100"
+                        when probability == :medium && impact == :medium
+                          "bg-yellow-100"
+                        else
+                          "bg-green-100"
+                        end
+          %>
+          <div class="px-4 py-8 <%= impact == :low ? '' : 'border-l border-gray-300' %> <%= cell_color %>">
+            <div class="font-medium text-2xl">
+              <%= count %>
+            </div>
+            <div class="text-sm text-gray-600 mt-1">
+              clients
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div> 
