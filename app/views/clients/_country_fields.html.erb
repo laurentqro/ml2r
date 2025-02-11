@@ -1,0 +1,68 @@
+<div class="py-4">
+<%= f.fields_for :clientable do |cf| %>
+    <fieldset>
+        <h3>
+            Country Information
+        </h3>
+
+        <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <% if f.object.clientable_type == "Person" %>
+            <div class="sm:col-span-3">
+                <%= cf.label :nationality, class: "block text-sm/6 font-bold text-gray-900" %>
+                <div class="mt-2 grid grid-cols-1">
+                <%= cf.collection_select :nationality,
+                    ISO3166::Country.all.sort_by(&:common_name), :alpha2, :common_name,
+                    { prompt: "Select nationality" },
+                    { required: true,
+                        class: "col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 px-3 text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" } %>
+                </div>
+            </div>
+
+            <div class="sm:col-span-3">
+                <%= cf.label :country_of_residence, class: "block text-sm/6 font-bold text-gray-900" %>
+                <div class="mt-2 grid grid-cols-1">
+                <%= cf.collection_select :country_of_residence,
+                    ISO3166::Country.all.sort_by(&:common_name), :alpha2, :common_name,
+                    { prompt: "Select country" },
+                    { required: true,
+                        class: "col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 px-3 text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" } %>
+                </div>
+            </div>
+
+            <div class="sm:col-span-3">
+                <%= cf.label :country_of_profession, class: "block text-sm/6 font-bold text-gray-900" %>
+                <div class="mt-2 grid grid-cols-1">
+                <%= cf.collection_select :country_of_profession,
+                    ISO3166::Country.all.sort_by(&:common_name), :alpha2, :common_name,
+                    { prompt: "Select country" },
+                    { required: true,
+                        class: "col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 px-3 text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" } %>
+                </div>
+            </div>
+
+            <div class="sm:col-span-3">
+                <%= cf.label :country_of_birth, class: "block text-sm/6 font-bold text-gray-900" %>
+                <div class="mt-2 grid grid-cols-1">
+                <%= cf.collection_select :country_of_birth,
+                    ISO3166::Country.all.sort_by(&:common_name), :alpha2, :common_name,
+                    { prompt: "Select country" },
+                    { required: true,
+                        class: "col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 px-3 text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" } %>
+                </div>
+            </div>
+            <% else %>
+            <div class="sm:col-span-3">
+                <%= cf.label :country, class: "block text-sm/6 font-bold text-gray-900" %>
+                <div class="mt-2 grid grid-cols-1">
+                <%= cf.collection_select :country,
+                    ISO3166::Country.all.sort_by(&:common_name), :alpha2, :common_name,
+                    { prompt: "Select country" },
+                    { required: true,
+                        class: "col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 px-3 text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" } %>
+                </div>
+            </div>
+        <% end %>
+        </div>
+    </fieldset>
+<% end %>
+</div>
