@@ -17,7 +17,7 @@ class RiskMatrixCalculator
   def calculate
     matrix = Array.new(3) { Array.new(3) }
 
-    [:low, :medium, :high].each_with_index do |impact, impact_index|
+    [ :low, :medium, :high ].each_with_index do |impact, impact_index|
       range = IMPACT_RANGES[impact]
       client_count = ClientRiskSummary.where(@score_field => range).count
       percentage = calculate_percentage(client_count)
@@ -45,4 +45,4 @@ class RiskMatrixCalculator
     else 0             # high
     end
   end
-end 
+end
