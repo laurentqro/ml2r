@@ -42,10 +42,10 @@
           %>
           <div class="px-4 py-8 <%= impact == :low ? '' : 'border-l border-gray-300' %> <%= cell_color %>">
             <div class="font-medium text-2xl">
-              <%= count %>
+              <%= risk_matrix[probability][impact][:percentage] %>%
             </div>
             <div class="text-sm text-gray-600 mt-1">
-              clients
+              <%= risk_matrix[probability][impact][:count] %> out of <%= risk_matrix[probability][impact][:total] %> clients
             </div>
           </div>
         <% end %>
