@@ -10,23 +10,19 @@ class PagesController < ApplicationController
   private
 
   def calculate_client_risk_matrix
-    matrix = initialize_matrix
+    matrix = Hash.new
     clients = ClientRiskSummary.all
     total_clients = clients.count.to_f
 
-    # Pre-calculate all cells
     [ :high, :medium, :low ].each do |probability_level|
       [ :low, :medium, :high ].each do |impact_level|
-        # Count clients in this cell
         clients_in_cell = clients.count do |client|
-          # Determine impact for this client
           impact = case client.client_risk_score
           when 0..40 then :low
           when 41..70 then :medium
           else :high
           end
 
-          # Calculate probability percentage for this client
           clients_at_level = clients.count { |c| c.client_risk_score >= client.client_risk_score }
           probability_percentage = (clients_at_level / total_clients) * 100
 
@@ -36,12 +32,12 @@ class PagesController < ApplicationController
           else :high
           end
 
-          # Check if this client belongs in current cell
           impact == impact_level && probability == probability_level
         end
 
-        # Store cell data
-        matrix[probability_level][impact_level] = {
+        key = "#{probability_level}_#{impact_level}"
+
+        matrix[key] = {
           percentage: ((clients_in_cell / total_clients) * 100).round,
           count: clients_in_cell,
           total: clients.count
@@ -49,18 +45,6 @@ class PagesController < ApplicationController
       end
     end
 
-    matrix
-  end
-
-  # Initialize an empty matrix with the structure we want
-  def initialize_matrix
-    matrix = {}
-    [ :high, :medium, :low ].each do |probability|
-      matrix[probability] = {}
-      [ :low, :medium, :high ].each do |impact|
-        matrix[probability][impact] = { percentage: 0, count: 0, total: 0 }
-      end
-    end
     matrix
   end
 
@@ -85,7 +69,9 @@ class PagesController < ApplicationController
       else :high
       end
 
-      matrix[[ probability, impact ]] = {
+      key = "#{probability}_#{impact}"
+
+      matrix[key] = {
         percentage: probability_percentage.round,
         count: clients_at_this_level,
         total: clients.count
@@ -116,7 +102,9 @@ class PagesController < ApplicationController
       else :high
       end
 
-      matrix[[ probability, impact ]] = {
+      key = "#{probability}_#{impact}"
+
+      matrix[key] = {
         percentage: probability_percentage.round,
         count: clients_at_this_level,
         total: clients.count
@@ -147,7 +135,9 @@ class PagesController < ApplicationController
       else :high
       end
 
-      matrix[[ probability, impact ]] = {
+      key = "#{probability}_#{impact}"
+
+      matrix[key] = {
         percentage: probability_percentage.round,
         count: clients_at_this_level,
         total: clients.count
@@ -178,7 +168,9 @@ class PagesController < ApplicationController
       else :high
       end
 
-      matrix[[ probability, impact ]] = {
+      key = "#{probability}_#{impact}"
+
+      matrix[key] = {
         percentage: probability_percentage.round,
         count: clients_at_this_level,
         total: clients.count
