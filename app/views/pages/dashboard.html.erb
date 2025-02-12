@@ -42,5 +42,10 @@
       <h2 class="text-xl font-bold text-gray-900 mb-4 text-center pb-6">Transaction</h2>
       <%= render "risk_matrix", risk_matrix: @transaction_risk_matrix %>
     </div>
+
+    <div class="p-6">
+      <h2 class="text-xl font-bold text-gray-900 mb-4 text-center pb-6">Overall Risk</h2>
+      <%= render "risk_matrix", risk_matrix: @total_risk_matrix %>
+    </div>
   </div>
 </div>

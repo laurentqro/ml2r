@@ -5,6 +5,7 @@ class PagesController < ApplicationController
     @distribution_risk_matrix = calculate_distribution_risk_matrix
     @transaction_risk_matrix = calculate_transaction_risk_matrix
     @country_risk_matrix = calculate_country_risk_matrix
+    @total_risk_matrix = calculate_total_risk_matrix
   end
 
   private
@@ -160,6 +161,37 @@ class PagesController < ApplicationController
     [ :low, :medium, :high ].each_with_index do |impact, impact_index|
       range = impact_ranges[impact]
       client_count = ClientRiskSummary.where(country_risk_score: range).count
+      percentage = (client_count / total_clients * 100).round
+
+      exposure_index = case percentage
+      when 0..33 then 2  # low
+      when 34..66 then 1 # medium
+      else 0             # high
+      end
+
+      matrix[impact_index][exposure_index] = {
+        percentage: percentage,
+        count: client_count,
+        total: total_clients.to_i
+      }
+    end
+
+    matrix
+  end
+
+  def calculate_total_risk_matrix
+    impact_ranges = {
+      low: 0..40,
+      medium: 41..70,
+      high: 71..
+    }
+
+    total_clients = ClientRiskSummary.count.to_f
+    matrix = Array.new(3) { Array.new(3) }
+
+    [ :low, :medium, :high ].each_with_index do |impact, impact_index|
+      range = impact_ranges[impact]
+      client_count = ClientRiskSummary.where(total_risk_score: range).count
       percentage = (client_count / total_clients * 100).round
 
       exposure_index = case percentage
