@@ -16,7 +16,11 @@ module ClientsHelper
     title ||= column.titleize
     direction = (column == sort_column && sort_direction == "asc") ? "desc" : "asc"
     css_class = "#{column == sort_column ? 'text-blue-900' : 'text-gray-900'} w-full flex justify-center"
-    link_to clients_path(request.params.merge(sort: column, direction: direction)), class: css_class do
+
+    # Keep all params except page
+    preserved_params = request.params.except(:page).merge(sort: column, direction: direction)
+
+    link_to clients_path(preserved_params), class: css_class do
       tag.div class: "flex gap-1" do
         concat title
       end
