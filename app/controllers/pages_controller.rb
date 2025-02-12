@@ -10,71 +10,72 @@ class PagesController < ApplicationController
   private
 
   def calculate_client_risk_matrix
-    matrix = Hash.new
-    clients = ClientRiskSummary.all
-    total_clients = clients.count.to_f
+    impact_ranges = {
+      low: 0..40,
+      medium: 41..70,
+      high: 71..
+    }
 
-    [ :high, :medium, :low ].each do |probability_level|
-      [ :low, :medium, :high ].each do |impact_level|
-        clients_in_cell = clients.count do |client|
-          impact = case client.client_risk_score
-          when 0..40 then :low
-          when 41..70 then :medium
-          else :high
-          end
+    total_clients = ClientRiskSummary.count.to_f
 
-          clients_at_level = clients.count { |c| c.client_risk_score >= client.client_risk_score }
-          probability_percentage = (clients_at_level / total_clients) * 100
+    # Create a 3x3 array where each element is a hash with the cell data
+    matrix = Array.new(3) { Array.new(3) }
 
-          probability = case probability_percentage
-          when 0..33 then :low
-          when 34..66 then :medium
-          else :high
-          end
+    [ :low, :medium, :high ].each_with_index do |impact, impact_index|
+      range = impact_ranges[impact]
+      client_count = ClientRiskSummary.where(client_risk_score: range).count
+      percentage = (client_count / total_clients * 100).round
 
-          impact == impact_level && probability == probability_level
-        end
-
-        key = "#{probability_level}_#{impact_level}"
-
-        matrix[key] = {
-          percentage: ((clients_in_cell / total_clients) * 100).round,
-          count: clients_in_cell,
-          total: clients.count
-        }
+      # Determine exposure level based on percentage
+      exposure = case percentage
+      when 0..33 then :low
+      when 34..66 then :medium
+      else :high
       end
+
+      # Convert exposure to index (reverse order since view displays high->low)
+      exposure_index = case exposure
+      when :high then 0
+      when :medium then 1
+      when :low then 2
+      end
+
+      # Store the data in the correct cell
+      matrix[impact_index][exposure_index] = {
+        percentage: percentage,
+        count: client_count,
+        total: total_clients.to_i
+      }
     end
 
     matrix
   end
 
   def calculate_products_risk_matrix
-    matrix = Hash.new
-    clients = ClientRiskSummary.all
-    total_clients = clients.count.to_f
+    impact_ranges = {
+      low: 0..40,
+      medium: 41..70,
+      high: 71..
+    }
 
-    clients.each do |client|
-      impact = case client.products_and_services_risk_score
-      when 0..40 then :low
-      when 41..70 then :medium
-      else :high
+    total_clients = ClientRiskSummary.count.to_f
+    matrix = Array.new(3) { Array.new(3) }
+
+    [ :low, :medium, :high ].each_with_index do |impact, impact_index|
+      range = impact_ranges[impact]
+      client_count = ClientRiskSummary.where(products_and_services_risk_score: range).count
+      percentage = (client_count / total_clients * 100).round
+
+      exposure_index = case percentage
+      when 0..33 then 2  # low
+      when 34..66 then 1 # medium
+      else 0             # high
       end
 
-      clients_at_this_level = clients.count { |c| c.products_and_services_risk_score >= client.products_and_services_risk_score }
-      probability_percentage = (clients_at_this_level / total_clients) * 100
-
-      probability = case probability_percentage
-      when 0..33 then :low
-      when 34..66 then :medium
-      else :high
-      end
-
-      key = "#{probability}_#{impact}"
-
-      matrix[key] = {
-        percentage: probability_percentage.round,
-        count: clients_at_this_level,
-        total: clients.count
+      matrix[impact_index][exposure_index] = {
+        percentage: percentage,
+        count: client_count,
+        total: total_clients.to_i
       }
     end
 
@@ -82,65 +83,64 @@ class PagesController < ApplicationController
   end
 
   def calculate_distribution_risk_matrix
-    matrix = Hash.new
-    clients = ClientRiskSummary.all
-    total_clients = clients.count.to_f
+    impact_ranges = {
+      low: 0..40,
+      medium: 41..70,
+      high: 71..
+    }
 
-    clients.each do |client|
-      impact = case client.distribution_channel_risk_score
-      when 0..40 then :low
-      when 41..70 then :medium
-      else :high
+    total_clients = ClientRiskSummary.count.to_f
+    matrix = Array.new(3) { Array.new(3) }
+
+    [ :low, :medium, :high ].each_with_index do |impact, impact_index|
+      range = impact_ranges[impact]
+      client_count = ClientRiskSummary.where(distribution_channel_risk_score: range).count
+      percentage = (client_count / total_clients * 100).round
+
+      exposure_index = case percentage
+      when 0..33 then 2  # low
+      when 34..66 then 1 # medium
+      else 0             # high
       end
 
-      clients_at_this_level = clients.count { |c| c.distribution_channel_risk_score >= client.distribution_channel_risk_score }
-      probability_percentage = (clients_at_this_level / total_clients) * 100
-
-      probability = case probability_percentage
-      when 0..33 then :low
-      when 34..66 then :medium
-      else :high
-      end
-
-      key = "#{probability}_#{impact}"
-
-      matrix[key] = {
-        percentage: probability_percentage.round,
-        count: clients_at_this_level,
-        total: clients.count
+      matrix[impact_index][exposure_index] = {
+        percentage: percentage,
+        count: client_count,
+        total: total_clients.to_i
       }
     end
+
+    puts "### DISTRIBUTION MATRIX ###"
+    puts matrix.inspect
 
     matrix
   end
 
   def calculate_transaction_risk_matrix
-    matrix = Hash.new
-    clients = ClientRiskSummary.all
-    total_clients = clients.count.to_f
+    impact_ranges = {
+      low: 0..40,
+      medium: 41..70,
+      high: 71..
+    }
 
-    clients.each do |client|
-      impact = case client.transaction_risk_score
-      when 0..40 then :low
-      when 41..70 then :medium
-      else :high
+    total_clients = ClientRiskSummary.count.to_f
+    matrix = Array.new(3) { Array.new(3) }
+
+    [ :low, :medium, :high ].each_with_index do |impact, impact_index|
+      range = impact_ranges[impact]
+      client_count = ClientRiskSummary.where(transaction_risk_score: range).count
+      percentage = (client_count / total_clients * 100).round
+
+      exposure_index = case percentage
+      when 0..33 then 2  # low
+      when 34..66 then 1 # medium
+      else 0             # high
       end
 
-      clients_at_this_level = clients.count { |c| c.transaction_risk_score >= client.transaction_risk_score }
-      probability_percentage = (clients_at_this_level / total_clients) * 100
-
-      probability = case probability_percentage
-      when 0..33 then :low
-      when 34..66 then :medium
-      else :high
-      end
-
-      key = "#{probability}_#{impact}"
-
-      matrix[key] = {
-        percentage: probability_percentage.round,
-        count: clients_at_this_level,
-        total: clients.count
+      matrix[impact_index][exposure_index] = {
+        percentage: percentage,
+        count: client_count,
+        total: total_clients.to_i
       }
     end
 
@@ -148,32 +148,30 @@ class PagesController < ApplicationController
   end
 
   def calculate_country_risk_matrix
-    matrix = Hash.new
-    clients = ClientRiskSummary.all
-    total_clients = clients.count.to_f
+    impact_ranges = {
+      low: 0..40,
+      medium: 41..70,
+      high: 71..
+    }
 
-    clients.each do |client|
-      impact = case client.country_risk_score
-      when 0..40 then :low
-      when 41..70 then :medium
-      else :high
+    total_clients = ClientRiskSummary.count.to_f
+    matrix = Array.new(3) { Array.new(3) }
+
+    [ :low, :medium, :high ].each_with_index do |impact, impact_index|
+      range = impact_ranges[impact]
+      client_count = ClientRiskSummary.where(country_risk_score: range).count
+      percentage = (client_count / total_clients * 100).round
+
+      exposure_index = case percentage
+      when 0..33 then 2  # low
+      when 34..66 then 1 # medium
+      else 0             # high
       end
 
-      clients_at_this_level = clients.count { |c| c.country_risk_score >= client.country_risk_score }
-      probability_percentage = (clients_at_this_level / total_clients) * 100
-
-      probability = case probability_percentage
-      when 0..33 then :low
-      when 34..67 then :medium
-      else :high
-      end
-
-      key = "#{probability}_#{impact}"
-
-      matrix[key] = {
-        percentage: probability_percentage.round,
-        count: clients_at_this_level,
-        total: clients.count
+      matrix[impact_index][exposure_index] = {
+        percentage: percentage,
+        count: client_count,
+        total: total_clients.to_i
       }
     end
 

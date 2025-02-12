@@ -20,29 +20,33 @@
     </div>
 
     <!-- Matrix cells -->
-    <% [:high, :medium, :low].each do |probability| %>
+    <% [:high, :medium, :low].each_with_index do |exposure, exposure_index| %>
       <div class="grid grid-cols-4 text-center border-b border-gray-300">
         <div class="px-4 py-2 flex items-center justify-center border-r border-gray-300 bg-gray-50">
-          <span class="text-sm font-medium text-gray-600"><%= probability.to_s.capitalize %></span>
+          <span class="text-sm font-medium text-gray-600"><%= exposure.to_s.capitalize %></span>
         </div>
-        <% [:low, :medium, :high].each do |impact| %>
+        <% [:low, :medium, :high].each_with_index do |impact, impact_index| %>
           <% 
-            cell_data = risk_matrix["#{probability}_#{impact}"]
+            cell_data = risk_matrix[impact_index][exposure_index]
+
             cell_color = case
-                        when probability == :high && impact == :high
+                        when exposure == :high && impact == :high
                           "bg-red-100"
-                        when (probability == :high && impact == :medium) || 
-                            (probability == :medium && impact == :high)
+                        when (exposure == :high && impact == :medium) || (exposure == :medium && impact == :high)
                           "bg-yellow-100"
-                        when probability == :medium && impact == :medium
+                        when exposure == :medium && impact == :medium
                           "bg-yellow-100"
                         else
                           "bg-green-100"
                         end
           %>
           <div class="px-4 py-8 <%= impact == :low ? '' : 'border-l border-gray-300' %> <%= cell_color %>">
-            <div class="font-medium text-lg">
-              <%= cell_data.present? ? cell_data[:percentage] : 0 %>%
+            <div class="font-medium text-lg h-10">
+              <% if cell_data.present? %>
+                <%= cell_data[:percentage] %>%
+              <% else %>
+                <span class="text-gray-400"><%= 0 %>%</span>
+              <% end %>
             </div>
             <div class="text-xs text-gray-600 mt-1">
               <% if cell_data.present? %>
