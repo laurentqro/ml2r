@@ -1,0 +1,16 @@
+<div class="bg-white shadow rounded-lg p-6" 
+     data-controller="chart"
+     data-chart-scores-value="<%= [
+       client.country_risk_score,
+       client.client_risk_score,
+       client.products_and_services_risk_score,
+       client.distribution_channel_risk_score,
+       client.transaction_risk_score
+     ].to_json %>"
+     data-chart-total-score-value="<%= client.total_risk_score %>">
+  <h2 class="text-xl font-bold text-gray-900 mb-4">Risk Profile</h2>
+  
+  <div class="w-full max-w-lg mx-auto">
+    <canvas id="riskRadarChart" data-chart-target="canvas"></canvas>
+  </div>
+</div> 

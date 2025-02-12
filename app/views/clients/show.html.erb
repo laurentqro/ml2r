@@ -8,6 +8,8 @@
   <div class="max-w-3xl mx-auto space-y-8">
     <%= render "client_header", client: @client %>
 
+    <%= render "risk_radar", client: @client %>
+
     <%= render "identification_documents_section", documents: @client.clientable.identification_documents %>
 
     <%= render "overall_risk_score", client: @client %>
