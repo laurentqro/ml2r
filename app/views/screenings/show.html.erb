@@ -21,41 +21,43 @@
             
             <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
               <div class="space-y-1">
-                <p class="text-sm font-medium text-gray-500">Nature</p>
-                <p class="text-gray-900"><%= match.sanction.nature %></p>
+                <p class="text-sm font-medium text-gray-500">Type</p>
+                <p class="text-gray-900"><%= match.schema %></p>
               </div>
 
               <div class="space-y-1">
                 <p class="text-sm font-medium text-gray-500">Name</p>
-                <p class="text-gray-900"><%= match.sanction.last_name %><%= ", #{match.sanction.first_name}" if match.sanction.first_name.present? %></p>
+                <p class="text-gray-900"><%= match.name %></p>
               </div>
 
-              <% if match.sanction.alias.present? %>
+              <% if match.aliases.any? %>
                 <div class="col-span-2 space-y-1">
-                  <p class="text-sm font-medium text-gray-500">Alias</p>
-                  <p class="text-gray-900"><%= match.sanction.alias %></p>
+                  <p class="text-sm font-medium text-gray-500">Aliases</p>
+                  <p class="text-gray-900"><%= match.aliases.join(", ") %></p>
                 </div>
               <% end %>
 
-              <div class="space-y-1">
-                <p class="text-sm font-medium text-gray-500">Nationality</p>
-                <p class="text-gray-900"><%= ISO3166::Country[match.sanction.nationality]&.iso_short_name %></p>
-              </div>
+              <% if match.nationality.present? %>
+                <div class="space-y-1">
+                  <p class="text-sm font-medium text-gray-500">Nationality</p>
+                  <p class="text-gray-900"><%= ISO3166::Country[match.nationality]&.iso_short_name %></p>
+                </div>
+              <% end %>
 
-              <div class="space-y-1">
-                <p class="text-sm font-medium text-gray-500">Date of Birth</p>
-                <p class="text-gray-900"><%= match.sanction.date_of_birth %></p>
-              </div>
-            </div>
+              <% if match.birth_date.present? %>
+                <div class="space-y-1">
+                  <p class="text-sm font-medium text-gray-500">Date of Birth</p>
+                  <p class="text-gray-900"><%= match.birth_date %></p>
+                </div>
+              <% end %>
 
-            <div class="mt-6">
-              <button class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                      onclick="document.getElementById('details-<%= match.id %>').classList.toggle('hidden')">
-                <span>Show/Hide Full Details</span>
-              </button>
-
-              <div id="details-<%= match.id %>" class="hidden mt-4">
-                <%= render "sanctions/details", sanction: match.sanction %>
+              <div class="col-span-2 space-y-1">
+                <p class="text-sm font-medium text-gray-500">Sanctions Lists</p>
+                <ul class="list-disc pl-5 text-gray-900">
+                  <% match.sanctions.each do |dataset| %>
+                    <li><%= dataset %></li>
+                  <% end %>
+                </ul>
               </div>
             </div>
           </div>

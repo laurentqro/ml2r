@@ -5,8 +5,8 @@ class ScreeningsController < ApplicationController
 
   def show
     @client = Client.find(params[:client_id])
-    @screening = Screening.includes(matches: :sanction).find(params[:id])
-    @matches = @screening.matches.includes(:sanction).order(score: :desc)
+    @screening = Screening.includes(:matches).find(params[:id])
+    @matches = @screening.matches.order(score: :desc)
   end
 
   def create
