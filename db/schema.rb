@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_07_144019) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_20_153250) do
   create_table "clients", force: :cascade do |t|
     t.string "clientable_type"
     t.integer "clientable_id"
@@ -42,11 +42,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_07_144019) do
   end
 
   create_table "matches", force: :cascade do |t|
-    t.integer "measure_id"
     t.integer "screening_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "score", default: 0
+    t.json "external_data"
+    t.index ["external_data"], name: "index_matches_on_external_data"
     t.index ["screening_id"], name: "index_matches_on_screening_id"
   end
 
@@ -75,6 +76,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_07_144019) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "nationality"
+    t.date "date_of_birth"
   end
 
   create_table "risk_factors", force: :cascade do |t|
