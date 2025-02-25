@@ -44,4 +44,8 @@ class PersonRiskFactor < RiskFactor
   def description
     DESCRIPTIONS[category.to_sym][identifier.to_sym]
   end
+
+  def self.available_categories
+    categories.keys
+  end
 end

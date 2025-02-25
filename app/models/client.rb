@@ -16,18 +16,6 @@ class Client < ApplicationRecord
   accepts_nested_attributes_for :risk_factors, allow_destroy: true,
     reject_if: proc { |attributes| attributes["identified_at"].blank? }
 
-  def risk_factor_class
-    case clientable_type
-    when "Person" then PersonRiskFactor
-    when "Company" then CompanyRiskFactor
-    else raise "Unknown clientable type: #{clientable_type}"
-    end
-  end
-
-  def available_risk_categories
-    risk_factor_class.categories.keys
-  end
-
   scope :clear, -> {
     where("NOT EXISTS (
       SELECT 1 FROM people
@@ -61,9 +49,15 @@ class Client < ApplicationRecord
       .where("people.pep = ?", true)
   }
 
-  def total_risk_score
-    return Float::INFINITY if blacklisted?
+  def risk_factor_class
+    case clientable_type
+    when "Person" then PersonRiskFactor
+    when "Company" then CompanyRiskFactor
+    else raise "Unknown clientable type: #{clientable_type}"
+    end
+  end
 
+  def total_risk_score
     country_risk_score + total_risk_factors_score
   end
 
@@ -91,12 +85,6 @@ class Client < ApplicationRecord
     risk_factor_class.where(client: self, category: category).count * 25
   end
 
-  def blacklisted?
-    [ country_of_residence, nationality, country_of_profession, country_of_birth ].compact.any? do |country|
-      ::CountryRiskScorer.gafi_status(country) == :black
-    end
-  end
-
   def build_clientable(type:)
     case type.downcase
     when "person"
@@ -109,6 +97,8 @@ class Client < ApplicationRecord
   end
 
   def country_risk_score
+    return Float::INFINITY if blacklisted?
+
     scores = []
     weights = []
 
@@ -138,11 +128,21 @@ class Client < ApplicationRecord
     (weighted_sum / weights.sum).round
   end
 
+  def available_risk_categories
+    risk_factor_class.available_categories
+  end
+
   private
 
   def no_blacklisted_countries
     if blacklisted?
       errors.add(:base, "Cannot onboard clients with ties to GAFI blacklisted countries")
+    end
+  end
+
+  def blacklisted?
+    [ country_of_residence, nationality, country_of_profession, country_of_birth ].compact.any? do |country|
+      ::CountryRiskScorer.gafi_status(country) == :black
     end
   end
 end
