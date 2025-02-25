@@ -8,14 +8,15 @@
         Screening run on <%= @screening.created_at.strftime("%B %d, %Y at %I:%M%p") %>
       </p>
     </div>
+    <%= link_to "Back to Client", client_path(@client), class: "inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
   </div>
 
   <div class="mt-8 space-y-6">
     <% @matches.each do |match| %>
       <div class="bg-white rounded-lg shadow p-4 border border-gray-200 hover:shadow-md transition-shadow duration-200">
-          <div class="flex justify-between items-start mb-2">
+          <div class="flex justify-between items-start">
             <%= link_to client_screening_match_path(@client, @screening, match), class: "block no-underline" do %>
-              <h3 class="font-medium text-lg text-blue-600 hover:text-blue-800 line-clamp-2"><%= match.caption %></h3>
+              <h3 class="text-lg font-medium text-blue-600 hover:text-blue-800"><%= match.caption %></h3>
             <% end %>
 
             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium <%= match_score_classes(match.external_score) %>">
@@ -33,19 +34,19 @@
                 <%= topic_description(topic) %>
               </span>
             <% end %>
+          </div>
 
-            <div class="mt-2 text-sm text-gray-600">
-              <% match.countries.each do |country_code| %>
-                <% if country_code == "suhh" %>
-                  <span class="inline-block mr-2">• Soviet Union</span>
-                <% else %>
-                  <% country = ISO3166::Country[country_code] %>
-                  <span class="inline-block mr-2">• <%= country ? (country.respond_to?(:common_name) ? country.common_name : country.name) : country_code %></span>
-                <% end %>
+          <div class="mt-2 text-sm text-gray-600">
+            <% match.countries.each do |country_code| %>
+              <% if country_code == "suhh" %>
+                <span class="inline-block mr-2">• Soviet Union</span>
+              <% else %>
+                <% country = ISO3166::Country[country_code] %>
+                <span class="inline-block mr-2">• <%= country ? (country.respond_to?(:common_name) ? country.common_name : country.name) : country_code %></span>
               <% end %>
-            </div>
+            <% end %>
           </div>
       </div>
     <% end %>
   </div>
-</div>
+</div> 
