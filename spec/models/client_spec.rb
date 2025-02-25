@@ -185,7 +185,7 @@ RSpec.describe Client do
 
     describe "#total_risk_factors_score" do
       it "sums up scores from all risk categories" do
-        allow(client).to receive(:available_risk_categories).and_return(["client_risk", "transaction_risk"])
+        allow(client).to receive(:available_risk_categories).and_return([ "client_risk", "transaction_risk" ])
         allow(client).to receive(:category_risk_score).with("client_risk").and_return(25)
         allow(client).to receive(:category_risk_score).with("transaction_risk").and_return(50)
 
