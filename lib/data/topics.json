@@ -1,0 +1,314 @@
+{
+  "metadata": {
+    "source_url": "https://www.opensanctions.org/reference/#type.topic",
+    "description": "Topic codes from OpenSanctions API",
+    "last_updated": "2025-02-25"
+  },
+  "topics": [
+    {
+      "code": "crime",
+      "label": "Crime",
+      "target": "yes"
+    },
+    {
+      "code": "crime.fraud",
+      "label": "Fraud",
+      "target": "yes"
+    },
+    {
+      "code": "crime.cyber",
+      "label": "Cybercrime",
+      "target": ""
+    },
+    {
+      "code": "crime.fin",
+      "label": "Financial crime",
+      "target": "yes"
+    },
+    {
+      "code": "crime.env",
+      "label": "Environmental violations",
+      "target": ""
+    },
+    {
+      "code": "crime.theft",
+      "label": "Theft",
+      "target": "yes"
+    },
+    {
+      "code": "crime.war",
+      "label": "War crimes",
+      "target": "yes"
+    },
+    {
+      "code": "crime.boss",
+      "label": "Criminal leadership",
+      "target": "yes"
+    },
+    {
+      "code": "crime.terror",
+      "label": "Terrorism",
+      "target": "yes"
+    },
+    {
+      "code": "crime.traffick",
+      "label": "Trafficking",
+      "target": "yes"
+    },
+    {
+      "code": "crime.traffick.drug",
+      "label": "Drug trafficking",
+      "target": ""
+    },
+    {
+      "code": "crime.traffick.human",
+      "label": "Human trafficking",
+      "target": ""
+    },
+    {
+      "code": "wanted",
+      "label": "Wanted",
+      "target": "yes"
+    },
+    {
+      "code": "corp.offshore",
+      "label": "Offshore",
+      "target": ""
+    },
+    {
+      "code": "corp.shell",
+      "label": "Shell company",
+      "target": ""
+    },
+    {
+      "code": "corp.public",
+      "label": "Public listed company",
+      "target": ""
+    },
+    {
+      "code": "corp.disqual",
+      "label": "Disqualified",
+      "target": "yes"
+    },
+    {
+      "code": "gov",
+      "label": "Government",
+      "target": ""
+    },
+    {
+      "code": "gov.national",
+      "label": "National government",
+      "target": ""
+    },
+    {
+      "code": "gov.state",
+      "label": "State government",
+      "target": ""
+    },
+    {
+      "code": "gov.muni",
+      "label": "Municipal government",
+      "target": ""
+    },
+    {
+      "code": "gov.soe",
+      "label": "State-owned enterprise",
+      "target": ""
+    },
+    {
+      "code": "gov.igo",
+      "label": "Intergovernmental organization",
+      "target": ""
+    },
+    {
+      "code": "gov.head",
+      "label": "Head of government or state",
+      "target": ""
+    },
+    {
+      "code": "gov.admin",
+      "label": "Civil service",
+      "target": ""
+    },
+    {
+      "code": "gov.executive",
+      "label": "Executive branch of government",
+      "target": ""
+    },
+    {
+      "code": "gov.legislative",
+      "label": "Legislative branch of government",
+      "target": ""
+    },
+    {
+      "code": "gov.judicial",
+      "label": "Judicial branch of government",
+      "target": ""
+    },
+    {
+      "code": "gov.security",
+      "label": "Security services",
+      "target": ""
+    },
+    {
+      "code": "gov.financial",
+      "label": "Central banking and financial integrity",
+      "target": ""
+    },
+    {
+      "code": "fin",
+      "label": "Financial services",
+      "target": ""
+    },
+    {
+      "code": "fin.bank",
+      "label": "Bank",
+      "target": ""
+    },
+    {
+      "code": "fin.fund",
+      "label": "Fund",
+      "target": ""
+    },
+    {
+      "code": "fin.adivsor",
+      "label": "Financial advisor",
+      "target": ""
+    },
+    {
+      "code": "reg.action",
+      "label": "Regulator action",
+      "target": "yes"
+    },
+    {
+      "code": "reg.warn",
+      "label": "Regulator warning",
+      "target": "yes"
+    },
+    {
+      "code": "role.pep",
+      "label": "Politician",
+      "target": "yes"
+    },
+    {
+      "code": "role.pol",
+      "label": "Non-PEP",
+      "target": ""
+    },
+    {
+      "code": "role.rca",
+      "label": "Close Associate",
+      "target": "yes"
+    },
+    {
+      "code": "role.judge",
+      "label": "Judge",
+      "target": ""
+    },
+    {
+      "code": "role.civil",
+      "label": "Civil servant",
+      "target": ""
+    },
+    {
+      "code": "role.diplo",
+      "label": "Diplomat",
+      "target": ""
+    },
+    {
+      "code": "role.lawyer",
+      "label": "Lawyer",
+      "target": ""
+    },
+    {
+      "code": "role.acct",
+      "label": "Accountant",
+      "target": ""
+    },
+    {
+      "code": "role.spy",
+      "label": "Spy",
+      "target": ""
+    },
+    {
+      "code": "role.oligarch",
+      "label": "Oligarch",
+      "target": "yes"
+    },
+    {
+      "code": "role.journo",
+      "label": "Journalist",
+      "target": ""
+    },
+    {
+      "code": "role.act",
+      "label": "Activist",
+      "target": ""
+    },
+    {
+      "code": "role.lobby",
+      "label": "Lobbyist",
+      "target": ""
+    },
+    {
+      "code": "pol.party",
+      "label": "Political party",
+      "target": ""
+    },
+    {
+      "code": "pol.union",
+      "label": "Union",
+      "target": ""
+    },
+    {
+      "code": "rel",
+      "label": "Religion",
+      "target": ""
+    },
+    {
+      "code": "mil",
+      "label": "Military",
+      "target": ""
+    },
+    {
+      "code": "asset.frozen",
+      "label": "Frozen asset",
+      "target": ""
+    },
+    {
+      "code": "sanction",
+      "label": "Sanctioned entity",
+      "target": "yes"
+    },
+    {
+      "code": "sanction.linked",
+      "label": "Sanction-linked entity",
+      "target": "yes"
+    },
+    {
+      "code": "sanction.counter",
+      "label": "Counter-sanctioned entity",
+      "target": "yes"
+    },
+    {
+      "code": "export.control",
+      "label": "Export controlled",
+      "target": "yes"
+    },
+    {
+      "code": "export.risk",
+      "label": "Trade risk",
+      "target": "yes"
+    },
+    {
+      "code": "debarment",
+      "label": "Debarred entity",
+      "target": "yes"
+    },
+    {
+      "code": "poi",
+      "label": "Person of interest",
+      "target": "yes"
+    }
+  ]
+}

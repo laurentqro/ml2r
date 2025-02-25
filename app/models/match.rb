@@ -9,12 +9,8 @@ class Match < ApplicationRecord
     external_data&.dig("schema")
   end
 
-  def name
-    if schema == "Person"
-      "#{properties['lastName']}, #{properties['firstName']}".strip.chomp(",")
-    else
-      properties["name"]
-    end
+  def caption
+    external_data&.dig("caption")
   end
 
   def aliases
@@ -37,11 +33,15 @@ class Match < ApplicationRecord
     external_data&.dig("datasets") || []
   end
 
-  def person?
-    schema == "Person"
+  def topics
+    properties["topics"] || []
   end
 
-  def company?
-    schema == "Organization"
+  def external_score
+    (external_data&.dig("score") * 100).to_i
+  end
+
+  def countries
+    (Array(properties["citizenship"]) + Array(properties["country"])).uniq
   end
 end

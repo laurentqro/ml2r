@@ -9,58 +9,34 @@
 
   <div class="mt-8 space-y-6">
     <% @matches.each do |match| %>
-      <div class="bg-white rounded-lg shadow p-6 border border-gray-200">
-        <div class="flex justify-between items-start">
-          <div class="flex-grow">
-            <div class="flex items-center space-x-2">
-              <span class="text-lg font-medium">Match Score:</span>
-              <span class="px-3 py-1 rounded-full <%= match_score_classes(match.score) %>">
-                <%= match.score %>
-              </span>
-            </div>
-            
-            <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div class="space-y-1">
-                <p class="text-sm font-medium text-gray-500">Type</p>
-                <p class="text-gray-900"><%= match.schema %></p>
-              </div>
+      <div class="bg-white rounded-lg shadow p-4 border border-gray-200">
+        <div class="flex justify-between items-start mb-2">
+          <%= match.caption %>
 
-              <div class="space-y-1">
-                <p class="text-sm font-medium text-gray-500">Name</p>
-                <p class="text-gray-900"><%= match.name %></p>
-              </div>
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium <%= match_score_classes(match.external_score) %>">
+            Match Score: <%= match.external_score %>
+          </span>
+        </div>
 
-              <% if match.aliases.any? %>
-                <div class="col-span-2 space-y-1">
-                  <p class="text-sm font-medium text-gray-500">Aliases</p>
-                  <p class="text-gray-900"><%= match.aliases.join(", ") %></p>
-                </div>
-              <% end %>
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+            <%= match.schema %>
+          </span>
 
-              <% if match.nationality.present? %>
-                <div class="space-y-1">
-                  <p class="text-sm font-medium text-gray-500">Nationality</p>
-                  <p class="text-gray-900"><%= ISO3166::Country[match.nationality]&.iso_short_name %></p>
-                </div>
-              <% end %>
+          <% match.topics.each do |topic| %>
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium <%= topic_badge_classes(topic) %>">
+              <%= topic_description(topic) %>
+            </span>
+          <% end %>
 
-              <% if match.birth_date.present? %>
-                <div class="space-y-1">
-                  <p class="text-sm font-medium text-gray-500">Date of Birth</p>
-                  <p class="text-gray-900"><%= match.birth_date %></p>
-                </div>
-              <% end %>
-
-              <div class="col-span-2 space-y-1">
-                <p class="text-sm font-medium text-gray-500">Sanctions Lists</p>
-                <ul class="list-disc pl-5 text-gray-900">
-                  <% match.sanctions.each do |dataset| %>
-                    <li><%= dataset %></li>
-                  <% end %>
-                </ul>
-              </div>
-            </div>
-          </div>
+          <% match.countries.each do |country_code| %>
+            <% if country_code == "suhh" %>
+              • Soviet Union
+            <% else %>
+              <% country = ISO3166::Country[country_code] %>
+              • <%= country ? (country.respond_to?(:common_name) ? country.common_name : country.name) : country_code %>
+            <% end %>
+          <% end %>
         </div>
       </div>
     <% end %>
