@@ -65,7 +65,7 @@ class ClientsController < ApplicationController
   end
 
   def edit
-    @client = Client.includes(clientable: { screenings: :sanctions }).find(params[:id])
+    @client = Client.includes(clientable: :screenings).find(params[:id])
   end
 
   def update
