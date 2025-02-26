@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@layer base {
+  h1 {
+    @apply text-[2.25rem] font-[700];
+  }
+
+  h2 {
+    @apply text-[1.875rem] font-[700] pb-2;
+  }
+
+  h3 {
+    @apply text-[1.25rem] font-[700] pb-2;
+  }
+
+  a {
+    @apply underline text-blue-500;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply rounded-md bg-blue-600 px-3.5 py-2.5 text-sm font-[600] text-white shadow-sm hover:cursor-pointer hover:bg-blue-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 no-underline font-sans not-italic;
+  }
+} 
