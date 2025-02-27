@@ -26,6 +26,14 @@ FOREIGN KEY ("client_id")
   REFERENCES "clients" ("id")
 );
 CREATE INDEX "index_risk_scoresheets_on_client_id" ON "risk_scoresheets" ("client_id") /*application='Ml2r'*/;
+CREATE TABLE IF NOT EXISTS "matches" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "screening_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "score" integer DEFAULT 0, "external_data" json, CONSTRAINT "fk_rails_2ea8490fc6"
+FOREIGN KEY ("screening_id")
+  REFERENCES "screenings" ("id")
+);
+CREATE INDEX "index_matches_on_screening_id" ON "matches" ("screening_id") /*application='Ml2r'*/;
+CREATE INDEX "index_matches_on_external_data" ON "matches" ("external_data") /*application='Ml2r'*/;
+CREATE TABLE IF NOT EXISTS "risk_factor_definitions" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "category" varchar NOT NULL, "description" text NOT NULL, "score" integer NOT NULL, "risk_factor_type" varchar NOT NULL, "identifier" varchar NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
+CREATE UNIQUE INDEX "idx_risk_factor_definitions_unique" ON "risk_factor_definitions" ("risk_factor_type", "category", "identifier") /*application='Ml2r'*/;
 CREATE VIEW client_risk_summaries AS
       WITH latest_scoresheets AS (
         SELECT rs.*
@@ -46,8 +54,8 @@ CREATE VIEW client_risk_summaries AS
           WHEN c.clientable_type = 'Company' THEN comp.name
         END AS display_name,
         CASE
-          WHEN c.clientable_type = 'Person' THEN p.pep
-          ELSE 0
+          WHEN c.clientable_type = 'Person' AND p.pep = 1 THEN 1
+          ELSE NULL
         END AS pep,
         CASE
           WHEN c.clientable_type = 'Person' THEN p.sanctioned
@@ -71,14 +79,6 @@ CREATE VIEW client_risk_summaries AS
       LEFT JOIN companies comp ON c.clientable_type = 'Company' AND c.clientable_id = comp.id
       LEFT JOIN latest_scoresheets rs ON c.id = rs.client_id
 /* client_risk_summaries(client_id,clientable_type,clientable_id,display_name,pep,sanctioned,country_risk_score,client_risk_score,products_and_services_risk_score,distribution_channel_risk_score,transaction_risk_score,total_risk_score,scoresheet_date) */;
-CREATE TABLE IF NOT EXISTS "matches" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "screening_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "score" integer DEFAULT 0, "external_data" json, CONSTRAINT "fk_rails_2ea8490fc6"
-FOREIGN KEY ("screening_id")
-  REFERENCES "screenings" ("id")
-);
-CREATE INDEX "index_matches_on_screening_id" ON "matches" ("screening_id") /*application='Ml2r'*/;
-CREATE INDEX "index_matches_on_external_data" ON "matches" ("external_data") /*application='Ml2r'*/;
-CREATE TABLE IF NOT EXISTS "risk_factor_definitions" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "category" varchar NOT NULL, "description" text NOT NULL, "score" integer NOT NULL, "risk_factor_type" varchar NOT NULL, "identifier" varchar NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
-CREATE UNIQUE INDEX "idx_risk_factor_definitions_unique" ON "risk_factor_definitions" ("risk_factor_type", "category", "identifier") /*application='Ml2r'*/;
 INSERT INTO "schema_migrations" (version) VALUES
 ('20250226144431'),
 ('20250220153250'),

@@ -21,12 +21,16 @@ class CreateClientRiskSummariesView < ActiveRecord::Migration[8.0]
           WHEN c.clientable_type = 'Company' THEN comp.name
         END AS display_name,
         CASE
-          WHEN c.clientable_type = 'Person' THEN p.pep
-          ELSE 0
+          WHEN c.clientable_type = 'Person' AND p.pep = 1 THEN true
+          WHEN c.clientable_type = 'Person' AND p.pep = 0 THEN false
+          ELSE NULL
         END AS pep,
         CASE
-          WHEN c.clientable_type = 'Person' THEN p.sanctioned
-          ELSE comp.sanctioned
+          WHEN c.clientable_type = 'Person' AND p.sanctioned = 1 THEN true
+          WHEN c.clientable_type = 'Person' AND p.sanctioned = 0 THEN false
+          WHEN c.clientable_type = 'Company' AND comp.sanctioned = 1 THEN true
+          WHEN c.clientable_type = 'Company' AND comp.sanctioned = 0 THEN false
+          ELSE NULL
         END AS sanctioned,
         rs.country_risk_score,
         rs.client_risk_score,
