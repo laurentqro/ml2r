@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_20_153250) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_26_144431) do
   create_table "clients", force: :cascade do |t|
     t.string "clientable_type"
     t.integer "clientable_id"
@@ -77,6 +77,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_20_153250) do
     t.datetime "updated_at", null: false
     t.string "nationality"
     t.date "date_of_birth"
+  end
+
+  create_table "risk_factor_definitions", force: :cascade do |t|
+    t.string "category", null: false
+    t.text "description", null: false
+    t.integer "score", null: false
+    t.string "risk_factor_type", null: false
+    t.string "identifier", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["risk_factor_type", "category", "identifier"], name: "idx_risk_factor_definitions_unique", unique: true
   end
 
   create_table "risk_factors", force: :cascade do |t|

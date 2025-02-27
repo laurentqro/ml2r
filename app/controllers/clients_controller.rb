@@ -3,8 +3,7 @@ class ClientsController < ApplicationController
   include ClientsHelper
 
   def index
-    base_scope = ClientRiskSummary
-      .order(sort_column => sort_direction)
+    base_scope = ClientRiskSummary.order(sort_column => sort_direction)
 
     filtered_scope = if params[:nature].present?
       base_scope.where(clientable_type: params[:nature].capitalize)

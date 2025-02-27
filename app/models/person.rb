@@ -7,7 +7,6 @@ class Person < ApplicationRecord
   validates :first_name, :last_name, presence: true
   validates :country_of_birth, :country_of_residence, :country_of_profession, presence: true
   validates :profession, presence: true
-  validates :pep, inclusion: { in: [ true, false ] }
 
   accepts_nested_attributes_for :identification_documents, allow_destroy: true, reject_if: :all_blank
 

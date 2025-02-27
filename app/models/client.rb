@@ -82,7 +82,12 @@ class Client < ApplicationRecord
   end
 
   def category_risk_score(category)
-    risk_factor_class.where(client: self, category: category).count * 25
+    risk_factor_class.where(client: self, category: category).sum do |risk_factor|
+      risk_factor_class.score_for(
+        category,
+        risk_factor.identifier
+      )
+    end
   end
 
   def build_clientable(type:)
