@@ -1,4 +1,4 @@
-class CreateClientRiskScoresheetsView < ActiveRecord::Migration[8.0]
+class CreateClientRiskSummariesView < ActiveRecord::Migration[8.0]
   def up
     execute <<-SQL
       CREATE VIEW client_risk_summaries AS
@@ -9,22 +9,22 @@ class CreateClientRiskScoresheetsView < ActiveRecord::Migration[8.0]
           SELECT client_id, MAX(created_at) as max_created_at
           FROM risk_scoresheets
           GROUP BY client_id
-        ) latest ON rs.client_id = latest.client_id#{' '}
+        ) latest ON rs.client_id = latest.client_id
         AND rs.created_at = latest.max_created_at
       )
-      SELECT#{' '}
+      SELECT
         c.id AS client_id,
         c.clientable_type,
         c.clientable_id,
-        CASE#{' '}
+        CASE
           WHEN c.clientable_type = 'Person' THEN p.last_name || ', ' || p.first_name
           WHEN c.clientable_type = 'Company' THEN comp.name
         END AS display_name,
-        CASE#{' '}
+        CASE
           WHEN c.clientable_type = 'Person' THEN p.pep
           ELSE 0
         END AS pep,
-        CASE#{' '}
+        CASE
           WHEN c.clientable_type = 'Person' THEN p.sanctioned
           ELSE comp.sanctioned
         END AS sanctioned,
@@ -45,9 +45,6 @@ class CreateClientRiskScoresheetsView < ActiveRecord::Migration[8.0]
       LEFT JOIN people p ON c.clientable_type = 'Person' AND c.clientable_id = p.id
       LEFT JOIN companies comp ON c.clientable_type = 'Company' AND c.clientable_id = comp.id
       LEFT JOIN latest_scoresheets rs ON c.id = rs.client_id;
-
-      CREATE INDEX idx_client_risk_summaries_client_id#{' '}
-        ON client_risk_summaries (client_id);
     SQL
   end
 
