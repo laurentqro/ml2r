@@ -11,6 +11,6 @@
 
   <p>
     <strong>Profession:</strong>
-    <%= Occupation.find_by(unit: person.profession)&.description %>
+    <%= Occupation.find_by(unit: person.profession)&.description&.strip&.singularize %>
   </p>
 </div>

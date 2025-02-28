@@ -41,6 +41,12 @@
     <div class="mt-10">
         <%= render "country_fields", f: f %>
 
+        <% if @client.clientable_type == "Person" %>
+          <div class="mt-4">
+            <%= render "profession_field", f: f %>
+          </div>
+        <% end %>
+
         <div class="mt-6 space-y-8">
           <% @client.available_risk_categories.each do |category| %>
             <div>
