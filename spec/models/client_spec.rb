@@ -92,10 +92,14 @@ RSpec.describe Client do
     context 'with risk factors' do
       before do
         client.save!
+
+        create(:person_client_risk_factor_definition, identifier: :rushed_transactions, score: 10)
+        create(:person_products_and_services_risk_factor_definition, identifier: :new_build_sale, score: 15)
+
         create(:person_risk_factor,
           client: client,
-          category: :distribution_channel_risk,
-          identifier: :remote_relationship
+          category: :products_and_services_risk,
+          identifier: :new_build_sale
         )
 
         create(:person_risk_factor,
@@ -106,11 +110,11 @@ RSpec.describe Client do
       end
 
       it 'calculates combined risk score' do
-        # Country score: 59 (from existing test)
-        # Risk factors score: 2 factors * 25 = 50
-        # Final score: (59 + 50) = 109
+        # Country score: 59
+        # Risk factors score: 15 + 10 = 25
+        # Final score: (59 + 25) = 84
 
-        expect(client.total_risk_score).to eq(109)
+        expect(client.total_risk_score).to eq(84)
       end
     end
   end
@@ -194,14 +198,23 @@ RSpec.describe Client do
     end
 
     describe "#category_risk_score" do
-      it "calculates score based on risk factor count" do
-        risk_factor_class = class_double("PersonRiskFactor")
-        relation = instance_double("ActiveRecord::Relation", count: 3)
+      it "calculates score based on risk factor definitions" do
+        create(:person_client_risk_factor_definition, identifier: :rushed_transactions, score: 30)
+        create(:person_client_risk_factor_definition, identifier: :trust_or_foundation, score: 25)
 
-        allow(client).to receive(:risk_factor_class).and_return(risk_factor_class)
-        allow(risk_factor_class).to receive(:where).with(client: client, category: :client_risk).and_return(relation)
+        create(:person_risk_factor,
+          client: client,
+          category: :client_risk,
+          identifier: :rushed_transactions
+        )
 
-        expect(client.category_risk_score(:client_risk)).to eq(75) # 3 * 25
+        create(:person_risk_factor,
+          client: client,
+          category: :client_risk,
+          identifier: :trust_or_foundation
+        )
+
+        expect(client.category_risk_score(:client_risk)).to eq(55)
       end
     end
 
