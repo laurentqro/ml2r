@@ -1,6 +1,4 @@
 class CompanyRiskFactor < RiskFactor
-  enum :category, [ :client_risk, :products_and_services_risk, :distribution_channel_risk, :transaction_risk ]
-
   scope :client_risks, -> { where(category: :client_risk) }
   scope :products_and_services_risks, -> { where(category: :products_and_services_risk) }
   scope :distribution_channel_risks, -> { where(category: :distribution_channel_risk) }
