@@ -3,13 +3,19 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["select", "searchInput", "dropdown", "options"]
   static values = {
-    placeholder: String
+    placeholder: { type: String, default: "Search..." }
   }
 
   connect() {
     this.setupSelectOptions()
     this.hideNativeSelect()
     this.initializeWithCurrentValue()
+
+    // Set placeholder from select's prompt if available
+    const promptOption = this.selectTarget.querySelector('option[value=""]')
+    if (promptOption) {
+      this.searchInputTarget.placeholder = promptOption.text
+    }
     
     // Bind the clickOutside method to this controller instance
     this.boundClickOutside = this.clickOutside.bind(this)
