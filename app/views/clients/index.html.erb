@@ -29,101 +29,43 @@
   </nav>
 </div>
 
-<div class="mt-8 flow-root">
-  <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-    <div class="inline-block min-w-full py-2 align-middle">
-      <%= render 'shared/pagination', collection: @clients %>
-
-      <div class="bg-white shadow ring-1 ring-gray-300 sm:rounded-lg overflow-hidden">
-        <table class="min-w-full divide-y divide-gray-300">
-          <thead class="bg-gray-50">
-            <tr class="border-x border-gray-300">
-              <th scope="col" rowspan="2" class="w-96 py-3.5 pl-4 pr-3 text-left text-sm font-semibold sm:pl-6 first:sm:rounded-tl-lg border-r border-gray-300">
-                <%= sortable "display_name", "Name" %>
-              </th>
-              <th scope="col" colspan="6" class="px-3 py-2 text-center text-sm font-semibold text-gray-900 border-b border-gray-300">
-                Risk Assessment
-              </th>
-            </tr>
-            <tr class="border-x border-gray-300">
-              <th scope="col" class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-2 text-center text-sm font-semibold border-r border-gray-300">
-                <%= sortable "country_risk_score", "Country" %>
-              </th>
-              <th scope="col" class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-2 text-center text-sm font-semibold border-r border-gray-300">
-                <%= sortable "client_risk_score", "Client" %>
-              </th>
-              <th scope="col" class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-2 text-center text-sm font-semibold border-r border-gray-300">
-                <%= sortable "products_and_services_risk_score", "Services" %>
-              </th>
-              <th scope="col" class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-2 text-center text-sm font-semibold border-r border-gray-300">
-                <%= sortable "distribution_channel_risk_score", "Distribution" %>
-              </th>
-              <th scope="col" class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-2 text-center text-sm font-semibold border-r border-gray-300">
-                <%= sortable "transaction_risk_score", "Transaction" %>
-              </th>
-              <th scope="col" class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-2 text-center text-sm font-semibold last:sm:rounded-tr-lg">
-                <%= sortable "total_risk_score", "Total" %>
-              </th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-gray-200 bg-white">
-            <% @clients.each_with_index do |summary, index| %>
-              <tr class="hover:bg-gray-50 border-x border-gray-300">
-                <td class="w-96 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 <%= 'sm:rounded-bl-lg' if index == @clients.size - 1 %>">
-                  <div class="max-w-md flex items-center justify-between">
-                    <%= link_to summary.display_name, client_path(summary.client_id),
-                        class: "text-blue-600 hover:text-blue-800 line-clamp-2" %>
-                    <div class="flex gap-2 flex-shrink-0 ml-2">
-                      <% if summary.pep %>
-                        <span class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">
-                          PEP
-                        </span>
-                      <% end %>
-                      <% if summary.sanctioned %>
-                        <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-800 ring-1 ring-inset ring-red-600/20">
-                          Sanctioned
-                        </span>
-                      <% end %>
-                    </div>
-                  </div>
-                </td>
-                <td class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-4 text-sm text-gray-500 text-center">
-                  <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(summary.country_risk_score) %>">
-                    <%= summary.country_risk_score %>
-                  </span>
-                </td>
-                <td class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-4 text-sm text-gray-500 text-center">
-                  <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(summary.client_risk_score) %>">
-                    <%= summary.client_risk_score %>
-                  </span>
-                </td>
-                <td class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-4 text-sm text-gray-500 text-center">
-                  <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(summary.products_and_services_risk_score) %>">
-                    <%= summary.products_and_services_risk_score %>
-                  </span>
-                </td>
-                <td class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-4 text-sm text-gray-500 text-center">
-                  <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(summary.distribution_channel_risk_score) %>">
-                    <%= summary.distribution_channel_risk_score %>
-                  </span>
-                </td>
-                <td class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-4 text-sm text-gray-500 text-center">
-                  <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(summary.transaction_risk_score) %>">
-                    <%= summary.transaction_risk_score %>
-                  </span>
-                </td>
-                <td class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-4 text-sm text-gray-500 text-center">
-                  <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(summary.total_risk_score) %>">
-                    <%= summary.total_risk_score %>
-                  </span>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
+<div class="mt-4" data-controller="client-search">
+  <%= form_with url: clients_path, method: :get, data: { client_search_target: "form", turbo_frame: "search_results" } do |f| %>
+    <%= f.hidden_field :nature, value: params[:nature] %>
+    <div class="relative rounded-md shadow-sm">
+      <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+        <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
+        </svg>
       </div>
+      <%= f.text_field :query,
+          value: params[:query],
+          placeholder: "Search #{params[:nature] ? params[:nature].pluralize : 'clients'}",
+          class: "block w-full rounded-md border-0 py-2 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6",
+          data: {
+            client_search_target: "input",
+            action: "input->client-search#search keyup->client-search#clear"
+          } %>
+    </div>
+  <% end %>
+</div>
 
-      <%= render 'shared/pagination', collection: @clients %>
+<div class="mt-4 flow-root">
+  <div class="overflow-x-auto">
+    <div class="inline-block min-w-full align-middle">
+      <%= turbo_frame_tag "search_results" do %>
+        <div id="clients_pagination">
+          <%= render 'shared/pagination', collection: @clients %>
+        </div>
+
+        <div id="clients_table">
+          <%= render partial: "clients_table", locals: { clients: @clients } %>
+        </div>
+
+        <div id="clients_pagination">
+          <%= render 'shared/pagination', collection: @clients %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

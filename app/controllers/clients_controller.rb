@@ -11,7 +11,17 @@ class ClientsController < ApplicationController
       base_scope.where(clientable_type: "Person")
     end
 
+    if params[:query].present?
+      search_term = "%#{params[:query].downcase}%"
+      filtered_scope = filtered_scope.where("LOWER(display_name) LIKE ?", search_term)
+    end
+
     @clients = paginate(filtered_scope)
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 
   def show

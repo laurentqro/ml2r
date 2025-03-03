@@ -1,0 +1,96 @@
+<div class="bg-white shadow ring-1 ring-gray-300 sm:rounded-lg overflow-hidden">
+  <table class="min-w-full divide-y divide-gray-300">
+    <thead class="bg-gray-50">
+      <tr class="border-x border-gray-300">
+        <th scope="col" rowspan="2" class="w-96 py-3.5 pl-4 pr-3 text-left text-sm font-semibold sm:pl-6 first:sm:rounded-tl-lg border-r border-gray-300">
+          <%= sortable "display_name", "Name" %>
+        </th>
+        <th scope="col" colspan="6" class="px-3 py-2 text-center text-sm font-semibold text-gray-900 border-b border-gray-300">
+          Risk Assessment
+        </th>
+      </tr>
+      <tr class="border-x border-gray-300">
+        <th scope="col" class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-2 text-center text-sm font-semibold border-r border-gray-300">
+          <%= sortable "country_risk_score", "Country" %>
+        </th>
+        <th scope="col" class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-2 text-center text-sm font-semibold border-r border-gray-300">
+          <%= sortable "client_risk_score", "Client" %>
+        </th>
+        <th scope="col" class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-2 text-center text-sm font-semibold border-r border-gray-300">
+          <%= sortable "products_and_services_risk_score", "Services" %>
+        </th>
+        <th scope="col" class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-2 text-center text-sm font-semibold border-r border-gray-300">
+          <%= sortable "distribution_channel_risk_score", "Distribution" %>
+        </th>
+        <th scope="col" class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-2 text-center text-sm font-semibold border-r border-gray-300">
+          <%= sortable "transaction_risk_score", "Transaction" %>
+        </th>
+        <th scope="col" class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-2 text-center text-sm font-semibold last:sm:rounded-tr-lg">
+          <%= sortable "total_risk_score", "Total" %>
+        </th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200 bg-white">
+      <% if clients.any? %>
+        <% clients.each_with_index do |summary, index| %>
+          <tr class="hover:bg-gray-50 border-x border-gray-300">
+            <td class="w-96 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 <%= 'sm:rounded-bl-lg' if index == clients.size - 1 %>">
+              <div class="max-w-md flex items-center justify-between">
+                <%= link_to summary.display_name, client_path(summary.client_id),
+                    class: "text-blue-600 hover:text-blue-800 line-clamp-2", data: { turbo: false } %>
+                <div class="flex gap-2 flex-shrink-0 ml-2">
+                  <% if summary.pep %>
+                    <span class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">
+                      PEP
+                    </span>
+                  <% end %>
+                  <% if summary.sanctioned %>
+                    <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-800 ring-1 ring-inset ring-red-600/20">
+                      Sanctioned
+                    </span>
+                  <% end %>
+                </div>
+              </div>
+            </td>
+            <td class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-4 text-sm text-gray-500 text-center">
+              <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(summary.country_risk_score) %>">
+                <%= summary.country_risk_score %>
+              </span>
+            </td>
+            <td class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-4 text-sm text-gray-500 text-center">
+              <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(summary.client_risk_score) %>">
+                <%= summary.client_risk_score %>
+              </span>
+            </td>
+            <td class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-4 text-sm text-gray-500 text-center">
+              <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(summary.products_and_services_risk_score) %>">
+                <%= summary.products_and_services_risk_score %>
+              </span>
+            </td>
+            <td class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-4 text-sm text-gray-500 text-center">
+              <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(summary.distribution_channel_risk_score) %>">
+                <%= summary.distribution_channel_risk_score %>
+              </span>
+            </td>
+            <td class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-4 text-sm text-gray-500 text-center">
+              <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(summary.transaction_risk_score) %>">
+                <%= summary.transaction_risk_score %>
+              </span>
+            </td>
+            <td class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-4 text-sm text-gray-500 text-center">
+              <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(summary.total_risk_score) %>">
+                <%= summary.total_risk_score %>
+              </span>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr class="border-x border-gray-300">
+          <td colspan="7" class="py-8 text-center text-gray-500 italic">
+            No clients found matching your search criteria.
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div> 
