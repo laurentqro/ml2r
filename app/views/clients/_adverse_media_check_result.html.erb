@@ -1,0 +1,15 @@
+<h3>Summary</h3>
+
+<div class="space-y-4 mb-6">
+  <% check.content_items.each do |item| %>
+    <p><%= item %></p>
+  <% end %>
+</div>
+
+<h3>Citations</h3>
+
+<ol>
+  <% check.citations.each_with_index do |citation, index| %>
+    <li class="py-1">[<%= index + 1 %>] <%= link_to citation, citation, target: "_blank", rel: "noopener noreferrer" %></li>
+  <% end %>
+</ol>

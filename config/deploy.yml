@@ -7,7 +7,8 @@ image: laurentqro/ml2r
 # Deploy to these servers.
 servers:
   web:
-    - 65.108.244.40
+    hosts:
+      - 65.108.244.40
   # job:
   #   hosts:
   #     - 192.168.0.1
@@ -44,14 +45,14 @@ env:
     # JOB_CONCURRENCY: 3
 
     # Set number of cores available to the application on each server (default: 1).
-    # WEB_CONCURRENCY: 2
+    WEB_CONCURRENCY: 4
 
     # Match this to any external database server to configure Active Record correctly
     # Use ml2r-db for a db accessory server on same machine via local kamal docker network.
     # DB_HOST: 192.168.0.2
 
     # Log everything from Rails
-    # RAILS_LOG_LEVEL: debug
+    RAILS_LOG_LEVEL: debug
 
 # Aliases are triggered with "bin/kamal <alias>". You can overwrite arguments on invocation:
 # "bin/kamal logs -r job" will tail logs from the first server in the job section.

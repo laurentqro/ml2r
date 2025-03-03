@@ -13,6 +13,10 @@
     @apply text-[1.00rem] font-[700] pb-2;
   }
 
+  h4 {
+    @apply text-[0.875rem] font-[700] pb-2;
+  }
+
   a {
     @apply underline text-blue-500;
   }

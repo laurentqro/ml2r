@@ -6,8 +6,9 @@ class Client < ApplicationRecord
   has_many :person_risk_factors, dependent: :destroy
   has_many :company_risk_factors, dependent: :destroy
   has_many :risk_scoresheets, dependent: :destroy
+  has_many :adverse_media_checks, dependent: :destroy
 
-  delegate :country_of_residence, :nationality, :country_of_profession,
+  delegate :display_name, :country_of_residence, :nationality, :country_of_profession,
            :country_of_birth, to: :clientable, allow_nil: true
 
   validate :no_blacklisted_countries

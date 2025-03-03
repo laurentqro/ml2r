@@ -6,7 +6,7 @@
       <div class="flex items-center justify-between">
         <div>
           <h3><%= client.clientable_type == "Company" ? "Country of Incorporation" : "Country of Residence" %></h3>
-          <p><%= country_name(client.country_of_residence) %></p>
+          <p class="text-sm text-gray-500"><%= country_name(client.country_of_residence) %></p>
         </div>
         <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(CountryRiskScorer.calculate_risk_score(client.country_of_residence)) %>">
           <%= CountryRiskScorer.calculate_risk_score(client.country_of_residence) %>

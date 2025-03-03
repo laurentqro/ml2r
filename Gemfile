@@ -45,6 +45,7 @@ gem "countries", "~> 7.1"
 gem "faker", "~> 3.5"
 gem "amatch"
 gem "faraday"
+gem "httparty"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
