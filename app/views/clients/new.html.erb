@@ -19,7 +19,7 @@
       <div class="border-b border-gray-900/10 pb-12">
         <%= f.fields_for :clientable do |cf| %>
           <div data-client-form-target="step1">
-            <h2 class="text-base/7 font-semibold text-gray-900">
+            <h2>
               <%= @client.clientable_type == 'Person' ? 'Personal Information' : 'Company Information' %>
             </h2>
             <p class="mt-1 text-sm/6 text-gray-600">
@@ -55,7 +55,7 @@
 
               <div class="mt-6">
                 <div class="pb-4">
-                  <h3 class="text-base/7 font-semibold text-gray-900">Identification Documents</h3>
+                  <h3>Identification Documents</h3>
                   <div data-controller="document-form">
                     <template data-document-form-target="template">
                       <%= cf.fields_for :identification_documents, IdentificationDocument.new, child_index: 'NEW_RECORD' do |doc| %>
@@ -78,7 +78,7 @@
 
           <div data-client-form-target="step2" class="hidden">
             <div class="pb-4">
-              <h2 class="text-base/7 font-semibold text-gray-900">Risk Assessment</h2>
+              <h2>Risk Assessment</h2>
               <p class="mt-1 text-sm/6 text-gray-600">
                 This information is required for AML risk assessment.
               </p>

@@ -1,9 +1,10 @@
 <%= turbo_frame_tag "kyc_note" do %>
-  <div class="p-4 bg-white rounded-md shadow">
-    <div class="flex justify-between items-start mb-4">
-      <h3 class="text-lg font-bold text-gray-900">KYC Notes</h3>
+  <div class="p-4 bg-white rounded-md shadow mb-4">
+    <div class="flex justify-between items-start">
+      <h3>KYC Notes</h3>
       <%= link_to "Edit", edit_client_path(client, format: :turbo_stream), 
-                  class: "px-3 py-1 text-sm text-blue-600 hover:text-blue-800 hover:underline" %>
+                  class: "px-3 py-1 text-sm text-blue-600 hover:text-blue-800 hover:underline",
+                  data: { turbo_prefetch: false } %>
     </div>
 
     <div class="prose max-w-none">

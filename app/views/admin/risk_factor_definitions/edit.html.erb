@@ -1,7 +1,9 @@
-<div class="container mx-auto px-4 py-8">
-  <div class="mb-6">
-    <h1 class="text-2xl font-bold">Edit Risk Factor Definition</h1>
-  </div>
+<div class="max-w-3xl mx-auto p-6">
+  <h1>Edit Risk Factor Definition</h1>
 
-  <%= render 'form', risk_factor_definition: @risk_factor_definition %>
+  <%= render "form", risk_factor_definition: @risk_factor_definition %>
+
+  <div class="mt-6">
+    <%= link_to "Back to risk factor definitions", admin_risk_factor_definitions_path, class: "text-blue-600 hover:text-blue-800" %>
+  </div>
 </div> 

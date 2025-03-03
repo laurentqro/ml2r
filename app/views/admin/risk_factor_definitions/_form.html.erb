@@ -1,6 +1,6 @@
 <%= form_with(model: [:admin, risk_factor_definition], class: "space-y-12") do |form| %>
   <div class="border-b border-gray-900/10 pb-12">
-    <h2 class="text-base/7 font-semibold text-gray-900">Risk Factor Definition</h2>
+    <h2>Risk Factor Definition</h2>
     <p class="mt-1 text-sm/6 text-gray-600">Configure risk factors that will be used to assess AML risk levels.</p>
 
     <% if risk_factor_definition.errors.any? %>
