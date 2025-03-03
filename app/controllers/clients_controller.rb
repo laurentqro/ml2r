@@ -68,6 +68,7 @@ class ClientsController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream { render turbo_stream: turbo_stream.update("kyc_note", partial: "clients/kyc_notes_edit", locals: { client: @client }) }
+      format.html { render :edit }
     end
   end
 
