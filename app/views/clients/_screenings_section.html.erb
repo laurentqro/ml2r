@@ -1,23 +1,13 @@
 <div class="bg-white shadow rounded-lg p-6">
   <h2>Screenings</h2>
 
-  <div class="space-y-2 mb-6">
+  <div id="screenings_list" class="space-y-2 mb-6">
     <% client.clientable.screenings.reverse.each do |screening| %>
-      <div class="flex items-center justify-between">
-        <div class="flex items-center">
-          <div class="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
-          <%= link_to screening.created_at.strftime("%B %d, %Y at %I:%M:%S %p"),
-                      client_screening_path(client, screening),
-                      class: "text-blue-600 hover:text-blue-800 hover:underline" %>
-        </div>
-        <span class="text-sm text-gray-600">
-          <%= pluralize(screening.matches.count, 'match') %>
-        </span>
-      </div>
+      <%= render "screening_item", client: client, screening: screening %>
     <% end %>
   </div>
 
-  <%= form_with(model: [client, @screening], data: { turbo: false }, class: "mt-4") do |form| %>
+  <%= form_with(model: [client, @screening], class: "mt-4") do |form| %>
     <%= form.hidden_field :query, value: client.clientable.name.downcase %>
     <%= form.hidden_field :screenable_id, value: client.clientable_id %>
     <%= form.hidden_field :screenable_type, value: client.clientable_type %>

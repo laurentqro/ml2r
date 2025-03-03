@@ -15,7 +15,11 @@ class ScreeningsController < ApplicationController
 
     if @screening.save
       @screening.run
-      redirect_to @client
+
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to @client }
+      end
     else
       render :new
     end
