@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS "sanctions" ("id" integer PRIMARY KEY AUTOINCREMENT N
 CREATE TABLE IF NOT EXISTS "screenings" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "screenable_id" integer, "screenable_type" varchar, "query" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
 CREATE INDEX "index_screenings_on_screenable_id_and_screenable_type" ON "screenings" ("screenable_id", "screenable_type") /*application='Ml2r'*/;
 CREATE TABLE IF NOT EXISTS "companies" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "sanctioned" boolean /*application='Ml2r'*/, "country" varchar /*application='Ml2r'*/);
-CREATE TABLE IF NOT EXISTS "clients" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "clientable_type" varchar, "clientable_id" integer, "started_at" datetime(6), "ended_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL);
+CREATE TABLE IF NOT EXISTS "clients" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "clientable_type" varchar, "clientable_id" integer, "started_at" datetime(6), "ended_at" datetime(6), "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "notes" text /*application='Ml2r'*/);
 CREATE INDEX "index_clients_on_clientable" ON "clients" ("clientable_type", "clientable_id") /*application='Ml2r'*/;
 CREATE INDEX "index_clients_on_clientable_id_and_clientable_type" ON "clients" ("clientable_id", "clientable_type") /*application='Ml2r'*/;
 CREATE INDEX "index_sanctions_on_measure_id" ON "sanctions" ("measure_id") /*application='Ml2r'*/;
@@ -78,8 +78,10 @@ CREATE VIEW client_risk_summaries AS
       LEFT JOIN people p ON c.clientable_type = 'Person' AND c.clientable_id = p.id
       LEFT JOIN companies comp ON c.clientable_type = 'Company' AND c.clientable_id = comp.id
       LEFT JOIN latest_scoresheets rs ON c.id = rs.client_id
+/* client_risk_summaries(client_id,clientable_type,clientable_id,display_name,pep,sanctioned,country_risk_score,client_risk_score,products_and_services_risk_score,distribution_channel_risk_score,transaction_risk_score,total_risk_score,scoresheet_date) */
 /* client_risk_summaries(client_id,clientable_type,clientable_id,display_name,pep,sanctioned,country_risk_score,client_risk_score,products_and_services_risk_score,distribution_channel_risk_score,transaction_risk_score,total_risk_score,scoresheet_date) */;
 INSERT INTO "schema_migrations" (version) VALUES
+('20250228152047'),
 ('20250226144431'),
 ('20250220153250'),
 ('20250220152637'),

@@ -12,6 +12,8 @@
 
     <%= render "identification_documents_section", documents: @client.clientable.identification_documents %>
 
+    <%= render "kyc_notes_show", client: @client %>
+
     <%= render "overall_risk_score", client: @client %>
 
     <%= render "country_risk_scores", client: @client %>

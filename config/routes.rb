@@ -9,6 +9,10 @@ Rails.application.routes.draw do
     resources :screenings, only: [ :create, :show ] do
       resources :matches, only: [ :index, :show ]
     end
+
+    member do
+      patch :update_notes
+    end
   end
 
   namespace :admin do

@@ -65,6 +65,10 @@ class ClientsController < ApplicationController
 
   def edit
     @client = Client.includes(clientable: :screenings).find(params[:id])
+
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.update("kyc_note", partial: "clients/kyc_notes_edit", locals: { client: @client }) }
+    end
   end
 
   def update
@@ -116,6 +120,24 @@ class ClientsController < ApplicationController
     render :edit, status: :unprocessable_entity
   end
 
+  def update_notes
+    @client = Client.find(params[:id])
+
+    if @client.update(notes: params[:client][:notes])
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: [
+            turbo_stream.replace(
+              "kyc_note",
+              partial: "clients/kyc_notes_show",
+              locals: { client: @client }
+            )
+          ]
+        end
+      end
+    end
+  end
+
   private
 
   def client_params
@@ -134,6 +156,7 @@ class ClientsController < ApplicationController
         :country_of_profession,
         :profession,
         :pep,
+        :notes,
         identification_documents_attributes: [
           :id,
           :document_type,
