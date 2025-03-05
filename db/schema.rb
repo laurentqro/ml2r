@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_26_144431) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_04_105214) do
+  create_table "adverse_media_checks", force: :cascade do |t|
+    t.integer "client_id", null: false
+    t.string "status"
+    t.boolean "adverse_media_found"
+    t.json "result"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_id"], name: "index_adverse_media_checks_on_client_id"
+  end
+
   create_table "clients", force: :cascade do |t|
     t.string "clientable_type"
     t.integer "clientable_id"
@@ -18,6 +28,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_26_144431) do
     t.datetime "ended_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "notes"
     t.index ["clientable_id", "clientable_type"], name: "index_clients_on_clientable_id_and_clientable_type"
     t.index ["clientable_type", "clientable_id"], name: "index_clients_on_clientable"
   end
@@ -147,6 +158,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_26_144431) do
     t.index ["screenable_id", "screenable_type"], name: "index_screenings_on_screenable_id_and_screenable_type"
   end
 
+  add_foreign_key "adverse_media_checks", "clients"
   add_foreign_key "identification_documents", "people"
   add_foreign_key "matches", "screenings"
   add_foreign_key "risk_factors", "clients"

@@ -1,7 +1,0 @@
-default: &default
-  workers:
-    - queues: "*"
-      threads: 1
-      polling_interval: 2
-production:
-  <<: *default

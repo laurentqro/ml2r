@@ -76,8 +76,7 @@ def create_random_person_risk_factors(client)
   RiskFactorDefinition.person_risk_factors.each do |definition|
     client.person_risk_factors.create!(
       category: definition.category,
-      identifier: definition.identifier,
-      score: definition.score
+      identifier: definition.identifier
     )
   end
 end
@@ -86,8 +85,7 @@ def create_random_company_risk_factors(client)
   RiskFactorDefinition.company_risk_factors.each do |definition|
     client.company_risk_factors.create!(
       category: definition.category,
-      identifier: definition.identifier,
-      score: definition.score
+      identifier: definition.identifier
     )
   end
 end
