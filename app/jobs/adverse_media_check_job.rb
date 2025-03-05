@@ -1,21 +1,18 @@
 class AdverseMediaCheckJob < ApplicationJob
   queue_as :default
 
-  def perform(client_id)
-    client = Client.find(client_id)
-    result = AdverseMediaCheckService.new(client.display_name).call
+  def perform(check_id)
+    check = AdverseMediaCheck.find(check_id)
+    result = AdverseMediaCheckService.new(check.client.display_name).call
 
-    AdverseMediaCheck.create(client_id: client_id) do |check|
-      check.adverse_media_found = result[:adverse_media_found]
-      check.status = result[:status]
-      check.result = result
-    end
+    check.update!(
+      status: result["status"],
+      adverse_media_found: result["adverse_media_found"],
+      result: result
+    )
   rescue StandardError => e
-    AdverseMediaCheck.create(client_id: client_id) do |check|
-      check.adverse_media_found = false
-      check.status = "failed"
-      check.result = e.message
-    end
+    check.update!(status: "failed", result: e.message)
+    Rails.logger.error("AdverseMediaCheckJob failed: #{e.message}")
     raise
   end
 end

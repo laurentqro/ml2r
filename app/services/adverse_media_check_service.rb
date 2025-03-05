@@ -33,7 +33,7 @@ class AdverseMediaCheckService
         messages: [
           {
             role: "system",
-            content: "Search the web for any negative news, scandals, lawsuits, or controversies associated with '#{@client_name}'. Provide a concise summary of findings, focusing on adverse media. If none are found, state that explicitly. If some adverse media are found, provide a list of the sources and the content of the adverse media, and clearly state 'no adverse media found' if none are found."
+            content: "Search the web for any negative news, scandals, lawsuits, or controversies associated with '#{@client_name}'. Provide a concise summary of findings, focusing on adverse media. If adverse media are found, state that explicitly at the beginning of your response with this exact notice in this exact format (this is very important): '[adverse media found]'. If no adverse media are found, state that explicitly at the beginning of your response with this exact notice in this exact format (this is very important): '[no adverse media found]."
           },
           {
             role: "user",
@@ -49,15 +49,17 @@ class AdverseMediaCheckService
   def parse_response(response)
     if response.success?
       result = JSON.parse(response.body)
+      summary = result.dig("choices", 0, "message", "content").to_s
+
       {
-        status: "completed",
-        adverse_media_found: result["citations"].any?,
-        result: result
+        "status" => "completed",
+        "adverse_media_found" => summary.include?("[adverse media found]"),
+        "result" => result,
       }
     else
       {
-        status: "failed",
-        result: "API request failed with response code #{response.code}"
+        "status" => "failed",
+        "result" => "API request failed with response code #{response.code}"
       }
     end
   end

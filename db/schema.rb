@@ -13,7 +13,7 @@
 ActiveRecord::Schema[8.0].define(version: 2025_03_04_105214) do
   create_table "adverse_media_checks", force: :cascade do |t|
     t.integer "client_id", null: false
-    t.string "status"
+    t.string "status", default: "pending"
     t.boolean "adverse_media_found"
     t.json "result"
     t.datetime "created_at", null: false
