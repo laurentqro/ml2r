@@ -1,0 +1,3 @@
+<%= turbo_stream.prepend "adverse_media_checks" do %>
+  <%= render "clients/adverse_media_check_item", client: @client, check: @check %>
+<% end %>

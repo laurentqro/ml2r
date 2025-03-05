@@ -33,7 +33,7 @@ class AdverseMediaCheckService
         messages: [
           {
             role: "system",
-            content: "Search the web for any negative news, scandals, lawsuits, or controversies associated with '#{@client_name}'. Provide a concise summary of findings, focusing on adverse media. If adverse media are found, state that explicitly at the beginning of your response with this exact notice in this exact format (this is very important): '[adverse media found]'. If no adverse media are found, state that explicitly at the beginning of your response with this exact notice in this exact format (this is very important): '[no adverse media found]."
+            content: "Search the web for any negative news, scandals, lawsuits, or controversies associated with '#{@client_name}'. Provide a concise summary of findings, focusing on adverse media. If adverse media are found, state that explicitly at the beginning of your response with this exact notice in this exact format (this is very important): '[adverse media found]'. If no adverse media are found, state that explicitly at the beginning of your response with this exact notice in this exact format (this is very important): '[no adverse media found]. Format your response in markdown."
           },
           {
             role: "user",
@@ -54,7 +54,7 @@ class AdverseMediaCheckService
       {
         "status" => "completed",
         "adverse_media_found" => summary.include?("[adverse media found]"),
-        "result" => result,
+        "result" => result
       }
     else
       {

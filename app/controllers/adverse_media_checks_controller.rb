@@ -5,10 +5,13 @@ class AdverseMediaChecksController < ApplicationController
 
   def create
     @client = Client.find(params[:client_id])
-    check = @client.adverse_media_checks.create!
-    AdverseMediaCheckJob.perform_later(check.id)
+    @check = @client.adverse_media_checks.create!
+    AdverseMediaCheckJob.perform_later(@check.id)
 
-    redirect_to client_path(@client), notice: "Adverse media check started"
+    respond_to do |format|
+      format.html { redirect_to client_path(@client) }
+      format.turbo_stream
+    end
   end
 
   def check_status
