@@ -1,12 +1,12 @@
-<h3>Summary</h3>
+<h2>Summary</h2>
 
-<div class="space-y-4 mb-6">
+<div class="space-y-4 mb-6 border-b pb-4">
   <% check.content_items.each do |item| %>
-    <p><%= item %></p>
+    <div class="markdown-content"><%= markdown_to_html(item) %></div>
   <% end %>
 </div>
 
-<h3>Citations</h3>
+<h4>Citations</h4>
 
 <ol>
   <% check.citations.each_with_index do |citation, index| %>
