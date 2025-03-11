@@ -12,6 +12,8 @@
 
     <%= render "risk_radar", client: @client %>
 
+    <%= render "company_relationships", client: @client if @client.clientable_type == "Company" %>
+
     <%= render "identification_documents_section", documents: @client.clientable.identification_documents %>
 
     <%= render "overall_risk_score", client: @client %>

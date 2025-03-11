@@ -1,0 +1,161 @@
+<div class="bg-white shadow sm:rounded-lg mb-8">
+  <div class="px-4 py-5 sm:px-6 flex justify-between items-center border-b border-gray-200">
+    <div>
+      <h2 class="text-xl font-semibold text-gray-900">Key Relationships</h2>
+      <p class="mt-1 text-sm text-gray-500">Directors, beneficial owners, and legal representatives</p>
+    </div>
+    <%= link_to "Add New Relationship", new_client_company_relationship_path(client), 
+        class: "btn-primary" %>
+  </div>
+
+  <div class="px-4 py-5 sm:p-6">
+    <% company = client.clientable %>
+    <% if company.company_relationships.any? %>
+      <!-- Directors Section -->
+      <div class="mb-8">
+        <h3 class="text-base font-semibold leading-7 text-gray-900 mb-4">Directors</h3>
+        <% if company.directors.any? %>
+          <div class="mt-2 flow-root">
+            <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+              <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                <table class="min-w-full divide-y divide-gray-300">
+                  <thead>
+                    <tr>
+                      <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Name</th>
+                      <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Status</th>
+                      <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-0">
+                        <span class="sr-only">Actions</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-gray-200">
+                    <% company.directors.each do |director| %>
+                      <tr>
+                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                          <%= link_to director.display_name, client_path(Client.find_by(clientable: director)), 
+                              class: "text-indigo-600 hover:text-indigo-900" %>
+                        </td>
+                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          <% if director.pep? %>
+                            <span class="inline-flex items-center rounded-full bg-yellow-100 px-2 py-1 text-xs font-medium text-yellow-800">
+                              PEP
+                            </span>
+                          <% end %>
+                        </td>
+                        <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                          <%= link_to "Edit", edit_client_company_relationship_path(client, CompanyRelationship.find_by(person: director)), 
+                              class: "text-indigo-600 hover:text-indigo-900" %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        <% else %>
+          <p class="text-sm text-gray-500">No directors registered.</p>
+        <% end %>
+      </div>
+
+      <!-- Beneficial Owners Section -->
+      <div class="mb-8">
+        <h3 class="text-base font-semibold leading-7 text-gray-900 mb-4">Beneficial Owners</h3>
+        <% if company.beneficial_owners.any? %>
+          <div class="mt-2 flow-root">
+            <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+              <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                <table class="min-w-full divide-y divide-gray-300">
+                  <thead>
+                    <tr>
+                      <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Name</th>
+                      <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Ownership</th>
+                      <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-0">
+                        <span class="sr-only">Actions</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-gray-200">
+                    <% company.beneficial_owner_relationships.includes(:person).each do |relationship| %>
+                      <tr>
+                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                          <%= link_to relationship.person.display_name, client_path(Client.find_by(clientable: relationship.person)), 
+                              class: "text-indigo-600 hover:text-indigo-900" %>
+                        </td>
+                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          <span class="inline-flex items-center rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-800">
+                            <%= relationship.ownership_percentage %>%
+                          </span>
+                        </td>
+                        <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                          <%= link_to "Edit", edit_client_company_relationship_path(client, relationship), 
+                              class: "text-indigo-600 hover:text-indigo-900" %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        <% else %>
+          <p class="text-sm text-gray-500">No beneficial owners registered.</p>
+        <% end %>
+      </div>
+
+      <!-- Legal Representatives Section -->
+      <div class="mb-8">
+        <h3 class="text-base font-semibold leading-7 text-gray-900 mb-4">Legal Representatives</h3>
+        <% if company.legal_representatives.any? %>
+          <div class="mt-2 flow-root">
+            <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+              <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                <table class="min-w-full divide-y divide-gray-300">
+                  <thead>
+                    <tr>
+                      <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Name</th>
+                      <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-0">
+                        <span class="sr-only">Actions</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-gray-200">
+                    <% company.legal_representatives.each do |representative| %>
+                      <tr>
+                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">
+                          <%= link_to representative.display_name, client_path(Client.find_by(clientable: representative)), 
+                              class: "text-indigo-600 hover:text-indigo-900" %>
+                        </td>
+                        <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                          <%= link_to "Edit", edit_client_company_relationship_path(client, CompanyRelationship.find_by(person: representative)), 
+                              class: "text-indigo-600 hover:text-indigo-900" %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        <% else %>
+          <p class="text-sm text-gray-500">No legal representatives registered.</p>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="rounded-md bg-blue-50 p-4">
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <svg class="h-5 w-5 text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <div class="ml-3 flex-1 md:flex md:justify-between">
+            <p class="text-sm text-blue-700">No relationships have been added for this company.</p>
+            <%= link_to "Add Relationship", new_client_company_relationship_path(client), 
+                class: "mt-3 text-sm font-medium text-blue-700 hover:text-blue-600 md:mt-0 md:ml-6" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_04_105214) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_10_162312) do
   create_table "adverse_media_checks", force: :cascade do |t|
     t.integer "client_id", null: false
     t.string "status", default: "in progress"
@@ -39,6 +39,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_04_105214) do
     t.datetime "updated_at", null: false
     t.boolean "sanctioned"
     t.string "country"
+  end
+
+  create_table "company_relationships", force: :cascade do |t|
+    t.integer "company_id", null: false
+    t.integer "person_id", null: false
+    t.integer "relationship_type", null: false
+    t.decimal "ownership_percentage", precision: 5, scale: 2
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id", "person_id", "relationship_type"], name: "idx_company_relationships_unique", unique: true
+    t.index ["company_id"], name: "index_company_relationships_on_company_id"
+    t.index ["person_id"], name: "index_company_relationships_on_person_id"
   end
 
   create_table "identification_documents", force: :cascade do |t|
@@ -159,6 +172,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_04_105214) do
   end
 
   add_foreign_key "adverse_media_checks", "clients"
+  add_foreign_key "company_relationships", "companies"
+  add_foreign_key "company_relationships", "people"
   add_foreign_key "identification_documents", "people"
   add_foreign_key "matches", "screenings"
   add_foreign_key "risk_factors", "clients"

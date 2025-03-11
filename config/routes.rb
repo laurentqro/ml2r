@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     resources :screenings, only: [ :create, :show ] do
       resources :matches, only: [ :index, :show ]
     end
+    resources :company_relationships, only: [ :index, :new, :create, :edit, :update, :destroy ]
 
     member do
       patch :update_notes
@@ -23,7 +24,7 @@ Rails.application.routes.draw do
   end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors toverify that the app is live.
+  # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
   get "dashboard" => "pages#dashboard"
 
