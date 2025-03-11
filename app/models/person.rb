@@ -35,4 +35,8 @@ class Person < ApplicationRecord
   def country
     country_of_residence
   end
+
+  def client?
+    Client.exists?(clientable: self)
+  end
 end

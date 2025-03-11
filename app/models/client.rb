@@ -138,6 +138,18 @@ class Client < ApplicationRecord
     risk_factor_class.available_categories
   end
 
+  def has_adverse_media?
+    adverse_media_checks.any?(&:adverse_media_found?)
+  end
+
+  def pep?
+    clientable.pep
+  end
+
+  def latest_risk_scoresheet
+    risk_scoresheets.current
+  end
+
   private
 
   def no_blacklisted_countries
