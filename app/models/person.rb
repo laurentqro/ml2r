@@ -24,8 +24,14 @@ class Person < ApplicationRecord
 
   accepts_nested_attributes_for :identification_documents, allow_destroy: true, reject_if: :all_blank
 
+  default_scope { order(last_name: :asc) }
+
   def name
     last_name
+  end
+
+  def last_name_first_name
+    "#{last_name.upcase}, #{first_name}"
   end
 
   def display_name

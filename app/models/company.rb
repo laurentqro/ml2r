@@ -46,4 +46,8 @@ class Company < ApplicationRecord
   def identification_documents
     []
   end
+
+  def client?
+    Client.exists?(clientable: self)
+  end
 end
