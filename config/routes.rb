@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   end
 
   resources :people
+  resources :prospects, only: :index
 
   resources :clients do
     resources :risk_factors, only: [ :index, :new, :create, :destroy ]
