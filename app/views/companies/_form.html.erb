@@ -1,0 +1,40 @@
+<div class="max-w-3xl mx-auto p-6">
+  <%= form_with(model: company, data: { turbo: false }) do |f| %>
+    <% if company.errors.any? %>
+        <div class="mb-8">
+            <div class="flex justify-between border-b border-gray-200">
+                <h2>
+                    <%= pluralize(company.errors.count, "error") %> prohibited this company from being saved:
+                </h2>
+            </div>
+        </div>
+    <% end %>
+
+    <div class="space-y-12">
+      <div class="border-b border-gray-900/10 pb-12">
+        <div>
+          <h2>
+            Company Information
+          </h2>
+          <p class="mt-1 text-sm/6 text-gray-600">
+            Please provide accurate information for AML compliance purposes.
+          </p>
+
+          <div class="mt-6 space-y-2">
+            <%= f.label :name, class: "block text-sm/6 font-bold text-gray-900" %>
+            <%= f.text_field :name, class: "mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" %>
+
+            <%= render "clients/searchable_country_field", f: f, field_name: :country %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-6 flex items-center justify-end gap-x-6">
+      <%= link_to "Cancel", clients_path,
+          class: "text-sm/6 font-semibold text-gray-900" %>
+
+      <%= f.submit class: "rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" %>
+    </div>
+  <% end %>
+</div> 

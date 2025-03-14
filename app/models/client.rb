@@ -1,14 +1,13 @@
 class Client < ApplicationRecord
   belongs_to :clientable, polymorphic: true
 
-  has_many :screenings, as: :screenable
   has_many :risk_factors, dependent: :destroy
   has_many :person_risk_factors, dependent: :destroy
   has_many :company_risk_factors, dependent: :destroy
   has_many :risk_scoresheets, dependent: :destroy
   has_many :adverse_media_checks, dependent: :destroy
 
-  delegate :display_name, :country_of_residence, :nationality, :country_of_profession,
+  delegate :risk_factor_class, :display_name, :country_of_residence, :nationality, :country_of_profession,
            :country_of_birth, to: :clientable, allow_nil: true
 
   validate :no_blacklisted_countries
@@ -49,14 +48,6 @@ class Client < ApplicationRecord
     joins("LEFT JOIN people ON clients.clientable_id = people.id AND clients.clientable_type = 'Person'")
       .where("people.pep = ?", true)
   }
-
-  def risk_factor_class
-    case clientable_type
-    when "Person" then PersonRiskFactor
-    when "Company" then CompanyRiskFactor
-    else raise "Unknown clientable type: #{clientable_type}"
-    end
-  end
 
   def total_risk_score
     country_risk_score + total_risk_factors_score

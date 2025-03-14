@@ -11,10 +11,8 @@
     <h1>Clients</h1>
   </div>
   <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none space-x-4">
-    <%= link_to "New Person Client", new_client_path(nature: "person"),
-        class: "btn-primary" %>
-    <%= link_to "New Company Client", new_client_path(nature: "company"),
-        class: "btn-primary" %>
+    <%= link_to "New Person", new_client_path(nature: "person"), class: "btn-primary" %>
+    <%= link_to "New Company", new_company_path, class: "btn-primary" %>
   </div>
 </div>
 

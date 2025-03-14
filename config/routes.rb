@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "clients#index"
 
+  resources :companies
+
   resources :clients do
     resources :risk_factors, only: [ :index, :new, :create, :destroy ]
     resources :adverse_media_checks, only: [ :index, :create, :show ] do

@@ -1,5 +1,4 @@
 <%= form_with(model: @client) do |f| %>
-
   <div class="mt-10">
     <%= f.fields_for :clientable do |cf| %>
       <% if @client.clientable_type == "Person" %>

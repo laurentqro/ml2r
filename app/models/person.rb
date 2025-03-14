@@ -45,4 +45,8 @@ class Person < ApplicationRecord
   def client?
     Client.exists?(clientable: self)
   end
+
+  def risk_factor_class
+    PersonRiskFactor
+  end
 end

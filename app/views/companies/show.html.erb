@@ -1,0 +1,11 @@
+<h2>
+    <%= @company.name %>
+</h2>
+
+<p>
+    <p class="text-sm text-gray-500"><%= country_name(@company.country) %></p>
+</p>
+
+<div class="mt-6">
+    <%= link_to "Edit", edit_company_path(@company), class: "btn-primary" %>
+</div>

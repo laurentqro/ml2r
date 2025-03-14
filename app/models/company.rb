@@ -50,4 +50,8 @@ class Company < ApplicationRecord
   def client?
     Client.exists?(clientable: self)
   end
+
+  def risk_factor_class
+    CompanyRiskFactor
+  end
 end
