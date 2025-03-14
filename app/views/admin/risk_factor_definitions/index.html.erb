@@ -6,12 +6,6 @@
       <%= link_to "New Risk Factor Definition", new_admin_risk_factor_definition_path, class: "bg-indigo-600 hover:bg-indigo-800 text-white font-bold py-2 px-4 rounded shadow" %>
     </div>
 
-  <% if notice.present? %>
-    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4 shadow-sm" role="alert">
-      <span class="block sm:inline"><%= notice %></span>
-    </div>
-  <% end %>
-
   <!-- Group all risk factor definitions by category -->
   <% 
     person_definitions_by_category = @risk_factor_definitions.select { |d| d.risk_factor_type.include?('Person') }.group_by(&:category)
@@ -29,7 +23,7 @@
     <% all_categories.each do |category| %>
       <div class="mb-8">
         <h3 class="text-lg font-medium text-gray-900 mb-4 bg-gray-100 p-2 rounded text-center"><%= category.humanize.titleize %></h3>
-        
+
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
           <!-- Person Risk Factors -->
           <div class="min-w-0">

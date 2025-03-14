@@ -1,11 +1,5 @@
 <% content_for :title, "#{@client.clientable.display_name}" %>
 
-<% if notice %>
-  <div class="p-4 mb-4 text-green-700 bg-green-100 rounded-lg">
-    <%= notice %>
-  </div>
-<% end %>
-
 <div class="mx-auto px-4 sm:px-6 lg:px-8 py-2">
   <div class="mb-4 text-sm text-gray-500">
     <p>Client since <%= @client.created_at.strftime("%d %B %Y") %></p>
