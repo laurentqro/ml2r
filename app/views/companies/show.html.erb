@@ -1,11 +1,6 @@
-<h2>
-    <%= @company.name %>
-</h2>
+<% content_for :title, "#{@company.display_name}" %>
 
-<p>
-    <p class="text-sm text-gray-500"><%= country_name(@company.country) %></p>
-</p>
-
-<div class="mt-6">
-    <%= link_to "Edit", edit_company_path(@company), class: "btn-primary" %>
+<div class="mx-auto space-y-8">
+  <%= render "clients/client_header", clientable: @company %>
+  <%= render "company_relationships/index", company: @company %>
 </div>

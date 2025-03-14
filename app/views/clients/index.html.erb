@@ -11,7 +11,7 @@
     <h1>Clients</h1>
   </div>
   <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none space-x-4">
-    <%= link_to "New Person", new_client_path(nature: "person"), class: "btn-primary" %>
+    <%= link_to "New Person", new_person_path, class: "btn-primary" %>
     <%= link_to "New Company", new_company_path, class: "btn-primary" %>
   </div>
 </div>
@@ -55,7 +55,7 @@
     </div>
 
     <div id="clients_table">
-      <%= render partial: "clients_table", locals: { clients: @clients } %>
+      <%= render "clients_table", clients: @clients %>
     </div>
 
     <div id="clients_pagination">

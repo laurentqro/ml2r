@@ -1,5 +1,4 @@
 class CompanyRelationshipsController < ApplicationController
-  before_action :set_client
   before_action :set_company
   before_action :set_company_relationship, only: [ :edit, :update, :destroy ]
 
@@ -21,7 +20,7 @@ class CompanyRelationshipsController < ApplicationController
     @selected_person = Person.find_by(id: company_relationship_params[:person_id])
 
     if @company_relationship.save
-      redirect_to @client, notice: "Relationship was successfully created."
+      redirect_to @company, notice: "Relationship was successfully created."
     else
       render :new
     end
@@ -31,7 +30,7 @@ class CompanyRelationshipsController < ApplicationController
     @selected_person = Person.find_by(id: company_relationship_params[:person_id])
 
     if @company_relationship.update(company_relationship_params)
-      redirect_to @client, notice: "Relationship was successfully updated."
+      redirect_to @company, notice: "Relationship was successfully updated."
     else
       render :edit
     end
@@ -39,20 +38,13 @@ class CompanyRelationshipsController < ApplicationController
 
   def destroy
     @company_relationship.destroy
-    redirect_to @client, notice: "Relationship was successfully deleted."
+    redirect_to @company, notice: "Relationship was successfully deleted."
   end
 
   private
 
-  def set_client
-    @client = Client.find(params[:client_id])
-  end
-
   def set_company
-    @company = @client.clientable
-    unless @company.is_a?(Company)
-      redirect_to @client, alert: "This client is not a company."
-    end
+    @company = Company.find(params[:company_id])
   end
 
   def set_company_relationship

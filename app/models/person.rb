@@ -49,4 +49,12 @@ class Person < ApplicationRecord
   def risk_factor_class
     PersonRiskFactor
   end
+
+  def company?
+    false
+  end
+
+  def person?
+    true
+  end
 end

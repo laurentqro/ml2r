@@ -51,6 +51,14 @@ class Company < ApplicationRecord
     Client.exists?(clientable: self)
   end
 
+  def person?
+    false
+  end
+
+  def company?
+    true
+  end
+
   def risk_factor_class
     CompanyRiskFactor
   end

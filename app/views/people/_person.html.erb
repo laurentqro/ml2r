@@ -1,16 +1,16 @@
-<div id="<%= dom_id person %>">
+<div id="<%= dom_id clientable %>">
   <p>
     <strong>First name:</strong>
-    <%= person.first_name %>
+    <%= clientable.first_name %>
   </p>
 
   <p>
     <strong>Last name:</strong>
-    <%= person.last_name %>
+    <%= clientable.last_name %>
   </p>
 
   <p>
     <strong>Profession:</strong>
-    <%= Occupation.find_by(unit: person.profession)&.description&.strip&.singularize %>
+    <%= Occupation.find_by(unit: clientable.profession)&.description&.strip&.singularize %>
   </p>
 </div>

@@ -4,12 +4,11 @@
       <h2 class="text-xl font-semibold text-gray-900">Key Relationships</h2>
       <p class="mt-1 text-sm text-gray-500">Directors, beneficial owners, and legal representatives</p>
     </div>
-    <%= link_to "Add New Relationship", new_client_company_relationship_path(client),
+    <%= link_to "Add New Relationship", new_company_company_relationship_path(company),
         class: "btn-primary" %>
   </div>
 
   <div class="px-4 py-5 sm:p-6">
-    <% company = client.clientable %>
     <% if company.company_relationships.any? %>
       <div class="mt-2 flow-root">
         <div class="overflow-x-auto">
@@ -87,7 +86,7 @@
                     </td>
                     <td class="relative font-medium sm:pr-0">
                       <div class="flex justify-center gap-3">
-                        <%= link_to edit_client_company_relationship_path(client, relationship), 
+                        <%= link_to edit_company_company_relationship_path(company, relationship), 
                             class: "text-gray-500 hover:text-indigo-600" do %>
                           <span class="group relative">
                             <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -96,7 +95,7 @@
                             </svg>
                           </span>
                         <% end %>
-                        <%= button_to client_company_relationship_path(client, relationship),
+                        <%= button_to company_company_relationship_path(company, relationship),
                             method: :delete,
                             class: "text-gray-500 hover:text-red-600",
                             data: { turbo_confirm: "Are you sure you want to remove this relationship?" } do %>

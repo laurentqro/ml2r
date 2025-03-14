@@ -4,7 +4,11 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "clients#index"
 
-  resources :companies
+  resources :companies do
+    resources :company_relationships
+  end
+
+  resources :people
 
   resources :clients do
     resources :risk_factors, only: [ :index, :new, :create, :destroy ]

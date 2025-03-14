@@ -1,6 +1,6 @@
-<div id="<%= dom_id company %>">
+<div id="<%= dom_id clientable %>">
   <p>
     <strong>Country:</strong>
-    <%= ISO3166::Country[company.country]&.iso_short_name %>
+    <%= ISO3166::Country[clientable.country]&.iso_short_name %>
   </p>
 </div>
