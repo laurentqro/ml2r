@@ -1,5 +1,5 @@
 <div class="max-w-3xl mx-auto p-6">
-  <%= form_with(model: person, local: true) do |f| %>
+  <%= form_with(model: person, data: { turbo: false }) do |f| %>
     <% if person.errors.any? %>
         <div class="mb-8">
             <div class="flex justify-between border-b border-gray-200">
@@ -53,7 +53,7 @@
               <div class="mt-6">
                 <div class="pb-4">
                   <h3>Identification Documents</h3>
-                  <div>
+                  <div data-controller="document-form">
                     <template data-document-form-target="template">
                       <%= f.fields_for :identification_documents, IdentificationDocument.new, child_index: 'NEW_RECORD' do |doc| %>
                         <%= render 'identification_document_fields', f: doc %>

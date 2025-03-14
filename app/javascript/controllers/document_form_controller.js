@@ -12,7 +12,7 @@ export default class extends Controller {
   remove(event) {
     event.preventDefault()
     const wrapper = event.target.closest('.document-fields')
-    
+
     if (wrapper.dataset.newRecord === "true") {
       wrapper.remove()
     } else {

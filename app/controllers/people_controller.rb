@@ -71,6 +71,23 @@ class PeopleController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def person_params
-      params.expect(person: [ :first_name, :last_name, :country_of_birth, :country_of_residence, :country_of_profession, :profession, :pep, :sanctioned ])
+      params.require(:person).permit(
+        :first_name,
+        :last_name,
+        :country_of_birth,
+        :country_of_residence,
+        :country_of_profession,
+        :profession,
+        :pep,
+        :sanctioned,
+        identification_documents_attributes: [
+          :id,
+          :document_type,
+          :number,
+          :expiration_date,
+          :is_copy,
+          :_destroy
+        ]
+      )
     end
 end
