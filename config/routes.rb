@@ -8,6 +8,10 @@ Rails.application.routes.draw do
     resources :company_relationships
   end
 
+  resources :screenings, only: [ :create, :show ] do
+    resources :matches, only: [ :index, :show ]
+  end
+
   resources :people
   resources :prospects, only: :index
 
@@ -15,9 +19,6 @@ Rails.application.routes.draw do
     resources :risk_factors, only: [ :index, :new, :create, :destroy ]
     resources :adverse_media_checks, only: [ :index, :create, :show ] do
       get :check_status, on: :member
-    end
-    resources :screenings, only: [ :create, :show ] do
-      resources :matches, only: [ :index, :show ]
     end
     resources :company_relationships, only: [ :index, :new, :create, :edit, :update, :destroy ]
 

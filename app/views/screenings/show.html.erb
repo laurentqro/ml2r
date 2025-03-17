@@ -2,7 +2,7 @@
   <div class="flex items-center justify-between">
     <div>
       <h2 class="text-2xl font-bold text-gray-900 sm:text-3xl">
-        Screening results for <%= @client.clientable.display_name %>
+        Screening results for <%= @screening.screenable.display_name %>
       </h2>
       <p class="mt-2 text-sm text-gray-600">
         Screening run on <%= @screening.created_at.strftime("%B %d, %Y at %I:%M%p") %>
@@ -14,7 +14,7 @@
     <% @matches.each do |match| %>
       <div class="bg-white rounded-lg shadow p-4 border border-gray-200 hover:shadow-md transition-shadow duration-200">
           <div class="flex justify-between items-start mb-2">
-            <%= link_to client_screening_match_path(@client, @screening, match), class: "block no-underline" do %>
+            <%= link_to screening_match_path(@screening, match), class: "block no-underline" do %>
               <h3 class="font-medium text-lg text-blue-600 hover:text-blue-800 line-clamp-2"><%= match.caption %></h3>
             <% end %>
 

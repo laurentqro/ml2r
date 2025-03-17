@@ -6,15 +6,15 @@
   </div>
 
   <div class="mx-auto space-y-8">
-    <%= render "client_header", clientable: @client.clientable %>
+    <%= render "client_header", clientable: @clientable %>
 
     <%= render "kyc_notes_show", client: @client %>
 
     <%= render "risk_radar", client: @client %>
 
-    <%= render "company_relationships/index", company: @client.clientable if @client.clientable_type == "Company" %>
+    <%= render "company_relationships/index", company: @clientable if @clientable_type == "Company" %>
 
-    <%= render "identification_documents_section", documents: @client.clientable.identification_documents %>
+    <%= render "identification_documents_section", documents: @clientable.identification_documents %>
 
     <%= render "overall_risk_score", client: @client %>
 
@@ -24,6 +24,6 @@
 
     <%= render "adverse_media_checks_section", client: @client %>
 
-    <%= render "screenings_section", client: @client %>
+    <%= render "screenings_section", clientable: @clientable %>
   </div>
 </div>

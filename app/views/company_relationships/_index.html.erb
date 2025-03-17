@@ -36,7 +36,8 @@
                         <%= link_to person.display_name, client_path(person_client),
                             class: "text-indigo-600 hover:text-indigo-900" %>
                       <% else %>
-                        <%= person.display_name %>
+                        <%= link_to person.display_name, person_path(person),
+                            class: "text-indigo-600 hover:text-indigo-900" %>
                       <% end %>
                     </td>
                     <td class="px-3 py-4 text-gray-500 break-words">
