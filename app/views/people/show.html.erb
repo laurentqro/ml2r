@@ -37,4 +37,15 @@
       <%= render screening %>
     <% end %>
   </div>
-</div>
+
+  <%= form_with(model: Screening.new(screenable: @person), class: "mt-4") do |form| %>
+    <%= form.hidden_field :query, value: @person.name.downcase %>
+    <%= form.hidden_field :screenable_id, value: @person.id %>
+    <%= form.hidden_field :screenable_type, value: @person.class.name %>
+
+    <%= form.submit "Run a new screening",
+        class: "w-full sm:w-auto px-4 py-2 bg-blue-600 text-white rounded-lg
+               hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500
+               focus:ring-offset-2 transition-colors" %>
+  <% end %>
+</div> 
