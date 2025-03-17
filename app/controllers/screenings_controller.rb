@@ -16,7 +16,7 @@ class ScreeningsController < ApplicationController
 
       respond_to do |format|
         format.turbo_stream
-        format.html { redirect_to @client }
+        format.html { redirect_to @screening.screenable }
       end
     else
       render :new
@@ -26,6 +26,12 @@ class ScreeningsController < ApplicationController
   private
 
   def screening_params
-    params.expect(screening: [ :screenable_id, :screenable_type, :query ])
+    params.expect(
+      screening: [
+        :screenable_id,
+        :screenable_type,
+        :query
+      ]
+    )
   end
 end

@@ -3,18 +3,9 @@
 
   <div id="screenings_list" class="space-y-2 mb-6">
     <% clientable.screenings.reverse.each do |screening| %>
-      <%= render "screening_item", screening: screening %>
+      <%= render screening %>
     <% end %>
   </div>
 
-  <%= form_with(model: Screening.new(screenable: clientable), class: "mt-4") do |form| %>
-    <%= form.hidden_field :query, value: clientable.name.downcase %>
-    <%= form.hidden_field :screenable_id, value: clientable.id %>
-    <%= form.hidden_field :screenable_type, value: clientable.class.name %>
-
-    <%= form.submit "Run a new screening",
-        class: "w-full sm:w-auto px-4 py-2 bg-blue-600 text-white rounded-lg
-               hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500
-               focus:ring-offset-2 transition-colors" %>
-  <% end %>
+  <%= render "screenings/form", screenable: clientable %>
 </div> 
