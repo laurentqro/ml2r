@@ -1,5 +1,4 @@
 class Prospect
-
   def self.all
     Person.where.missing(:business_relationships) + Company.where.missing(:business_relationships)
   end

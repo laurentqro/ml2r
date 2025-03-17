@@ -3,7 +3,7 @@ class ProspectsController < ApplicationController
   include ProspectsHelper
 
   def index
-    if params[:nature] == 'company'
+    if params[:nature] == "company"
       scope = Company.where.missing(:business_relationships)
 
       if params[:query].present?

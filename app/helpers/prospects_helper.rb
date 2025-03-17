@@ -1,5 +1,4 @@
 module ProspectsHelper
-
   def prospect_path(prospect)
     if prospect.is_a?(Person)
       person_path(prospect)
