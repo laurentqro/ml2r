@@ -38,14 +38,30 @@
     <% end %>
   </div>
 
-  <%= form_with(model: Screening.new(screenable: @person), class: "mt-4") do |form| %>
-    <%= form.hidden_field :query, value: @person.name.downcase %>
-    <%= form.hidden_field :screenable_id, value: @person.id %>
-    <%= form.hidden_field :screenable_type, value: @person.class.name %>
+  <%= render "screenings/form", screenable: @person %>
+</div> 
 
-    <%= form.submit "Run a new screening",
-        class: "w-full sm:w-auto px-4 py-2 bg-blue-600 text-white rounded-lg
-               hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500
-               focus:ring-offset-2 transition-colors" %>
-  <% end %>
+<div class="bg-white shadow rounded-lg p-6 mt-4">
+  <div>
+    <h2>Adverse Media Checks</h2>
+  </div>
+
+  <div>
+    <%= form_with(model: AdverseMediaCheck.new(adverse_media_checkable: @person), class: "mt-4", data: { turbo: true }) do |form| %>
+      <%= form.hidden_field :adverse_media_checkable_id, value: @person.id %>
+      <%= form.hidden_field :adverse_media_checkable_type, value: @person.class.name %>
+
+      <%= form.submit "Run a new adverse media check",
+          class: "w-full sm:w-auto px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+      %>
+    <% end %>
+  </div>
+
+  <div id="adverse_media_checks_list" class="space-y-2 mt-4">
+    <%= turbo_frame_tag "adverse_media_checks" do %>
+      <% @person.adverse_media_checks.order(created_at: :desc).each do |check| %>
+        <%= render check %>
+      <% end %>
+    <% end %>
+  </div>
 </div> 

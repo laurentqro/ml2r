@@ -12,14 +12,13 @@ Rails.application.routes.draw do
     resources :matches, only: [ :index, :show ]
   end
 
+  resources :adverse_media_checks, only: :create
+
   resources :people
   resources :prospects, only: :index
 
   resources :clients do
     resources :risk_factors, only: [ :index, :new, :create, :destroy ]
-    resources :adverse_media_checks, only: [ :index, :create, :show ] do
-      get :check_status, on: :member
-    end
     resources :company_relationships, only: [ :index, :new, :create, :edit, :update, :destroy ]
 
     member do

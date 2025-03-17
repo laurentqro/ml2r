@@ -1,0 +1,19 @@
+<h2>Summary</h2>
+
+<div class="space-y-4">
+  <% adverse_media_check.content_items.each do |item| %>
+    <div class="markdown-content"><%= markdown_to_html(item) %></div>
+  <% end %>
+</div>
+
+<% if adverse_media_check.adverse_media_found? %>
+  <div class="border-t mt-6 pt-4">
+    <h4>Citations</h4>
+
+    <ol>
+      <% adverse_media_check.citations.each_with_index do |citation, index| %>
+        <li class="py-1">[<%= index + 1 %>] <%= link_to citation, citation, target: "_blank", rel: "noopener noreferrer" %></li>
+      <% end %>
+    </ol>
+  </div>
+<% end %>

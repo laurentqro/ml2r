@@ -3,7 +3,7 @@ class AdverseMediaCheckJob < ApplicationJob
 
   def perform(check_id)
     check = AdverseMediaCheck.find(check_id)
-    result = AdverseMediaCheckService.new(check.client.display_name).call
+    result = AdverseMediaCheckService.new(check.adverse_media_checkable.display_name).call
 
     check.update!(
       status: result["status"],

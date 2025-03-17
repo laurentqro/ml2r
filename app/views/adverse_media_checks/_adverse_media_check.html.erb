@@ -1,10 +1,10 @@
-<%= turbo_stream_from "adverse_media_check_#{check.id}_updates" %>
+<%= turbo_stream_from "adverse_media_check_#{adverse_media_check.id}_updates" %>
 
-<%= turbo_frame_tag "adverse_media_check_#{check.id}" do %>
+<%= turbo_frame_tag "adverse_media_check_#{adverse_media_check.id}" do %>
   <div class="border rounded-lg p-4 bg-gray-50 mb-4">
     <div class="flex justify-between items-start">
       <div>
-        <% if check.in_progress? %>
+        <% if adverse_media_check.in_progress? %>
           <div class="flex items-center mb-2">
             <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-700 mr-2"></div>
             <span class="text-xs text-blue-700">Check in progress ...</span>
@@ -12,38 +12,38 @@
         <% else %>
           <div class="flex items-center mb-2">
             <span class="py-1 text-xs
-              <%= check.completed? ? 'text-green-800' : 
-                (check.failed? ? 'text-red-800' : 'text-yellow-800') %>">
-              Check <%= check.status %>
+              <%= adverse_media_check.completed? ? 'text-green-800' : 
+                (adverse_media_check.failed? ? 'text-red-800' : 'text-yellow-800') %>">
+              Check <%= adverse_media_check.status %>
             </span>
           </div>
         <% end %>
 
         <div class="font-medium">
           <span class="py-1
-            <%= check.adverse_media_status == 'Adverse Media Found' ? 'text-red-800' : 'text-green-800' %>">
-            <%= check.adverse_media_status %>
+            <%= adverse_media_check.adverse_media_status == 'Adverse Media Found' ? 'text-red-800' : 'text-green-800' %>">
+            <%= adverse_media_check.adverse_media_status %>
           </span>
         </div>
 
         <div class="text-sm text-gray-500">
-          <%= check.created_at.strftime("%d %B %Y %H:%M:%S") %>
+          <%= adverse_media_check.created_at.strftime("%d %B %Y %H:%M:%S") %>
         </div>
       </div>
 
-      <% if check.completed? %>
+      <% if adverse_media_check.completed? %>
         <button type="button" 
                 class="text-sm text-blue-600 hover:text-blue-800"
-                onclick="toggleDetails('<%= dom_id(check) %>')">
+                onclick="toggleDetails('<%= dom_id(adverse_media_check) %>')">
           View Details
         </button>
       <% end %>
     </div>
 
-    <% if check.completed? %>
-      <div id="<%= dom_id(check) %>_details" class="mt-4 hidden">
+    <% if adverse_media_check.completed? %>
+      <div id="<%= dom_id(adverse_media_check) %>_details" class="mt-4 hidden">
         <div class="text-sm bg-white p-3 rounded border">
-          <%= render "clients/adverse_media_check_result", check: check %>
+          <%= render "adverse_media_checks/result", adverse_media_check: adverse_media_check %>
         </div>
       </div>
     <% end %>

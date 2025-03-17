@@ -28,6 +28,6 @@
   }
 
   .markdown-content h2 {
-    @apply text-lg pb-0;
+    @apply text-lg pb-0 mt-8;
   }
 } 

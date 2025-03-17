@@ -5,20 +5,14 @@
     </div>
 
     <div>
-      <%= form_with(url: client_adverse_media_checks_path(client), method: :post, class: "mb-4", data: { turbo: true }) do |form| %>
-        <%= form.submit "Run a new adverse media check",
-            class: "w-full sm:w-auto px-4 py-2 bg-blue-600 text-white rounded-lg
-                hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500
-                focus:ring-offset-2 transition-colors" %>
-      <% end %>
+      <%= render "adverse_media_checks/form", adverse_media_checkable: clientable %>
     </div>
   </div>
 
-
   <div id="adverse_media_checks_list" class="space-y-2 mb-6">
     <%= turbo_frame_tag "adverse_media_checks" do %>
-      <% client.adverse_media_checks.order(created_at: :desc).each do |check| %>
-        <%= render "adverse_media_check_item", client: client, check: check %>
+      <% clientable.adverse_media_checks.order(created_at: :desc).each do |check| %>
+        <%= render check %>
       <% end %>
     <% end %>
   </div>

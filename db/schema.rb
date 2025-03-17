@@ -10,15 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_10_162312) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_17_163348) do
   create_table "adverse_media_checks", force: :cascade do |t|
     t.string "status", default: "in progress"
     t.boolean "adverse_media_found"
     t.json "result"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "client_id"
-    t.index ["client_id"], name: "index_adverse_media_checks_on_client_id"
+    t.integer "adverse_media_checkable_id"
+    t.string "adverse_media_checkable_type"
+    t.index ["adverse_media_checkable_id", "adverse_media_checkable_type"], name: "idx_on_adverse_media_checkable_id_adverse_media_che_72cfe96daf"
   end
 
   create_table "clients", force: :cascade do |t|
@@ -171,7 +172,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_10_162312) do
     t.index ["screenable_id", "screenable_type"], name: "index_screenings_on_screenable_id_and_screenable_type"
   end
 
-  add_foreign_key "adverse_media_checks", "clients"
   add_foreign_key "company_relationships", "companies"
   add_foreign_key "company_relationships", "people"
   add_foreign_key "identification_documents", "people"

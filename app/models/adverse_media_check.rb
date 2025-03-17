@@ -1,5 +1,5 @@
 class AdverseMediaCheck < ApplicationRecord
-  belongs_to :client
+  belongs_to :adverse_media_checkable, polymorphic: true
 
   after_commit :broadcast_status
 
@@ -7,8 +7,8 @@ class AdverseMediaCheck < ApplicationRecord
     Turbo::StreamsChannel.broadcast_replace_to(
       "adverse_media_check_#{id}_updates",
       target: "adverse_media_check_#{id}",
-      partial: "clients/adverse_media_check_item",
-      locals: { check: self }
+      partial: "adverse_media_checks/adverse_media_check",
+      locals: { adverse_media_check: self }
     )
   end
 
