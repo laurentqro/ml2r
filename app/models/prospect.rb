@@ -12,6 +12,6 @@ class Prospect
   end
 
   def self.any?
-    Person.any? || Company.any?
+    people.any? || companies.any?
   end
 end
