@@ -16,7 +16,7 @@ class ClientsController < ApplicationController
       filtered_scope = filtered_scope.where("LOWER(display_name) LIKE ?", search_term)
     end
 
-    @clients = paginate(filtered_scope)
+    @client_risk_summaries = paginate(filtered_scope)
 
     respond_to do |format|
       format.html
