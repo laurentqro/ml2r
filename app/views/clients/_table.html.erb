@@ -36,10 +36,18 @@
         <% client_risk_summaries.each do |summary| %>
           <%= render summary %>
         <% end %>
+      <% elsif params[:query].present? %>
+        <tr class="border-x border-gray-300">
+          <td colspan="7" class="py-8 text-center text-gray-500 italic">
+            No client found matching your search criteria.
+          </td>
+        </tr>
       <% else %>
         <tr class="border-x border-gray-300">
           <td colspan="7" class="py-8 text-center text-gray-500 italic">
-            No clients found matching your search criteria.
+            Create your first prospect:
+            <%= link_to "Create Person Prospect", new_person_path, class: "btn-primary", data: { turbo: false } %>
+            <%= link_to "Create Company Prospect", new_company_path, class: "btn-primary", data: { turbo: false } %>
           </td>
         </tr>
       <% end %>

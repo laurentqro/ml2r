@@ -116,18 +116,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_17_163348) do
   end
 
   create_table "risk_factors", force: :cascade do |t|
+    t.integer "client_id", null: false
     t.integer "category"
     t.string "identifier"
     t.datetime "identified_at"
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "client_id"
     t.index ["client_id", "category", "identifier"], name: "index_risk_factors_on_client_id_and_category_and_identifier", unique: true
     t.index ["client_id"], name: "index_risk_factors_on_client_id"
   end
 
   create_table "risk_scoresheets", force: :cascade do |t|
+    t.integer "client_id", null: false
     t.integer "country_risk_score"
     t.integer "client_risk_score"
     t.integer "products_and_services_risk_score"
@@ -137,7 +138,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_17_163348) do
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "client_id"
     t.index ["client_id"], name: "index_risk_scoresheets_on_client_id"
   end
 

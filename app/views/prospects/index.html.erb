@@ -4,10 +4,12 @@
   <div class="sm:flex-auto">
     <h1>Prospects</h1>
   </div>
-  <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none space-x-4">
-    <%= link_to "Add New Person", new_person_path, class: "btn-primary" %>
-    <%= link_to "Add New Company", new_company_path, class: "btn-primary" %>
-  </div>
+  <% if Prospect.any? %>
+    <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none space-x-4">
+      <%= link_to "Create Person Prospect", new_person_path, class: "btn-primary" %>
+      <%= link_to "Create Company Prospect", new_company_path, class: "btn-primary" %>
+    </div>
+  <% end %>
 </div>
 
 <div class="border-b border-gray-200">
@@ -46,9 +48,7 @@
       <%= render 'shared/pagination', collection: @prospects %>
     </div>
 
-    <div id="prospects_table">
-      <%= render "prospects_table", prospects: @prospects %>
-    </div>
+    <%= render "table", prospects: @prospects %>
 
     <div id="prospects_pagination">
       <%= render 'shared/pagination', collection: @prospects %>

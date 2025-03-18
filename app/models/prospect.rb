@@ -10,4 +10,8 @@ class Prospect
   def self.companies
     Company.where.missing(:business_relationships)
   end
+
+  def self.any?
+    Person.any? || Company.any?
+  end
 end
