@@ -1,3 +1,3 @@
 <%= turbo_stream.prepend "screenings_list" do %>
-  <%= render "clients/screening_item", client: @client, screening: @screening %>
-<% end %> 
+  <%= render @screening %>
+<% end %>
