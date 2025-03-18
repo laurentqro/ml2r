@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
-  root "clients#index"
+  root "prospects#index"
 
   resources :companies do
     resources :company_relationships
