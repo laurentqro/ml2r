@@ -141,6 +141,14 @@ class Client < ApplicationRecord
     risk_scoresheets.current
   end
 
+  def company?
+    clientable_type == "Company"
+  end
+
+  def person?
+    clientable_type == "Person"
+  end
+
   private
 
   def no_blacklisted_countries

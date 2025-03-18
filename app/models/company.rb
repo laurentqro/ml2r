@@ -1,7 +1,8 @@
 class Company < ApplicationRecord
+  has_many :business_relationships, class_name: "Client", as: :clientable
   has_many :screenings, as: :screenable
   has_many :screening_matches, through: :screenings, source: :matches
-  has_many :business_relationships, class_name: "Client", as: :clientable
+  has_many :adverse_media_checks, as: :adverse_media_checkable
 
   # Add company relationships
   has_many :company_relationships, dependent: :destroy
@@ -51,15 +52,11 @@ class Company < ApplicationRecord
     Client.exists?(clientable: self)
   end
 
-  def person?
-    false
-  end
-
-  def company?
-    true
-  end
-
   def risk_factor_class
     CompanyRiskFactor
+  end
+
+  def has_adverse_media?
+    adverse_media_checks.any?(&:adverse_media_found?)
   end
 end

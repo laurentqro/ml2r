@@ -8,6 +8,14 @@ module ClientsHelper
     end
   end
 
+  def edit_clientable_path(clientable)
+    if clientable.is_a?(Company)
+      edit_company_path(clientable)
+    elsif clientable.is_a?(Person)
+      edit_person_path(clientable)
+    end
+  end
+
   def country_name(code)
     ISO3166::Country[code]&.iso_short_name || code
   end

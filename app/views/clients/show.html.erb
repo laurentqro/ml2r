@@ -12,7 +12,7 @@
 
     <%= render "risk_radar", client: @client %>
 
-    <%= render "company_relationships/index", company: @clientable if @clientable_type == "Company" %>
+    <%= render "company_relationships/index", company: @clientable if @clientable.is_a?(Company) %>
 
     <%= render "identification_documents_section", documents: @clientable.identification_documents %>
 
