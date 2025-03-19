@@ -1,4 +1,12 @@
 class Company < ApplicationRecord
+  DOCUMENT_TYPES = [
+    "Articles of Association",
+    "Shareholder Register",
+    "Board Minutes",
+    "Annual Return",
+    "Other"
+  ].freeze
+
   has_many :business_relationships, class_name: "Client", as: :clientable
   has_many :screenings, as: :screenable
   has_many :screening_matches, through: :screenings, source: :matches

@@ -1,4 +1,11 @@
 class Person < ApplicationRecord
+  DOCUMENT_TYPES = [
+    "Passport",
+    "ID Card",
+    "Driver License",
+    "Residence Permit"
+  ].freeze
+
   has_many :business_relationships, class_name: "Client", as: :clientable
   has_many :screenings, as: :screenable
   has_many :screening_matches, through: :screenings, source: :matches
