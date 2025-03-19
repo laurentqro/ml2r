@@ -1,5 +1,5 @@
 class IdentificationDocument < ApplicationRecord
-  belongs_to :person
+  belongs_to :documentable, polymorphic: true
 
   validates :document_type, :number, :expiration_date, presence: true
   validate :expiration_date_cannot_be_in_past

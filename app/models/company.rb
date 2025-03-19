@@ -3,6 +3,7 @@ class Company < ApplicationRecord
   has_many :screenings, as: :screenable
   has_many :screening_matches, through: :screenings, source: :matches
   has_many :adverse_media_checks, as: :adverse_media_checkable
+  has_many :identification_documents, as: :documentable, dependent: :destroy
 
   # Add company relationships
   has_many :company_relationships, dependent: :destroy
@@ -19,6 +20,8 @@ class Company < ApplicationRecord
   has_many :legal_representatives, through: :legal_representative_relationships, source: :person
 
   validates :name, :country, presence: true
+
+  accepts_nested_attributes_for :identification_documents, allow_destroy: true, reject_if: :all_blank
 
   def country_of_residence
     country
@@ -42,10 +45,6 @@ class Company < ApplicationRecord
 
   def pep?
     false
-  end
-
-  def identification_documents
-    []
   end
 
   def client?

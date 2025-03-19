@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_19_121328) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_19_144312) do
   create_table "adverse_media_checks", force: :cascade do |t|
     t.string "status", default: "in progress"
     t.boolean "adverse_media_found"
@@ -56,14 +56,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_19_121328) do
   end
 
   create_table "identification_documents", force: :cascade do |t|
-    t.integer "person_id", null: false
+    t.integer "documentable_id", null: false
     t.string "document_type", null: false
     t.string "number", null: false
     t.date "expiration_date", null: false
     t.boolean "is_copy", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["person_id"], name: "index_identification_documents_on_person_id"
+    t.string "documentable_type", null: false
+    t.index ["documentable_type", "documentable_id"], name: "idx_on_documentable_type_documentable_id_d7e5f13e74"
   end
 
   create_table "matches", force: :cascade do |t|
@@ -152,7 +153,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_19_121328) do
 
   add_foreign_key "company_relationships", "companies"
   add_foreign_key "company_relationships", "people"
-  add_foreign_key "identification_documents", "people"
+  add_foreign_key "identification_documents", "people", column: "documentable_id"
   add_foreign_key "matches", "screenings"
   add_foreign_key "risk_factors", "clients"
   add_foreign_key "risk_scoresheets", "clients"

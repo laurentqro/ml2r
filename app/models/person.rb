@@ -3,7 +3,7 @@ class Person < ApplicationRecord
   has_many :screenings, as: :screenable
   has_many :screening_matches, through: :screenings, source: :matches
   has_many :adverse_media_checks, as: :adverse_media_checkable
-  has_many :identification_documents, dependent: :destroy
+  has_many :identification_documents, as: :documentable, dependent: :destroy
 
   # Add company relationships
   has_many :company_relationships, dependent: :destroy
