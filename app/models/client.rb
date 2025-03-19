@@ -2,8 +2,6 @@ class Client < ApplicationRecord
   belongs_to :clientable, polymorphic: true
 
   has_many :risk_factors, dependent: :destroy
-  has_many :person_risk_factors, dependent: :destroy
-  has_many :company_risk_factors, dependent: :destroy
   has_many :risk_scoresheets, dependent: :destroy
   has_many :adverse_media_checks, dependent: :destroy
 

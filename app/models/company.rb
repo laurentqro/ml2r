@@ -59,10 +59,6 @@ class Company < ApplicationRecord
     Client.exists?(clientable: self)
   end
 
-  def risk_factor_class
-    CompanyRiskFactor
-  end
-
   def has_adverse_media?
     adverse_media_checks.any?(&:adverse_media_found?)
   end
