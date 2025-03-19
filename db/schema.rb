@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_17_163348) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_19_121328) do
   create_table "adverse_media_checks", force: :cascade do |t|
     t.string "status", default: "in progress"
     t.boolean "adverse_media_found"
@@ -139,28 +139,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_17_163348) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["client_id"], name: "index_risk_scoresheets_on_client_id"
-  end
-
-  create_table "sanctions", force: :cascade do |t|
-    t.string "nature"
-    t.string "title"
-    t.string "last_name"
-    t.string "first_name"
-    t.string "sex"
-    t.string "date_of_birth"
-    t.string "place_of_birth"
-    t.string "nationality"
-    t.text "address"
-    t.text "alias"
-    t.string "authority"
-    t.text "motive"
-    t.string "legal_basis"
-    t.text "additional_info"
-    t.string "expiration_date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "measure_id"
-    t.index ["measure_id"], name: "index_sanctions_on_measure_id"
   end
 
   create_table "screenings", force: :cascade do |t|

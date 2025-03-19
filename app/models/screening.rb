@@ -1,6 +1,4 @@
 class Screening < ApplicationRecord
-  include MatchScoring
-
   belongs_to :screenable, polymorphic: true
   has_many :matches, dependent: :destroy
 
