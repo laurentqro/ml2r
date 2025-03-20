@@ -43,7 +43,7 @@ gem "thruster", require: false
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
-gem "csv", "~> 3.0"
+gem "csv", "~> 3.3"
 gem "countries", "~> 7.1"
 gem "faker", "~> 3.5"
 gem "amatch"

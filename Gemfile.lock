@@ -102,7 +102,7 @@ GEM
     countries (7.1.1)
       unaccent (~> 0.3)
     crass (1.0.6)
-    csv (3.3.2)
+    csv (3.3.3)
     date (3.4.1)
     debug (1.10.0)
       irb (~> 1.10)
@@ -434,7 +434,7 @@ DEPENDENCIES
   brakeman
   capybara
   countries (~> 7.1)
-  csv (~> 3.0)
+  csv (~> 3.3)
   debug
   factory_bot_rails (~> 6.4.0)
   faker (~> 3.5)
