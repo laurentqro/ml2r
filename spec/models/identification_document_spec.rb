@@ -14,7 +14,7 @@ RSpec.describe IdentificationDocument do
   describe "validations" do
     it "is valid with valid attributes" do
       document = described_class.new(
-        person: person,
+        documentable: person,
         document_type: "Passport",
         number: "123456789",
         expiration_date: 1.year.from_now,
@@ -25,7 +25,7 @@ RSpec.describe IdentificationDocument do
 
     it "is invalid without a document type" do
       document = described_class.new(
-        person: person,
+        documentable: person,
         number: "123456789",
         expiration_date: 1.year.from_now
       )
@@ -35,7 +35,7 @@ RSpec.describe IdentificationDocument do
 
     it "is invalid without a number" do
       document = described_class.new(
-        person: person,
+        documentable: person,
         document_type: "Passport",
         expiration_date: 1.year.from_now
       )
@@ -45,7 +45,7 @@ RSpec.describe IdentificationDocument do
 
     it "is invalid without an expiration date" do
       document = described_class.new(
-        person: person,
+        documentable: person,
         document_type: "Passport",
         number: "123456789"
       )
@@ -55,7 +55,7 @@ RSpec.describe IdentificationDocument do
 
     it "is invalid with a past expiration date" do
       document = described_class.new(
-        person: person,
+        documentable: person,
         document_type: "Passport",
         number: "123456789",
         expiration_date: 1.day.ago
@@ -66,10 +66,16 @@ RSpec.describe IdentificationDocument do
   end
 
   describe "associations" do
-    it "belongs to a person" do
-      document = described_class.new
-      expect(document).to respond_to(:person)
-      expect(document.build_person).to be_a(Person)
+    it "belongs to a documentable" do
+      document = described_class.new(
+        documentable: person,
+        document_type: "Passport",
+        number: "123456789",
+        expiration_date: 1.year.from_now
+      )
+
+      expect(document).to respond_to(:documentable)
+      expect(document.documentable).to be_a(Person)
     end
   end
 end
