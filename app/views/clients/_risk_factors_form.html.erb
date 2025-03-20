@@ -5,7 +5,7 @@
       Select all applicable <%= client.clientable_type.downcase %> factors.
     </p>
     <div class="mt-6 space-y-8">
-      <% client.risk_factor_class.categories.each do |category, _| %>
+      <% RiskFactorDefinition.categories.each do |category| %>
         <div>
           <h3>
             <%= category.titleize %> Factors
@@ -14,7 +14,7 @@
             <% client.risk_factor_class.identifiers_for(category).each do |identifier| %>
               <div class="relative flex items-start">
                 <div class="flex h-6 items-center">
-                  <%= f.fields_for :risk_factors, client.risk_factor_class.new(category: category, identifier: identifier) do |rf| %>
+                  <%= f.fields_for :risk_factors, RiskFactor.new(category: category, identifier: identifier) do |rf| %>
                     <%= rf.hidden_field :category, value: category %>
                     <%= rf.hidden_field :identifier, value: identifier %>
                     <%= rf.check_box :identified_at, { 

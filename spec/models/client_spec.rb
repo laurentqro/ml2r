@@ -96,13 +96,13 @@ RSpec.describe Client do
         create(:person_client_risk_factor_definition, identifier: :rushed_transactions, score: 10)
         create(:person_products_and_services_risk_factor_definition, identifier: :new_build_sale, score: 15)
 
-        create(:person_risk_factor,
+        create(:risk_factor,
           client: client,
           category: :products_and_services_risk,
           identifier: :new_build_sale
         )
 
-        create(:person_risk_factor,
+        create(:risk_factor,
           client: client,
           category: :client_risk,
           identifier: :rushed_transactions
@@ -146,54 +146,27 @@ RSpec.describe Client do
     end
   end
 
-  describe "#risk_factor_class" do
-    context "with person client" do
-      let(:client) { described_class.new(clientable: Person.new) }
-
-      it "returns PersonRiskFactor" do
-        expect(client.risk_factor_class).to eq(PersonRiskFactor)
-      end
-    end
-
-    context "with company client" do
-      let(:client) { described_class.new(clientable: Company.new) }
-
-      it "returns CompanyRiskFactor" do
-        expect(client.risk_factor_class).to eq(CompanyRiskFactor)
-      end
-    end
-  end
-
-  describe "#build_clientable" do
-    let(:client) { described_class.new }
-
-    context "with person type" do
-      it "builds a new Person as clientable" do
-        client.build_clientable(type: "person")
-        expect(client.clientable).to be_a(Person)
-        expect(client.clientable).to be_new_record
-      end
-    end
-
-    context "with company type" do
-      it "builds a new Company as clientable" do
-        client.build_clientable(type: "company")
-        expect(client.clientable).to be_a(Company)
-        expect(client.clientable).to be_new_record
-      end
-    end
-  end
-
   describe "risk score methods" do
     let(:client) { create(:client, clientable: create(:person)) }
 
     describe "#total_risk_factors_score" do
       it "sums up scores from all risk categories" do
-        allow(client).to receive(:available_risk_categories).and_return([ "client_risk", "transaction_risk" ])
-        allow(client).to receive(:category_risk_score).with("client_risk").and_return(25)
-        allow(client).to receive(:category_risk_score).with("transaction_risk").and_return(50)
+        create(:person_client_risk_factor_definition, identifier: :rushed_transactions, score: 30)
+        create(:person_client_risk_factor_definition, identifier: :trust_or_foundation, score: 25)
 
-        expect(client.total_risk_factors_score).to eq(75)
+        create(:risk_factor,
+          client: client,
+          category: :client_risk,
+          identifier: :rushed_transactions
+        )
+
+        create(:risk_factor,
+          client: client,
+          category: :client_risk,
+          identifier: :trust_or_foundation
+        )
+
+        expect(client.total_risk_factors_score).to eq(55)
       end
     end
 
@@ -202,13 +175,13 @@ RSpec.describe Client do
         create(:person_client_risk_factor_definition, identifier: :rushed_transactions, score: 30)
         create(:person_client_risk_factor_definition, identifier: :trust_or_foundation, score: 25)
 
-        create(:person_risk_factor,
+        create(:risk_factor,
           client: client,
           category: :client_risk,
           identifier: :rushed_transactions
         )
 
-        create(:person_risk_factor,
+        create(:risk_factor,
           client: client,
           category: :client_risk,
           identifier: :trust_or_foundation

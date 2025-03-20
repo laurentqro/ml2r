@@ -1,5 +1,5 @@
-<% client.available_risk_categories.each do |category| %>
-  <% risk_factors = client.risk_factor_class.where(client: client, category: category) %>
+<% RiskFactorDefinition.categories.each do |category| %>
+  <% risk_factors = RiskFactor.where(client: client, category: category) %>
   <% category_score = client.category_risk_score(category) %>
 
   <% if risk_factors.any? %>
@@ -19,7 +19,7 @@
               </div>
               <div>
                 <p class="text-sm text-gray-900">
-                  <%= RiskFactorDefinition.description_for(risk_factor.class.to_s, risk_factor.category, risk_factor.identifier) %>
+                  <%= RiskFactorDefinition.description_for(risk_factor.category, risk_factor.identifier) %>
                 </p>
                 <% if risk_factor.notes.present? %>
                   <p class="mt-1 text-sm text-gray-500">
@@ -29,7 +29,7 @@
               </div>
             </div>
             <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(25) %>">
-              <%= RiskFactorDefinition.score_for(risk_factor.class.to_s, risk_factor.category, risk_factor.identifier) %>
+              <%= RiskFactorDefinition.score_for(risk_factor.category, risk_factor.identifier) %>
             </span>
           </div>
         <% end %>

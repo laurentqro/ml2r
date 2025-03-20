@@ -5,7 +5,7 @@ class Client < ApplicationRecord
   has_many :risk_scoresheets, dependent: :destroy
   has_many :adverse_media_checks, dependent: :destroy
 
-  delegate :risk_factor_class, :display_name, :country_of_residence, :nationality, :country_of_profession,
+  delegate :display_name, :country_of_residence, :nationality, :country_of_profession,
            :country_of_birth, to: :clientable, allow_nil: true
 
   validate :no_blacklisted_countries
@@ -52,7 +52,12 @@ class Client < ApplicationRecord
   end
 
   def total_risk_factors_score
-    available_risk_categories.sum { |category| category_risk_score(category) }
+    RiskFactor.where(client: self).sum do |risk_factor|
+      RiskFactorDefinition.score_for(
+        risk_factor.category,
+        risk_factor.identifier
+      )
+    end
   end
 
   def client_risk_score
@@ -72,22 +77,11 @@ class Client < ApplicationRecord
   end
 
   def category_risk_score(category)
-    risk_factor_class.where(client: self, category: category).sum do |risk_factor|
-      risk_factor_class.score_for(
+    RiskFactor.where(client: self, category: category).sum do |risk_factor|
+      RiskFactorDefinition.score_for(
         category,
         risk_factor.identifier
       )
-    end
-  end
-
-  def build_clientable(type:)
-    case type.downcase
-    when "person"
-      self.clientable = Person.new
-    when "company"
-      self.clientable = Company.new
-    else
-      raise ArgumentError, "Invalid clientable type: #{type}"
     end
   end
 
@@ -121,10 +115,6 @@ class Client < ApplicationRecord
 
     weighted_sum = scores.zip(weights).sum { |score, weight| score.to_f * weight }
     (weighted_sum / weights.sum).round
-  end
-
-  def available_risk_categories
-    risk_factor_class.available_categories
   end
 
   def has_adverse_media?

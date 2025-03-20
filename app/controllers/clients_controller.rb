@@ -30,11 +30,6 @@ class ClientsController < ApplicationController
     @screening = Screening.new(screenable: @client)
   end
 
-  def new
-    @client = Client.new
-    @client.build_clientable(type: params[:nature] || "person")
-  end
-
   def create
     clientable_type = client_params[:clientable_type].classify
     clientable = clientable_type.constantize.new(client_params[:clientable_attributes])
@@ -49,7 +44,7 @@ class ClientsController < ApplicationController
       risk_factors = client_params[:risk_factors_attributes].values.map do |attrs|
         next if attrs[:identified_at].blank?
 
-        @client.risk_factor_class.new(
+        RiskFactor.new(
           client: @client,
           category: attrs[:category],
           identifier: attrs[:identifier],
@@ -69,7 +64,6 @@ class ClientsController < ApplicationController
       RiskScoresheet.create_for_client!(@client)
       redirect_to @client, notice: "Client was successfully created."
     else
-      @client.build_clientable(type: params[:nature] || "person") unless @client.clientable
       render :new, status: :unprocessable_entity
     end
   end
@@ -100,7 +94,7 @@ class ClientsController < ApplicationController
         end
 
         # Delete unchecked risk factors
-        @client.risk_factor_class.where(client: @client).each do |risk_factor|
+        RiskFactor.where(client: @client).each do |risk_factor|
           matching_submission = submitted_risk_factors.find { |category, identifier, checked|
             category == risk_factor.category && identifier == risk_factor.identifier
           }
@@ -114,7 +108,7 @@ class ClientsController < ApplicationController
         client_params[:risk_factors_attributes].values.each do |attrs|
           next if attrs[:identified_at].blank?
 
-          @client.risk_factor_class.find_or_create_by!(
+          RiskFactor.find_or_create_by!(
             client: @client,
             category: attrs[:category],
             identifier: attrs[:identifier]

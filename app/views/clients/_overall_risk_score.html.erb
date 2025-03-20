@@ -1,4 +1,4 @@
-<% if @client.available_risk_categories.any? { |category| @client.risk_factor_class.where(client: @client, category: category).any? } %>
+<% if RiskFactorDefinition.categories.any? { |category| @client.risk_factors.where(category: category).any? } %>
     <div class="bg-white shadow rounded-lg p-6 mt-4">
     <div class="flex flex-col">
         <div class="flex items-center justify-between">

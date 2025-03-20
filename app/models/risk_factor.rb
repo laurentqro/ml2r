@@ -24,10 +24,6 @@ class RiskFactor < ApplicationRecord
     RiskFactorDefinition.description_for(self.class.name, category, identifier)
   end
 
-  def self.available_categories
-    categories.keys
-  end
-
   def self.score_for(category, identifier)
     RiskFactorDefinition.score_for(name, category, identifier) || 0
   end

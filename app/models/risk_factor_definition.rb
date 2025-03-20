@@ -16,8 +16,6 @@ class RiskFactorDefinition < ApplicationRecord
 
   validates :identifier, uniqueness: { scope: [ :risk_factor_type, :category ], message: "must be unique within the same risk factor type and category" }
 
-  scope :person_risk_factors, -> { where(risk_factor_type: "PersonRiskFactor") }
-  scope :company_risk_factors, -> { where(risk_factor_type: "CompanyRiskFactor") }
   scope :by_category, ->(category) { where(category: category) }
 
   def self.format_category_name(category)
@@ -26,13 +24,19 @@ class RiskFactorDefinition < ApplicationRecord
     category.humanize.titleize
   end
 
-  def self.score_for(risk_factor_type, category, identifier)
-    definition = where(risk_factor_type: risk_factor_type, category: category, identifier: identifier).first
-    definition&.score
+  def self.score_for(category, identifier)
+    find_by(category: category, identifier: identifier)&.score
   end
 
-  def self.description_for(risk_factor_type, category, identifier)
-    definition = where(risk_factor_type: risk_factor_type, category: category, identifier: identifier).first
-    definition&.description
+  def self.description_for(category, identifier)
+    find_by(category: category, identifier: identifier)&.description
+  end
+
+  def self.identifiers_for(category)
+    where(category: category).pluck(:identifier).map(&:to_sym)
+  end
+
+  def self.categories
+    CATEGORIES
   end
 end

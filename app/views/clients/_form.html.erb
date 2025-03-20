@@ -39,15 +39,15 @@
 
     <div class="mt-10">
         <div class="mt-6 space-y-8">
-          <% @client.available_risk_categories.each do |category| %>
+          <% RiskFactorDefinition.categories.each do |category| %>
             <div>
               <h3>
-                <%= category.titleize %> Factors
+                <%= RiskFactorDefinition.format_category_name(category) %> Factors
               </h3>
               <div class="space-y-4">
-                <% @client.risk_factor_class.identifiers_for(category).each do |identifier| %>
-                  <% checkbox_id = "risk_factor_#{category}_#{identifier}" %>
-                  <% risk_factor = @client.risk_factor_class.find_by(client_id: @client.id, category: category, identifier: identifier) || @client.risk_factor_class.new(client_id: @client.id, category: category, identifier: identifier) %>
+                <% RiskFactorDefinition.identifiers_for(category).each do |identifier| %>
+                  <% checkbox_id = "#{category}_#{identifier}" %>
+                  <% risk_factor = RiskFactor.find_by(client_id: @client.id, category: category, identifier: identifier) || RiskFactor.new(client_id: @client.id, category: category, identifier: identifier) %>
                   <div class="relative flex items-start">
                     <div class="flex h-6 items-center">
                       <%= f.fields_for :risk_factors, risk_factor do |rf| %>
@@ -62,7 +62,7 @@
                     </div>
                     <div class="ml-3 text-sm/6 leading-6">
                       <label for="<%= checkbox_id %>" class="font-medium text-gray-900">
-                        <%= risk_factor.description %>
+                        <%= RiskFactorDefinition.description_for(category, identifier) %>
                       </label>
                     </div>
                   </div>

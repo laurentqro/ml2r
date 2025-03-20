@@ -44,7 +44,13 @@ module Admin
     end
 
     def risk_factor_definition_params
-      params.require(:risk_factor_definition).permit(:risk_factor_type, :category, :identifier, :description, :score)
+      params.expect(risk_factor_definition: [
+        :risk_factor_type,
+        :category,
+        :identifier,
+        :description,
+        :score
+      ])
     end
   end
 end

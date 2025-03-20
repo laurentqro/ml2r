@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   resources :people
   resources :prospects, only: :index
 
-  resources :clients do
+  resources :clients, except: [ :new, :destroy ] do
     resources :risk_factors, only: [ :index, :new, :create, :destroy ]
     resources :company_relationships, only: [ :index, :new, :create, :edit, :update, :destroy ]
 
