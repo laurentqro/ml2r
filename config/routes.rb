@@ -4,8 +4,21 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "prospects#index"
 
+  resources :people
+
   resources :companies do
     resources :company_relationships
+  end
+
+  resources :prospects, only: :index
+
+  resources :clients, except: [ :new, :destroy ] do
+    resources :company_relationships, only: [ :index, :new, :create, :edit, :update, :destroy ]
+    resources :risk_assessments
+
+    member do
+      patch :update_notes
+    end
   end
 
   resources :screenings, only: [ :create, :show ] do
@@ -13,18 +26,6 @@ Rails.application.routes.draw do
   end
 
   resources :adverse_media_checks, only: :create
-
-  resources :people
-  resources :prospects, only: :index
-
-  resources :clients, except: [ :new, :destroy ] do
-    resources :risk_factors, only: [ :index, :new, :create, :destroy ]
-    resources :company_relationships, only: [ :index, :new, :create, :edit, :update, :destroy ]
-
-    member do
-      patch :update_notes
-    end
-  end
 
   namespace :admin do
     resources :risk_factor_definitions

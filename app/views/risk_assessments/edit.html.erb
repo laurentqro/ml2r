@@ -1,0 +1,10 @@
+<% content_for :title, "Editing risk assessment" %>
+
+<div class="md:w-2/3 w-full">
+  <h1 class="font-bold text-4xl">Editing risk assessment</h1>
+
+  <%= render "form", risk_assessment: @risk_assessment %>
+
+  <%= link_to "Show this risk assessment", client_risk_assessment_path(@client, @risk_assessment), class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+  <%= link_to "Back to risk assessments", client_risk_assessments_path(@client), class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+</div>

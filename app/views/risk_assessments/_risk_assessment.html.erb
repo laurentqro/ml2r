@@ -1,0 +1,7 @@
+<ul>
+    <li><%= link_to risk_assessment.created_at, client_risk_assessment_path(risk_assessment.client, risk_assessment) %></li>
+    <li><%= risk_assessment.status %></li>
+    <li><%= risk_assessment.notes %></li>
+    <li><%= risk_assessment.approved_at %></li>
+    <li><%= risk_assessment.approver_name %></li>
+</ul>

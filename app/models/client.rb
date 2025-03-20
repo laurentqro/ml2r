@@ -1,18 +1,18 @@
 class Client < ApplicationRecord
   belongs_to :clientable, polymorphic: true
 
-  has_many :risk_factors, dependent: :destroy
+  has_many :risk_assessments, dependent: :destroy
+  has_many :risk_factors, through: :risk_assessments
   has_many :risk_scoresheets, dependent: :destroy
   has_many :adverse_media_checks, dependent: :destroy
 
   delegate :display_name, :country_of_residence, :nationality, :country_of_profession,
-           :country_of_birth, to: :clientable, allow_nil: true
+           :country_of_birth,
+           to: :clientable, allow_nil: true
 
   validate :no_blacklisted_countries
 
   accepts_nested_attributes_for :clientable
-  accepts_nested_attributes_for :risk_factors, allow_destroy: true,
-    reject_if: proc { |attributes| attributes["identified_at"].blank? }
 
   scope :clear, -> {
     where("NOT EXISTS (
@@ -47,74 +47,44 @@ class Client < ApplicationRecord
       .where("people.pep = ?", true)
   }
 
-  def total_risk_score
-    country_risk_score + total_risk_factors_score
-  end
-
-  def total_risk_factors_score
-    RiskFactor.where(client: self).sum do |risk_factor|
-      RiskFactorDefinition.score_for(
-        risk_factor.category,
-        risk_factor.identifier
-      )
-    end
+  def country_risk_score
+    latest_risk_scoresheet&.country_risk_score || 0
   end
 
   def client_risk_score
-    category_risk_score(:client_risk)
+    latest_risk_scoresheet&.client_risk_score || 0
   end
 
   def products_and_services_risk_score
-    category_risk_score(:products_and_services_risk)
+    latest_risk_scoresheet&.products_and_services_risk_score || 0
   end
 
   def distribution_channel_risk_score
-    category_risk_score(:distribution_channel_risk)
+    latest_risk_scoresheet&.distribution_channel_risk_score || 0
   end
 
   def transaction_risk_score
-    category_risk_score(:transaction_risk)
+    latest_risk_scoresheet&.transaction_risk_score || 0
   end
 
-  def category_risk_score(category)
-    RiskFactor.where(client: self, category: category).sum do |risk_factor|
-      RiskFactorDefinition.score_for(
-        category,
-        risk_factor.identifier
-      )
-    end
+  def current_risk_assessment
+    risk_assessments.current
   end
 
-  def country_risk_score
-    return Float::INFINITY if blacklisted?
+  def latest_approved_risk_assessment
+    risk_assessments.approved.order(approved_at: :desc).first
+  end
 
-    scores = []
-    weights = []
+  def total_risk_score
+    latest_risk_assessment&.total_risk_score || 0
+  end
 
-    if country_of_residence.present?
-      scores << CountryRiskScorer.calculate_risk_score(country_of_residence)
-      weights << 40
-    end
+  def latest_risk_assessment
+    risk_assessments.order(created_at: :desc).first
+  end
 
-    if nationality.present?
-      scores << CountryRiskScorer.calculate_risk_score(nationality)
-      weights << 35
-    end
-
-    if country_of_profession.present?
-      scores << CountryRiskScorer.calculate_risk_score(country_of_profession)
-      weights << 15
-    end
-
-    if country_of_birth.present?
-      scores << CountryRiskScorer.calculate_risk_score(country_of_birth)
-      weights << 10
-    end
-
-    return 0 if scores.empty?
-
-    weighted_sum = scores.zip(weights).sum { |score, weight| score.to_f * weight }
-    (weighted_sum / weights.sum).round
+  def current_risk_factors
+    current_risk_assessment&.risk_factors || RiskFactor.none
   end
 
   def has_adverse_media?
@@ -126,7 +96,14 @@ class Client < ApplicationRecord
   end
 
   def latest_risk_scoresheet
-    risk_scoresheets.current
+    risk_scoresheets.current || RiskScoresheet.new(
+      client: self,
+      country_risk_score: 0,
+      client_risk_score: 0,
+      products_and_services_risk_score: 0,
+      distribution_channel_risk_score: 0,
+      transaction_risk_score: 0
+    )
   end
 
   def company?

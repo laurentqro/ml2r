@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_19_160059) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_20_142915) do
   create_table "adverse_media_checks", force: :cascade do |t|
     t.string "status", default: "in progress"
     t.boolean "adverse_media_found"
@@ -105,28 +105,43 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_19_160059) do
     t.date "date_of_birth"
   end
 
+  create_table "risk_assessments", force: :cascade do |t|
+    t.integer "client_id", null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "completed_at"
+    t.datetime "approved_at"
+    t.string "approver_name"
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["approved_at"], name: "index_risk_assessments_on_approved_at"
+    t.index ["client_id"], name: "index_risk_assessments_on_client_id"
+    t.index ["completed_at"], name: "index_risk_assessments_on_completed_at"
+    t.index ["status"], name: "index_risk_assessments_on_status"
+  end
+
   create_table "risk_factor_definitions", force: :cascade do |t|
     t.string "category", null: false
     t.text "description", null: false
     t.integer "score", null: false
     t.string "risk_factor_type", null: false
-    t.string "identifier", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["risk_factor_type", "category", "identifier"], name: "idx_risk_factor_definitions_unique", unique: true
+    t.index ["risk_factor_type", "category"], name: "idx_risk_factor_definitions_on_type_and_category"
   end
 
   create_table "risk_factors", force: :cascade do |t|
-    t.integer "client_id", null: false
     t.integer "category"
-    t.string "identifier"
     t.datetime "identified_at"
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "entity_type", default: 0, null: false
-    t.index ["client_id", "category", "identifier"], name: "index_risk_factors_on_client_id_and_category_and_identifier", unique: true
-    t.index ["client_id"], name: "index_risk_factors_on_client_id"
+    t.integer "risk_assessment_id"
+    t.integer "risk_factor_definition_id"
+    t.index ["risk_assessment_id", "risk_factor_definition_id"], name: "idx_risk_factors_on_risk_assessment_and_definition", unique: true
+    t.index ["risk_assessment_id"], name: "index_risk_factors_on_risk_assessment_id"
+    t.index ["risk_factor_definition_id"], name: "index_risk_factors_on_risk_factor_definition_id"
   end
 
   create_table "risk_scoresheets", force: :cascade do |t|
@@ -140,7 +155,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_19_160059) do
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "risk_assessment_id", null: false
     t.index ["client_id"], name: "index_risk_scoresheets_on_client_id"
+    t.index ["risk_assessment_id"], name: "index_risk_scoresheets_on_risk_assessment_id"
   end
 
   create_table "screenings", force: :cascade do |t|
@@ -156,6 +173,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_19_160059) do
   add_foreign_key "company_relationships", "people"
   add_foreign_key "identification_documents", "people", column: "documentable_id"
   add_foreign_key "matches", "screenings"
-  add_foreign_key "risk_factors", "clients"
+  add_foreign_key "risk_assessments", "clients"
+  add_foreign_key "risk_factors", "risk_assessments"
+  add_foreign_key "risk_factors", "risk_factor_definitions"
   add_foreign_key "risk_scoresheets", "clients"
+  add_foreign_key "risk_scoresheets", "risk_assessments"
 end

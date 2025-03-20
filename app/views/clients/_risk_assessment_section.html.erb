@@ -1,0 +1,25 @@
+<div class="bg-white shadow-sm rounded-lg p-6">
+  <h2>Risk Assessments</h2>
+
+  <div class="flex justify-end">
+    <%= link_to new_client_risk_assessment_path(client), class: "btn-primary" do %>
+      Create Risk Assessment
+    <% end %>
+  </div>
+
+  <div class="grid grid-cols-1 gap-6">
+    <% if client.risk_assessments.any? %>
+      <% client.risk_assessments.each do |risk_assessment| %>
+        <%= render risk_assessment %>
+      <% end %>
+    <% else %>
+      <p class="text-gray-500 italic mb-3">No risk factors have been identified yet.</p>
+
+      <div class="mt-4">
+        <%= link_to new_client_risk_assessment_path(client), class: "btn-primary" do %>
+          Create Risk Assessment
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

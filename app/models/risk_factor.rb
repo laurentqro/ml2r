@@ -1,10 +1,10 @@
 class RiskFactor < ApplicationRecord
-  belongs_to :client
+  belongs_to :risk_assessment
+  belongs_to :risk_factor_definition
 
   enum :category, [ :client_risk, :products_and_services_risk, :distribution_channel_risk, :transaction_risk ]
   enum :entity_type, [ :person, :company ]
 
-  validates :identifier, presence: true
   validates :category, presence: true
   validates :entity_type, presence: true
 
@@ -16,19 +16,15 @@ class RiskFactor < ApplicationRecord
   scope :distribution_channel_risks, -> { where(category: :distribution_channel_risk) }
   scope :transaction_risks, -> { where(category: :transaction_risk) }
 
-  def self.identifiers_for(category)
-    RiskFactorDefinition.where(risk_factor_type: name, category: category).pluck(:identifier).map(&:to_sym)
-  end
-
   def description
-    RiskFactorDefinition.description_for(self.class.name, category, identifier)
-  end
-
-  def self.score_for(category, identifier)
-    RiskFactorDefinition.score_for(name, category, identifier) || 0
+    risk_factor_definition.description
   end
 
   def active?
     persisted?
+  end
+
+  def score
+    risk_factor_definition.score
   end
 end

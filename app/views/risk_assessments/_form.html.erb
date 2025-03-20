@@ -1,0 +1,29 @@
+<%= form_with(model: [@client, @risk_assessment], data: { turbo: false }) do |f| %>
+  <div class="mb-4">
+    <%= f.label :status, "Status", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.select :status, RiskAssessment.statuses.keys.map { |status| [status.humanize, status] }, {}, class: "mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md shadow-sm" %>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :notes, "Notes", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_area :notes, class: "mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md shadow-sm" %>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :approved_at, "Approved at", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.datetime_local_field :approved_at, class: "mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md shadow-sm" %>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :approver_name, "Approver", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :approver_name, class: "mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md shadow-sm" %>
+  </div>
+
+  <%= f.fields_for :risk_factors do |risk_factor_fields| %>
+      <%= render "risk_factor_fields", f: risk_factor_fields %>
+  <% end %>
+
+  <div class="mb-4">
+    <%= f.submit "Save", class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+  </div>
+<% end %>
