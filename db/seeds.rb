@@ -91,11 +91,11 @@ def create_random_company_risk_factors(client)
 end
 
 
-def create_risk_factor_definitions(risk_factors, risk_factor_type)
+def create_risk_factor_definitions(risk_factors, entity_type)
   risk_factors.each do |category, descriptions|
     descriptions.each do |identifier, description|
       RiskFactorDefinition.create!(
-        risk_factor_type: risk_factor_type,
+        entity_type: entity_type,
         identifier: identifier.to_s,
         category: category,
         description: description,

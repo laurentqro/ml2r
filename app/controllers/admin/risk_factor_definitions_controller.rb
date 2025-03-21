@@ -4,7 +4,7 @@ module Admin
 
     def index
       @risk_factor_definitions = RiskFactorDefinition.all
-        .order(:risk_factor_type, :category, :description)
+        .order(:entity_type, :category, :description)
     end
 
     def new
@@ -45,7 +45,7 @@ module Admin
 
     def risk_factor_definition_params
       params.expect(risk_factor_definition: [
-        :risk_factor_type,
+        :entity_type,
         :category,
         :identifier,
         :description,

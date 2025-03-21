@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_21_150044) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_21_153746) do
   create_table "adverse_media_checks", force: :cascade do |t|
     t.string "status", default: "in progress"
     t.boolean "adverse_media_found"
@@ -129,10 +129,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_21_150044) do
     t.string "category", null: false
     t.text "description", null: false
     t.integer "score", null: false
-    t.string "risk_factor_type", null: false
+    t.string "entity_type", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["risk_factor_type", "category"], name: "idx_risk_factor_definitions_on_type_and_category"
+    t.index ["entity_type", "category"], name: "idx_risk_factor_definitions_on_type_and_category"
   end
 
   create_table "risk_factors", force: :cascade do |t|

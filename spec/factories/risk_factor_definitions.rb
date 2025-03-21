@@ -4,7 +4,7 @@ FactoryBot.define do
     category { "client_risk" }
     description { "Subject of legal proceedings" }
     score { 25 }
-    risk_factor_type { "PersonRiskFactor" }
+    entity_type { "Person" }
     identifier { "subject_of_legal_proceedings" }
   end
 
@@ -12,7 +12,7 @@ FactoryBot.define do
     category { "products_and_services_risk" }
     description { "New build sale" }
     score { 25 }
-    risk_factor_type { "PersonRiskFactor" }
+    entity_type { "Person" }
     identifier { "new_build_sale" }
   end
 
@@ -20,7 +20,7 @@ FactoryBot.define do
     category { "distribution_channel_risk" }
     description { "Remote relationship" }
     score { 25 }
-    risk_factor_type { "PersonRiskFactor" }
+    entity_type { "Person" }
     identifier { "remote_relationship" }
   end
 
@@ -28,7 +28,7 @@ FactoryBot.define do
     category { "transaction_risk" }
     description { "Means of payment" }
     score { 25 }
-    risk_factor_type { "PersonRiskFactor" }
+    entity_type { "Person" }
     identifier { "means_of_payment" }
   end
 
@@ -36,7 +36,7 @@ FactoryBot.define do
     category { "client_risk" }
     description { "Subject of legal proceedings" }
     score { 25 }
-    risk_factor_type { "CompanyRiskFactor" }
+    entity_type { "Company" }
     identifier { "subject_of_legal_proceedings" }
   end
 
@@ -44,7 +44,7 @@ FactoryBot.define do
     category { "products_and_services_risk" }
     description { "New build sale" }
     score { 25 }
-    risk_factor_type { "CompanyRiskFactor" }
+    entity_type { "Company" }
     identifier { "new_build_sale" }
   end
 
@@ -52,7 +52,7 @@ FactoryBot.define do
     category { "distribution_channel_risk" }
     description { "Remote relationship" }
     score { 25 }
-    risk_factor_type { "CompanyRiskFactor" }
+    entity_type { "Company" }
     identifier { "remote_relationship" }
   end
 
@@ -60,7 +60,7 @@ FactoryBot.define do
     category { "transaction_risk" }
     description { "Means of payment" }
     score { 25 }
-    risk_factor_type { "CompanyRiskFactor" }
+    entity_type { "Company" }
     identifier { "means_of_payment" }
   end
 end
