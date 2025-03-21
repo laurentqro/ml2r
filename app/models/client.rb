@@ -48,23 +48,23 @@ class Client < ApplicationRecord
   }
 
   def country_risk_score
-    latest_risk_scoresheet&.country_risk_score || 0
+    latest_risk_assessment&.country_risk_score || 0
   end
 
   def client_risk_score
-    latest_risk_scoresheet&.client_risk_score || 0
+    latest_risk_assessment&.client_risk_score || 0
   end
 
   def products_and_services_risk_score
-    latest_risk_scoresheet&.products_and_services_risk_score || 0
+    latest_risk_assessment&.products_and_services_risk_score || 0
   end
 
   def distribution_channel_risk_score
-    latest_risk_scoresheet&.distribution_channel_risk_score || 0
+    latest_risk_assessment&.distribution_channel_risk_score || 0
   end
 
   def transaction_risk_score
-    latest_risk_scoresheet&.transaction_risk_score || 0
+    latest_risk_assessment&.transaction_risk_score || 0
   end
 
   def current_risk_assessment
@@ -96,14 +96,7 @@ class Client < ApplicationRecord
   end
 
   def latest_risk_scoresheet
-    risk_scoresheets.current || RiskScoresheet.new(
-      client: self,
-      country_risk_score: 0,
-      client_risk_score: 0,
-      products_and_services_risk_score: 0,
-      distribution_channel_risk_score: 0,
-      transaction_risk_score: 0
-    )
+    latest.risk_scoresheet.presence
   end
 
   def company?
@@ -112,6 +105,10 @@ class Client < ApplicationRecord
 
   def person?
     clientable_type == "Person"
+  end
+
+  def create_risk_assessment!
+    risk_assessments.create!
   end
 
   private

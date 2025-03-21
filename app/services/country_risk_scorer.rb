@@ -21,6 +21,10 @@ class CountryRiskScorer
     gafi_data[country_code]
   end
 
+  def self.blacklisted?(country_code)
+    gafi_status(country_code) == :black
+  end
+
   private
 
   def self.load_cpi_data
