@@ -1,7 +1,7 @@
 class UpdateClientRiskSummariesView < ActiveRecord::Migration[8.0]
   def up
     execute "DROP VIEW IF EXISTS client_risk_summaries;"
-    
+
     execute <<-SQL
       CREATE VIEW client_risk_summaries AS
       WITH latest_assessments AS (
@@ -57,7 +57,7 @@ class UpdateClientRiskSummariesView < ActiveRecord::Migration[8.0]
 
   def down
     execute "DROP VIEW IF EXISTS client_risk_summaries;"
-    
+
     execute <<-SQL
       CREATE VIEW client_risk_summaries AS
       WITH latest_scoresheets AS (

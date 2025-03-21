@@ -5,8 +5,7 @@ class RiskFactor < ApplicationRecord
   enum :category, [ :client_risk, :products_and_services_risk, :distribution_channel_risk, :transaction_risk ]
   enum :entity_type, [ :person, :company ]
 
-  validates :category, presence: true
-  validates :entity_type, presence: true
+  validates :category, :entity_type, presence: true
 
   scope :for_people, -> { where(entity_type: :person) }
   scope :for_companies, -> { where(entity_type: :company) }

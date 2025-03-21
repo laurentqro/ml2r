@@ -7,9 +7,9 @@
     </div>
 
   <!-- Group all risk factor definitions by category -->
-  <% 
-    person_definitions_by_category = @risk_factor_definitions.select { |d| d.risk_factor_type.include?('Person') }.group_by(&:category)
-    company_definitions_by_category = @risk_factor_definitions.select { |d| d.risk_factor_type.include?('Company') }.group_by(&:category)
+  <%
+    person_definitions_by_category = @risk_factor_definitions.select { |d| d.entity_type == "Person" }.group_by(&:category)
+    company_definitions_by_category = @risk_factor_definitions.select { |d| d.entity_type == "Company" }.group_by(&:category)
     all_categories = (person_definitions_by_category.keys + company_definitions_by_category.keys).uniq
   %>
 

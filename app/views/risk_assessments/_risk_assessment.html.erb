@@ -1,7 +1,13 @@
-<ul>
-    <li><%= link_to risk_assessment.created_at, client_risk_assessment_path(risk_assessment.client, risk_assessment) %></li>
-    <li><%= risk_assessment.status %></li>
-    <li><%= risk_assessment.notes %></li>
-    <li><%= risk_assessment.approved_at %></li>
-    <li><%= risk_assessment.approver_name %></li>
-</ul>
+<h2>Risk Assessment</h2>
+
+<p>Created at: <%= link_to risk_assessment.created_at, client_risk_assessment_path(risk_assessment.client, risk_assessment) %></p>
+<p>Client risk score: <%= risk_assessment.client_risk_score %></p>
+<p>Status: <%= risk_assessment.status %></p>
+<p>Notes: <%= risk_assessment.notes %></p>
+<p>Approved at: <%= risk_assessment.approved_at %></p>
+<p>Approver name: <%= risk_assessment.approver_name %></p>
+<p>Country risk score: <%= risk_assessment.country_risk_score %></p>
+<p>Products and services risk score: <%= risk_assessment.products_and_services_risk_score %></p>
+<p>Distribution channel risk score: <%= risk_assessment.distribution_channel_risk_score %></p>
+<p>Transaction risk score: <%= risk_assessment.transaction_risk_score %></p>
+<p>Total risk score: <%= risk_assessment.total_risk_score %></p>

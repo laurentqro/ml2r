@@ -19,11 +19,74 @@
     <%= f.text_field :approver_name, class: "mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md shadow-sm" %>
   </div>
 
-  <%= f.fields_for :risk_factors do |risk_factor_fields| %>
-      <%= render "risk_factor_fields", f: risk_factor_fields %>
-  <% end %>
+  <div class="mb-8">
+    <h2 class="text-lg font-medium text-gray-900 mb-4">Risk Factors</h2>
+    <p class="text-sm text-gray-600 mb-6">Select all applicable risk factors for this assessment. Previously selected factors are shown as checked.</p>
+
+    <% RiskFactorDefinition.categories.each do |category| %>
+      <div class="mb-6">
+        <h3 class="text-md font-medium text-gray-800 mb-3">
+          <%= RiskFactorDefinition.format_category_name(category) %>
+        </h3>
+
+        <div class="space-y-3">
+          <% RiskFactorDefinition.for_category(category).for_entity_type(@client.clientable_type).each do |definition| %>
+            <% risk_factor = @risk_assessment.risk_factors.find_or_initialize_by(risk_factor_definition: definition) %>
+
+            <%= f.fields_for :risk_factors, risk_factor do |rf| %>
+              <%= rf.hidden_field :risk_factor_definition_id, value: definition.id %>
+              <%= rf.hidden_field :category, value: definition.category %>
+              <% if risk_factor.persisted? %>
+                <%= rf.hidden_field :id %>
+                <%= rf.hidden_field :_destroy, value: "1", class: "destroy-flag" %>
+              <% end %>
+              <div class="relative flex items-start">
+                <div class="flex h-6 items-center">
+                  <%= rf.check_box :identified_at, { 
+                    checked: risk_factor.persisted?, 
+                    class: "h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600 risk-factor-checkbox",
+                    id: "risk_factor_#{definition.id}",
+                    data: { destroy_target: rf.object_name.gsub(/\[\d+\]/, "[#{rf.index}]") + "[_destroy]" }
+                  }, Time.current, nil %>
+                </div>
+                <div class="ml-3 text-sm/6 leading-6">
+                  <label for="risk_factor_<%= definition.id %>" class="font-medium text-gray-900">
+                    <%= definition.description %>
+                  </label>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
 
   <div class="mb-4">
     <%= f.submit "Save", class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
   </div>
 <% end %>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const checkboxes = document.querySelectorAll('.risk-factor-checkbox');
+
+    checkboxes.forEach(function(checkbox) {
+      if (checkbox.checked) {
+        const destroyFieldId = checkbox.dataset.destroyTarget;
+        const destroyField = document.querySelector(`input[name="${destroyFieldId}"]`);
+        if (destroyField) {
+          destroyField.value = "0";
+        }
+      }
+
+      checkbox.addEventListener('change', function() {
+        const destroyFieldId = this.dataset.destroyTarget;
+        const destroyField = document.querySelector(`input[name="${destroyFieldId}"]`);
+        if (destroyField) {
+          destroyField.value = this.checked ? "0" : "1";
+        }
+      });
+    });
+  });
+</script>

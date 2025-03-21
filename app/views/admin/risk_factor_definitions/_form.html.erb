@@ -24,11 +24,11 @@
 
     <div class="mt-10 space-y-8">
       <div class="sm:max-w-md">
-        <%= form.label :risk_factor_type, class: "block text-sm/6 font-medium text-gray-900" %>
+        <%= form.label :entity_type, class: "block text-sm/6 font-medium text-gray-900" %>
         <div class="mt-2 grid grid-cols-1">
-          <%= form.select :risk_factor_type, 
-                       [['Person', 'PersonRiskFactor'], ['Company', 'CompanyRiskFactor']], 
-                       { include_blank: 'Select type' }, 
+          <%= form.select :entity_type,
+                       [['Person', 'Person'], ['Company', 'Company']],
+                       { include_blank: 'Select type' },
                        class: "col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" %>
           <svg class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
             <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
@@ -39,14 +39,14 @@
       <div class="sm:max-w-md">
         <%= form.label :category, class: "block text-sm/6 font-medium text-gray-900" %>
         <div class="mt-2 grid grid-cols-1">
-          <%= form.select :category, 
+          <%= form.select :category,
                        [
                          ['Client Risk', 'client_risk'], 
                          ['Products and Services Risk', 'products_and_services_risk'],
                          ['Distribution Channel Risk', 'distribution_channel_risk'],
                          ['Transaction Risk', 'transaction_risk']
-                       ], 
-                       { include_blank: 'Select category' }, 
+                       ],
+                       { include_blank: 'Select category' },
                        class: "col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pr-8 pl-3 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" %>
           <svg class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
             <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
@@ -78,4 +78,4 @@
         class: "text-sm/6 font-semibold text-gray-900" %>
     <%= form.submit class: "rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus:outline-indigo-600" %>
   </div>
-<% end %> 
+<% end %>

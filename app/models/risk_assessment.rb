@@ -6,11 +6,16 @@ class RiskAssessment < ApplicationRecord
 
   enum :status, [ :pending, :completed, :approved, :rejected ]
 
+  default_scope { order(created_at: :desc) }
+
   scope :current, -> { order(created_at: :desc).first }
   scope :approved, -> { where.not(approved_at: nil) }
   scope :pending_approval, -> { where(status: :completed, approved_at: nil) }
 
-  accepts_nested_attributes_for :risk_factors, allow_destroy: true
+  accepts_nested_attributes_for :risk_factors,
+                               allow_destroy: true,
+                               reject_if: proc { |attributes| attributes["identified_at"].blank? },
+                               update_only: true
 
   def approved?
     approved_at.present?

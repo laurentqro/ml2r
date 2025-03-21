@@ -2,21 +2,11 @@ class RiskAssessmentsController < ApplicationController
   before_action :set_risk_assessment, only: %i[ show edit update destroy ]
   before_action :set_client
 
-  def index
-    @risk_assessments = RiskAssessment.all
-  end
-
   def show
   end
 
   def new
     @risk_assessment = @client.risk_assessments.build
-
-    RiskFactorDefinition.categories.each do |category|
-      RiskFactorDefinition.by_category(category).each do |definition|
-        @risk_assessment.risk_factors.build(risk_factor_definition: definition)
-      end
-    end
   end
 
   def edit
@@ -27,6 +17,7 @@ class RiskAssessmentsController < ApplicationController
 
     respond_to do |format|
       if @risk_assessment.save
+        @risk_assessment.calculate_and_save_scores!
         format.html { redirect_to @client, notice: "Risk assessment was successfully created." }
         format.json { render :show, status: :created, location: @risk_assessment }
       else
@@ -39,7 +30,8 @@ class RiskAssessmentsController < ApplicationController
   def update
     respond_to do |format|
       if @risk_assessment.update(risk_assessment_params)
-        format.html { redirect_to @risk_assessment, notice: "Risk assessment was successfully updated." }
+        @risk_assessment.calculate_and_save_scores!
+        format.html { redirect_to [ @client, @risk_assessment ], notice: "Risk assessment was successfully updated." }
         format.json { render :show, status: :ok, location: @risk_assessment }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -60,26 +52,27 @@ class RiskAssessmentsController < ApplicationController
   private
 
     def set_risk_assessment
-      @risk_assessment = RiskAssessment.find(params.expect(:id))
+      @risk_assessment = RiskAssessment.find(params[:id])
     end
 
     def set_client
-      @client = Client.find(params.expect(:client_id))
+      @client = Client.find(params[:client_id])
     end
 
     def risk_assessment_params
-      params.expect(
-        risk_assessment: [
-          :status,
+      params.require(:risk_assessment).permit(
+        :status,
+        :notes,
+        :approved_at,
+        :approver_name,
+        risk_factors_attributes: [
+          :id,
+          :risk_factor_definition_id,
+          :category,
+          :entity_type,
           :notes,
-          :approved_at,
-          :approver_name,
-          risk_factors_attributes: [
-            :id,
-            :risk_factor_definition_id,
-            :notes,
-            :identified_at
-          ]
+          :identified_at,
+          :_destroy
         ]
       )
     end
