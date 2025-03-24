@@ -60,50 +60,19 @@ PROFESSIONS = [
   [ 2631, 'Economist', false ]
 ]
 
-def create_risk_scoresheet(client)
-  RiskScoresheet.create!(
-    client: client,
-    country_risk_score: client.country_risk_score,
-    client_risk_score: client.client_risk_score,
-    products_and_services_risk_score: client.products_and_services_risk_score,
-    distribution_channel_risk_score: client.distribution_channel_risk_score,
-    transaction_risk_score: client.transaction_risk_score
-  )
-end
-
-def create_random_person_risk_factors(client)
-  # For each risk category, randomly select 0-3 risk factors
-  RiskFactorDefinition.person_risk_factors.each do |definition|
-    client.person_risk_factors.create!(
-      category: definition.category,
-      identifier: definition.identifier
+def create_risk_factor_definitions(entity_type)
+  RiskFactorDefinition::CATEGORIES.each do |category|
+    RiskFactorDefinition.create!(
+      entity_type: entity_type,
+      category: category,
+      description: Faker::Lorem.sentence,
+      score: rand(1..50)
     )
   end
 end
 
-def create_random_company_risk_factors(client)
-  RiskFactorDefinition.company_risk_factors.each do |definition|
-    client.company_risk_factors.create!(
-      category: definition.category,
-      identifier: definition.identifier
-    )
-  end
-end
-
-
-def create_risk_factor_definitions(risk_factors, entity_type)
-  risk_factors.each do |category, descriptions|
-    descriptions.each do |identifier, description|
-      RiskFactorDefinition.create!(
-        entity_type: entity_type,
-        identifier: identifier.to_s,
-        category: category,
-        description: description,
-        score: rand(1..50)
-      )
-    end
-  end
-end
+create_risk_factor_definitions("Person")
+create_risk_factor_definitions("Company")
 
 # Create 100 people
 100.times do |i|
@@ -123,9 +92,6 @@ end
     clientable: person,
     started_at: Faker::Date.between(from: 2.years.ago, to: Date.today)
   )
-
-  create_random_person_risk_factors(client)
-  create_risk_scoresheet(client)
 end
 
 # Create 100 companies
@@ -141,78 +107,4 @@ end
     clientable: company,
     started_at: Faker::Date.between(from: 2.years.ago, to: Date.today)
   )
-
-  create_random_company_risk_factors(client)
-  create_risk_scoresheet(client)
 end
-
-# Create risk scoresheets for clients
-Client.all.each do |client|
-  create_risk_scoresheet(client)
-end
-
-person_risk_factors = {
-  client_risk: {
-    rushed_transactions: "Client wants to complete the transaction quickly for no apparent reason",
-    trust_or_foundation: "Client is a trust or foundation",
-    precious_stones_dealer: "Client is a precious stones dealer",
-    antiques_art_dealer: "Client is an antiques/artwork dealer",
-    sensitive_materials_trader: "Client is a sensitive materials trader (oil, raw materials, arms)",
-    construction_influence: "Client has influence in construction/public works",
-    gaming_establishment_owner: "Client is a casino or gaming establishment owner",
-    cash_intensive_business: "Client is a cash-intensive business"
-  },
-  products_and_services_risk: {
-    new_build_sale: "Client is selling or buying a new build property",
-    existing_build_sale: "Client is selling or buying an existing build property",
-    main_residence_rental_above_threshold: "Client is renting their main residence for more than 10 000 euros",
-    secondary_residence_rental_above_threshold: "Client is renting their secondary residence for more than 10 000 euros"
-  },
-  distribution_channel_risk: {
-    remote_relationship: "The relationship is remote",
-    presence_of_intermediary: "An intermediary is involved"
-  },
-  transaction_risk: {
-    means_of_payment: "The means of payment is unusual",
-    transaction_amount: "The transaction amount is high",
-    transaction_frequency: "The transaction frequency is high",
-    fractioned_payments: "The payments are fractioned",
-    complex_transactions: "The transactions are complex",
-    manipulation_of_property_value: "The property value appears to be manipulated (over or under-valuation)"
-  }
-}
-
-
-company_risk_factors = {
-  client_risk: {
-    subject_of_legal_proceedings: "Subject of legal proceedings",
-    corruption_risk: "Company operates in country with high risk of corruption",
-    government_related: "Government or public sector related",
-    holding_company: "Holding company",
-    charity_trust: "Charity-oriented trust",
-    construction_related: "Active in construction/public works",
-    cash_intensive: "Cash-intensive business operations",
-    complex_structure: "Complex business structure"
-  },
-  products_and_services_risk: {
-    new_build_sale: "Client is selling or buying a new build property",
-    existing_build_sale: "Client is selling or buying an existing build property",
-    main_residence_rental_above_threshold: "Client is renting their main residence for more than 10 000 euros",
-    secondary_residence_rental_above_threshold: "Client is renting their secondary residence for more than 10 000 euros"
-  },
-  distribution_channel_risk: {
-    remote_relationship: "The relationship is remote",
-    presence_of_intermediary: "An intermediary is involved"
-  },
-  transaction_risk: {
-    means_of_payment: "The means of payment is unusual",
-    transaction_amount: "The transaction amount is high",
-    transaction_frequency: "The transaction frequency is high",
-    fractioned_payments: "The payments are fractioned",
-    complex_transactions: "The transactions are complex",
-    manipulation_of_property_value: "The property value appears to be manipulated (over or under-valuation)"
-  }
-}
-
-create_risk_factor_definitions(person_risk_factors, "PersonRiskFactor")
-create_risk_factor_definitions(company_risk_factors, "CompanyRiskFactor")
