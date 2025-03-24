@@ -1,0 +1,42 @@
+<div class="mb-4 flex gap-4">
+  <div class="rounded-lg bg-green-100 inset-ring-2 inset-ring-green-500/50 p-4">
+    <span class="text-lg font-semibold text-green-800"><%= clear_count %></span>
+    <span class="text-sm text-green-600">Clear</span>
+  </div>
+
+  <% if with_adverse_media_count.positive? %>
+    <div class="rounded-lg bg-yellow-100 inset-ring-2 inset-ring-yellow-500/50 p-4">
+      <span class="text-lg font-semibold text-yellow-800"><%= with_adverse_media_count %></span>
+      <span class="text-sm text-yellow-600">Adverse Media</span>
+    </div>
+  <% else %>
+    <div class="rounded-lg bg-green-100 inset-ring-2 inset-ring-green-500/50 p-4">
+      <span class="text-lg font-semibold text-green-800"><%= with_adverse_media_count %></span>
+      <span class="text-sm text-green-600">Adverse Media</span>
+    </div>
+  <% end %>
+
+  <% if pep_count.positive? %>
+    <div class="rounded-lg bg-red-100 inset-ring-2 inset-ring-red-500/50 p-4">
+      <span class="text-lg font-semibold text-red-800"><%= pep_count %></span>
+      <span class="text-sm text-red-600">PEP</span>
+    </div>
+  <% else %>
+    <div class="rounded-lg bg-green-100 inset-ring-2 inset-ring-green-500/50 p-4">
+      <span class="text-lg font-semibold text-green-800"><%= pep_count %></span>
+      <span class="text-sm text-green-600">PEP</span>
+    </div>
+  <% end %>
+
+  <% if sanctioned_count.positive? %>
+    <div class="rounded-lg bg-red-100 inset-ring-2 inset-ring-red-500/50 p-4">
+      <span class="text-lg font-semibold text-red-800"><%= sanctioned_count %></span>
+      <span class="text-sm text-red-600">Sanctioned</span>
+    </div>
+  <% else %>
+    <div class="rounded-lg bg-green-100 inset-ring-2 inset-ring-green-500/50 p-4">
+      <span class="text-lg font-semibold text-green-800"><%= sanctioned_count %></span>
+      <span class="text-sm text-green-600">Sanctioned</span>
+    </div>
+  <% end %>
+</div> 

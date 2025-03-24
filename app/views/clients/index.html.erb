@@ -2,10 +2,9 @@
 
 <h1>Clients</h1>
 
-<%= render "statistics" %>
+<%= render "shared/statistics", clear_count: @clear_count, pep_count: @pep_count, sanctioned_count: @sanctioned_count, with_adverse_media_count: @with_adverse_media_count %>
 
 <%= render "tabs" %>
-
 <%= render "search" %>
 
 <div class="mt-4 flow-root">

@@ -34,6 +34,32 @@ class Person < ApplicationRecord
 
   default_scope { order(last_name: :asc) }
 
+  scope :clear, -> {
+    where("NOT EXISTS (
+      SELECT 1 FROM people
+      WHERE people.sanctioned = true
+    )")
+  }
+
+  scope :sanctioned, -> {
+    where("EXISTS (
+      SELECT 1 FROM people
+      WHERE people.sanctioned = true
+    )")
+  }
+
+  scope :pep, -> {
+    where("people.pep = ?", true)
+  }
+
+  scope :with_adverse_media, -> {
+    where("EXISTS (
+      SELECT 1 FROM adverse_media_checks
+      WHERE adverse_media_checks.adverse_media_checkable_id = people.id
+      AND adverse_media_checks.adverse_media_checkable_type = 'Person'
+    )")
+  }
+
   def name
     last_name
   end

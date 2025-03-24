@@ -14,6 +14,11 @@ class Client < ApplicationRecord
 
   accepts_nested_attributes_for :clientable
 
+  scope :with_adverse_media, -> {
+    joins("LEFT JOIN adverse_media_checks ON clients.clientable_id = adverse_media_checks.adverse_media_checkable_id AND clients.clientable_type = 'Person'")
+      .where("adverse_media_checks.adverse_media_found = ?", true)
+  }
+
   scope :clear, -> {
     where("NOT EXISTS (
       SELECT 1 FROM people

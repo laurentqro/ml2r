@@ -31,6 +31,28 @@ class Company < ApplicationRecord
 
   accepts_nested_attributes_for :identification_documents, allow_destroy: true, reject_if: :all_blank
 
+  scope :clear, -> {
+    where("NOT EXISTS (
+      SELECT 1 FROM companies
+      WHERE companies.sanctioned = true
+    )")
+  }
+
+  scope :sanctioned, -> {
+    where("EXISTS (
+      SELECT 1 FROM companies
+      WHERE companies.sanctioned = true
+    )")
+  }
+
+  scope :with_adverse_media, -> {
+    where("EXISTS (
+      SELECT 1 FROM adverse_media_checks
+      WHERE adverse_media_checks.adverse_media_checkable_id = companies.id
+      AND adverse_media_checks.adverse_media_checkable_type = 'Company'
+    )")
+  }
+
   def country_of_residence
     country
   end

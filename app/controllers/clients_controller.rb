@@ -16,6 +16,11 @@ class ClientsController < ApplicationController
       filtered_scope = filtered_scope.where("LOWER(display_name) LIKE ?", search_term)
     end
 
+    @clear_count = Client.clear.count
+    @pep_count = Client.pep.count
+    @sanctioned_count = Client.sanctioned.count
+    @with_adverse_media_count = Client.with_adverse_media.count
+
     @client_risk_summaries = paginate(filtered_scope)
 
     respond_to do |format|
