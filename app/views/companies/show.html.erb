@@ -1,6 +1,82 @@
 <% content_for :title, "#{@company.display_name}" %>
 
-<div class="mx-auto space-y-8">
-  <%= render "clients/header", clientable: @company %>
-  <%= render "company_relationships/index", company: @company %>
+<div class="bg-white shadow rounded-lg p-6">
+  <div class="flex items-center justify-between pb-4">
+    <div class="flex items-center gap-2">
+      <h1 class="py-0"><%= @company.display_name %></h1>
+
+      <div class="flex items-center gap-2">
+        <% if @company.sanctioned? %>
+          <span class="px-3 py-1 text-sm font-semibold text-white bg-red-600 rounded-full">Sanctioned</span>
+        <% end %>
+
+        <% if @company.adverse_media_checks.any?(&:adverse_media_found?) %>
+          <span class="px-3 py-1 text-sm font-semibold text-white bg-red-600 rounded-full">
+            Adverse Media Found
+          </span>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <%= link_to edit_company_path(@company), class: "btn-primary inline-flex items-center gap-2" do %>
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+        </svg>
+        Edit
+      <% end %>
+
+      <%= link_to clients_path(client: { clientable_id: @company.id, clientable_type: "Company" }),
+          class: "btn-primary inline-flex items-center gap-2",
+          data: { turbo_method: :post, turbo_confirm: "Onboard #{@company.display_name} as a client?" } do %>
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+        </svg>
+        Onboard Prospect
+      <% end %>
+    </div>
+  </div>
+
+  <div class="border-t pt-4">
+    <%= render @company %>
+  </div>
 </div>
+
+<%= render "company_relationships/index", company: @company %>
+
+<div class="bg-white shadow rounded-lg p-6 mt-4">
+  <h2>Screenings</h2>
+
+  <div id="screenings_list" class="space-y-2 mb-6">
+    <% @company.screenings.reverse.each do |screening| %>
+      <%= render screening %>
+    <% end %>
+  </div>
+
+  <%= render "screenings/form", screenable: @company %>
+</div> 
+
+<div class="bg-white shadow rounded-lg p-6 mt-4">
+  <div>
+    <h2>Adverse Media Checks</h2>
+  </div>
+
+  <div>
+    <%= form_with(model: AdverseMediaCheck.new(adverse_media_checkable: @company), class: "mt-4", data: { turbo: true }) do |form| %>
+      <%= form.hidden_field :adverse_media_checkable_id, value: @company.id %>
+      <%= form.hidden_field :adverse_media_checkable_type, value: @company.class.name %>
+
+      <%= form.submit "Run a new adverse media check",
+          class: "w-full sm:w-auto px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+      %>
+    <% end %>
+  </div>
+
+  <div id="adverse_media_checks_list" class="space-y-2 mt-4">
+    <%= turbo_frame_tag "adverse_media_checks" do %>
+      <% @company.adverse_media_checks.order(created_at: :desc).each do |check| %>
+        <%= render check %>
+      <% end %>
+    <% end %>
+  </div>
+</div> 
