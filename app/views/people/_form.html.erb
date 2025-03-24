@@ -41,10 +41,10 @@
               </div>
             </div>
 
-            <%= render "clients/searchable_country_field", f: f, field_name: :nationality %>
-            <%= render "clients/searchable_country_field", f: f, field_name: :country_of_residence %>
-            <%= render "clients/searchable_country_field", f: f, field_name: :country_of_profession %>
-            <%= render "clients/searchable_country_field", f: f, field_name: :country_of_birth %>
+            <%= render "shared/searchable_country_field", f: f, field_name: :nationality %>
+            <%= render "shared/searchable_country_field", f: f, field_name: :country_of_residence %>
+            <%= render "shared/searchable_country_field", f: f, field_name: :country_of_profession %>
+            <%= render "shared/searchable_country_field", f: f, field_name: :country_of_birth %>
 
             <div class="mt-6">
                 <%= render "profession_field", f: f %>

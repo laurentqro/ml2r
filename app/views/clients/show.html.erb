@@ -7,23 +7,12 @@
 
   <div class="mx-auto space-y-8">
     <%= render "header", clientable: @clientable %>
-
     <%= render "kyc_notes_show", client: @client %>
-
-    <%= render "risk_radar", client: @client %>
-
+    <%= render "risk_profile", client: @client %>
     <%= render "company_relationships/index", company: @clientable if @clientable.is_a?(Company) %>
-
-    <%= render "identification_documents_section", documents: @clientable.identification_documents %>
-
-    <%= render "overall_risk_score", client: @client %>
-
-    <%= render "country_risk_scores", client: @client %>
-
     <%= render "risk_assessment_section", client: @client %>
-
     <%= render "adverse_media_checks_section", clientable: @clientable %>
-
     <%= render "screenings_section", clientable: @clientable %>
+    <%= render "identification_documents_section", documents: @clientable.identification_documents %>
   </div>
 </div>

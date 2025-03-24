@@ -1,20 +1,36 @@
-<p>Created at: <%= link_to risk_assessment.created_at, client_risk_assessment_path(risk_assessment.client, risk_assessment) %></p>
-<p>Client risk score: <%= risk_assessment.client_risk_score %></p>
-<p>Country risk score: <%= risk_assessment.country_risk_score %></p>
-<p>Products and services risk score: <%= risk_assessment.products_and_services_risk_score %></p>
-<p>Distribution channel risk score: <%= risk_assessment.distribution_channel_risk_score %></p>
-<p>Transaction risk score: <%= risk_assessment.transaction_risk_score %></p>
-<p>Total risk score: <%= risk_assessment.total_risk_score %></p>
-<p>Notes: <%= risk_assessment.notes %></p>
+<div class="flex items-center justify-between">
+  <div class="mb-4 text-sm text-gray-500">
+    <p>Created on <%= @risk_assessment.created_at.strftime("%d %B %Y at %H:%M") %></p>
+  </div>
+</div>
 
-<% if risk_assessment.approved_at %>
-  <p>Approved at: <%= risk_assessment.approved_at %></p>
-<% else %>
+<div class="mb-6">
+  <div class="flex items-center justify-between">
+    <% if @risk_assessment.approved? %>
+      <span class="text-green-500"> ✅ Approved on <%= @risk_assessment.approved_at.strftime("%d %B %Y at %H:%M") %></span>
+    <% else %>
+      <span class="text-orange-500"> ⏳ Pending Approval</span>
+    <% end %>
+  </div>
+</div>
+
+<%= render "country_risk_scores", client: @client %>
+<%= render "risk_factor_scores", risk_assessment: @risk_assessment %>
+<%= render "total_risk_score", risk_assessment: @risk_assessment %>
+
+<div class="mt-4">
+  <div class="bg-white shadow rounded-lg p-6">
+    <h3>Notes</h3>
+    <%= @risk_assessment.notes %>
+  </div>
+</div>
+
+<% if @risk_assessment.approved_at.blank? %>
   <div class="mt-4">
     <%= button_to "Approve Risk Assessment",
-                  approve_client_risk_assessment_path(risk_assessment.client, risk_assessment),
-                  method: :patch,
-                  class: "rounded-md px-3.5 py-2.5 text-white bg-green-600 hover:bg-green-500 font-medium cursor-pointer",
-                  data: { turbo_confirm: "Are you sure you want to approve this risk assessment?" } %>
+        approve_client_risk_assessment_path(@client, @risk_assessment),
+        method: :patch,
+        class: "rounded-md px-3.5 py-2.5 text-white bg-green-600 hover:bg-green-500 font-medium cursor-pointer",
+        data: { turbo_confirm: "Are you sure you want to approve this risk assessment?" } %>
   </div>
 <% end %>

@@ -1,8 +1,11 @@
 <div class="bg-white shadow rounded-lg p-6">
   <h2>Screenings</h2>
+  <p class="text-sm text-gray-500">
+    Screening for PEPs, sanctions, criminal activity, and more.
+  </p>
 
   <div id="screenings_list" class="space-y-2 mb-6">
-    <% clientable.screenings.reverse.each do |screening| %>
+    <% clientable.screenings.order(created_at: :desc).each do |screening| %>
       <%= render screening %>
     <% end %>
   </div>

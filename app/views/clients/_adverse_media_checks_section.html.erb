@@ -1,13 +1,13 @@
 <div class="bg-white shadow rounded-lg p-6">
-  <div class="flex justify-between items-center mb-4">
-    <div>
-      <h2>Adverse Media Checks</h2>
-    </div>
+  <h2>Adverse Media Checks</h2>
 
-    <div>
-      <%= render "adverse_media_checks/form", adverse_media_checkable: clientable %>
-    </div>
+  <div class="mb-6">
+    <p class="text-sm text-gray-500">
+      Run adverse media checks to see if the client is associated with any adverse media.
+    </p>
   </div>
+
+  <%= render "adverse_media_checks/form", adverse_media_checkable: clientable %>
 
   <div id="adverse_media_checks_list" class="space-y-2 mb-6">
     <%= turbo_frame_tag "adverse_media_checks" do %>

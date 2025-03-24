@@ -18,7 +18,8 @@ class RiskAssessmentsController < ApplicationController
     respond_to do |format|
       if @risk_assessment.save
         @risk_assessment.calculate_and_save_scores!
-        format.html { redirect_to @client, notice: "Risk assessment was successfully created." }
+
+        format.html { redirect_to [ @client, @risk_assessment ], notice: "Risk assessment was successfully created." }
         format.json { render :show, status: :created, location: @risk_assessment }
       else
         format.html { render :new, status: :unprocessable_entity }

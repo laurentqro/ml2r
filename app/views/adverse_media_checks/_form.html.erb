@@ -1,9 +1,6 @@
-<%= form_with(model: AdverseMediaCheck.new(adverse_media_checkable: adverse_media_checkable),
-  class: "mt-4", data: { turbo: true }) do |form| %>
-
+<%= form_with(model: AdverseMediaCheck.new(adverse_media_checkable: adverse_media_checkable), data: { turbo: true }) do |form| %>
   <%= form.hidden_field :adverse_media_checkable_id, value: adverse_media_checkable.id %>
   <%= form.hidden_field :adverse_media_checkable_type, value: adverse_media_checkable.class.name %>
-
   <%= form.submit "Run a new adverse media check",
     class: "w-full sm:w-auto px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
   %>

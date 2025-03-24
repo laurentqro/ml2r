@@ -1,9 +1,9 @@
 <%= turbo_frame_tag "kyc_note" do %>
   <div data-controller="inline-edit">
-    <%= form_with(model: client, 
-                  url: update_notes_client_path(client), 
+    <%= form_with(model: client,
+                  url: update_notes_client_path(client),
                   method: :patch,
-                  data: { 
+                  data: {
                     inline_edit_target: "form",
                     action: "keydown->inline-edit#keydown"
                   }) do |form| %>
@@ -13,15 +13,15 @@
         </div>
 
         <div class="mb-4">
-          <%= form.text_area :notes, 
+          <%= form.text_area :notes,
                             class: "w-full h-48 p-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500",
                             placeholder: "Enter KYC notes here..." %>
         </div>
 
         <div class="flex justify-end space-x-2">
-          <%= link_to "Cancel", client_path(client), 
+          <%= link_to "Cancel", client_path(client),
                       class: "px-4 py-2 text-sm text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200" %>
-          <%= form.submit "Save", 
+          <%= form.submit "Save",
                          class: "px-4 py-2 text-sm text-white bg-blue-600 rounded-md hover:bg-blue-700",
                          data: { inline_edit_target: "submitButton" } %>
         </div>

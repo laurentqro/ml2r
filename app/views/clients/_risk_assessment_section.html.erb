@@ -1,25 +1,32 @@
 <div class="bg-white shadow-sm rounded-lg p-6">
   <h2>Risk Assessments</h2>
 
-  <div class="flex justify-end">
-    <%= link_to new_client_risk_assessment_path(client), class: "btn-primary" do %>
-      Create Risk Assessment
-    <% end %>
+  <div class="mb-6">
+    <p class="text-sm text-gray-500">
+      Risk assessments are used to evaluate the risk associated with a client.
+    </p>
   </div>
 
-  <div class="grid grid-cols-1 gap-6">
-    <% if client.risk_assessments.any? %>
-      <% client.risk_assessments.each do |risk_assessment| %>
-        <%= render risk_assessment %>
-      <% end %>
-    <% else %>
-      <p class="text-gray-500 italic mb-3">No risk factors have been identified yet.</p>
+  <%= link_to new_client_risk_assessment_path(client), class: "btn-primary" do %>
+    Create Risk Assessment
+  <% end %>
 
-      <div class="mt-4">
-        <%= link_to new_client_risk_assessment_path(client), class: "btn-primary" do %>
-          Create Risk Assessment
+  <div class="grid grid-cols-1 gap-6">
+    <div class="mt-6">
+      <ul class="divide-y divide-gray-200">
+        <% client.risk_assessments.order(created_at: :asc).each do |risk_assessment| %>
+          <li class="py-3">
+            <div class="flex justify-between">
+              <span>Created on <%= risk_assessment.created_at.strftime("%d %B %Y at %H:%M") %></span>
+              <% if risk_assessment.approved_at %>
+                <span>Approved on <%= risk_assessment.approved_at.strftime("%d %B %Y at %H:%M") %></span>
+              <% end %>
+              <span>Score: <%= risk_assessment.total_risk_score %></span>
+              <%= link_to "View details", client_risk_assessment_path(client, risk_assessment), class: "text-blue-600 hover:text-blue-800" %>
+            </div>
+          </li>
         <% end %>
-      </div>
-    <% end %>
+      </ul>
+    </div>
   </div>
 </div>

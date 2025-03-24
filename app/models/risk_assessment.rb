@@ -17,6 +17,18 @@ class RiskAssessment < ApplicationRecord
     update!(approved_at: Time.current)
   end
 
+  def status
+    approved_at.present? ? "Approved" : "Pending Approval"
+  end
+
+  def approved?
+    approved_at.present?
+  end
+
+  def pending_approval?
+    !approved?
+  end
+
   def calculate_and_save_scores!
     update!(
       client_risk_score: calculate_client_risk_score,

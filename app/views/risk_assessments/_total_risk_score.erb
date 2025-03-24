@@ -1,19 +1,19 @@
-<% if RiskFactorDefinition.categories.any? { |category| @client.risk_factors.where(category: category).any? } %>
+<% if RiskFactorDefinition.categories.any? { |category| @risk_assessment.risk_factors.where(category: category).any? } %>
     <div class="bg-white shadow rounded-lg p-6 mt-4">
     <div class="flex flex-col">
         <div class="flex items-center justify-between">
         <div>
             <span class="text-lg font-bold text-gray-900">Overall Risk Score</span>
             <p class="mt-1 text-xs text-gray-500">
-            <% if @client.latest_risk_assessment %>
-              Calculated on <%= @client.latest_risk_assessment.created_at.strftime("%B %d, %Y") %>
+            <% if @risk_assessment.created_at %>
+              Calculated on <%= @risk_assessment.created_at.strftime("%B %d, %Y at %H:%M") %>
             <% else %>
               No risk assessment available
             <% end %>
             </p>
         </div>
-        <span class="inline-flex items-center rounded-md px-4 py-2 text-base font-medium <%= risk_badge_class(@client.total_risk_score) %>">
-            <%= @client.total_risk_score %>
+        <span class="inline-flex items-center rounded-md px-4 py-2 text-base font-medium <%= risk_badge_class(@risk_assessment.total_risk_score) %>">
+            <%= @risk_assessment.total_risk_score %>
         </span>
         </div>
     </div>
