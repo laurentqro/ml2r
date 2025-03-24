@@ -107,10 +107,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_21_153746) do
 
   create_table "risk_assessments", force: :cascade do |t|
     t.integer "client_id", null: false
-    t.integer "status", default: 0, null: false
-    t.datetime "completed_at"
     t.datetime "approved_at"
-    t.string "approver_name"
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -121,8 +118,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_21_153746) do
     t.integer "transaction_risk_score"
     t.index ["approved_at"], name: "index_risk_assessments_on_approved_at"
     t.index ["client_id"], name: "index_risk_assessments_on_client_id"
-    t.index ["completed_at"], name: "index_risk_assessments_on_completed_at"
-    t.index ["status"], name: "index_risk_assessments_on_status"
   end
 
   create_table "risk_factor_definitions", force: :cascade do |t|
