@@ -7,7 +7,7 @@
 
   <div class="mx-auto space-y-8">
     <%= render "header", clientable: @clientable %>
-    <%= render "kyc_notes_show", client: @client %>
+    <%= render "notes/show", client: @client %>
     <%= render "risk_profile", client: @client %>
     <%= render "company_relationships/index", company: @clientable if @clientable.is_a?(Company) %>
     <%= render "risk_assessment_section", client: @client %>

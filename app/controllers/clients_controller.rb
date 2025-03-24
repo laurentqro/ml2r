@@ -139,8 +139,8 @@ class ClientsController < ApplicationController
         format.turbo_stream do
           render turbo_stream: [
             turbo_stream.replace(
-              "kyc_note",
-              partial: "clients/kyc_notes_show",
+              "note",
+              partial: "notes/show",
               locals: { client: @client }
             )
           ]
