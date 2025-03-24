@@ -45,15 +45,13 @@ class ClientsController < ApplicationController
     end
   end
 
-  def edit
-    @client = Client.includes(clientable: :screenings).find(params[:id])
+  def edit_notes
+    @client = Client.find(params[:id])
 
     respond_to do |format|
       format.turbo_stream do
         render turbo_stream: turbo_stream.update("note", partial: "notes/edit", locals: { client: @client })
       end
-
-      format.html { render :edit }
     end
   end
 

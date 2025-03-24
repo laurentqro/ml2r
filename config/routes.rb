@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   resources :prospects, only: :index
 
-  resources :clients, except: [ :new, :update, :destroy ] do
+  resources :clients, only: [ :index, :create, :show ] do
     resources :company_relationships, only: [ :index, :new, :create, :edit, :update, :destroy ]
     resources :risk_assessments, except: [ :index ] do
       patch :approve, on: :member
@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
     member do
       patch :update_notes
+      get :edit_notes
     end
   end
 
