@@ -14,7 +14,9 @@ Rails.application.routes.draw do
 
   resources :clients, except: [ :new, :destroy ] do
     resources :company_relationships, only: [ :index, :new, :create, :edit, :update, :destroy ]
-    resources :risk_assessments, except: [ :index ]
+    resources :risk_assessments, except: [ :index ] do
+      patch :approve, on: :member
+    end
 
     member do
       patch :update_notes

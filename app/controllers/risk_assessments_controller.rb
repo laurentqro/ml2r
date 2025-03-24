@@ -1,5 +1,5 @@
 class RiskAssessmentsController < ApplicationController
-  before_action :set_risk_assessment, only: %i[ show edit update destroy ]
+  before_action :set_risk_assessment, only: %i[ show edit update destroy approve ]
   before_action :set_client
 
   def show
@@ -47,6 +47,11 @@ class RiskAssessmentsController < ApplicationController
       format.html { redirect_to risk_assessments_path, status: :see_other, notice: "Risk assessment was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def approve
+    @risk_assessment.approve!
+    redirect_to [ @client, @risk_assessment ], notice: "Risk assessment approved."
   end
 
   private
