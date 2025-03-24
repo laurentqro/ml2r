@@ -1,33 +1,10 @@
 <%= form_with(model: [@client, @risk_assessment], data: { turbo: false }) do |f| %>
-  <div class="mb-4">
-    <%= f.label :status, "Status", class: "block text-sm font-medium text-gray-700" %>
-    <%= f.select :status, RiskAssessment.statuses.keys.map { |status| [status.humanize, status] }, {}, class: "mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md shadow-sm" %>
-  </div>
-
-  <div class="mb-4">
-    <%= f.label :notes, "Notes", class: "block text-sm font-medium text-gray-700" %>
-    <%= f.text_area :notes, class: "mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md shadow-sm" %>
-  </div>
-
-  <div class="mb-4">
-    <%= f.label :approved_at, "Approved at", class: "block text-sm font-medium text-gray-700" %>
-    <%= f.datetime_local_field :approved_at, class: "mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md shadow-sm" %>
-  </div>
-
-  <div class="mb-4">
-    <%= f.label :approver_name, "Approver", class: "block text-sm font-medium text-gray-700" %>
-    <%= f.text_field :approver_name, class: "mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md shadow-sm" %>
-  </div>
-
   <div class="mb-8">
-    <h2 class="text-lg font-medium text-gray-900 mb-4">Risk Factors</h2>
-    <p class="text-sm text-gray-600 mb-6">Select all applicable risk factors for this assessment. Previously selected factors are shown as checked.</p>
+    <p class="text-sm text-gray-600 mb-6">Select all applicable risk factors for this assessment.</p>
 
     <% RiskFactorDefinition.categories.each do |category| %>
       <div class="mb-6">
-        <h3 class="text-md font-medium text-gray-800 mb-3">
-          <%= RiskFactorDefinition.format_category_name(category) %>
-        </h3>
+        <h3><%= RiskFactorDefinition.format_category_name(category) %></h3>
 
         <div class="space-y-3">
           <% RiskFactorDefinition.for_category(category).for_entity_type(@client.clientable_type).each do |definition| %>
@@ -60,6 +37,11 @@
         </div>
       </div>
     <% end %>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :notes, "Notes", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_area :notes, class: "mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md shadow-sm" %>
   </div>
 
   <div class="mb-4">

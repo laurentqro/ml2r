@@ -10,7 +10,6 @@ class UpdateClientRiskSummariesView < ActiveRecord::Migration[8.0]
         INNER JOIN (
           SELECT client_id, MAX(created_at) as max_created_at
           FROM risk_assessments
-          WHERE status = 'approved' OR status = 'completed'
           GROUP BY client_id
         ) latest ON ra.client_id = latest.client_id
         AND ra.created_at = latest.max_created_at
@@ -35,6 +34,13 @@ class UpdateClientRiskSummariesView < ActiveRecord::Migration[8.0]
           WHEN c.clientable_type = 'Company' AND comp.sanctioned = 0 THEN false
           ELSE NULL
         END AS sanctioned,
+        ra.created_at AS risk_assessment_created_at,
+        ra.approved_at AS risk_assessment_approved_at,
+        CASE
+          WHEN ra.approved_at IS NOT NULL THEN 'Approved'
+          WHEN ra.created_at IS NOT NULL THEN 'Pending Approval'
+          ELSE 'Not Assessed'
+        END AS risk_assessment_status,
         ra.country_risk_score,
         ra.client_risk_score,
         ra.products_and_services_risk_score,

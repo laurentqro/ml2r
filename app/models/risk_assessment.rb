@@ -2,51 +2,19 @@ class RiskAssessment < ApplicationRecord
   belongs_to :client
   has_many :risk_factors, dependent: :destroy
 
-  validates :status, presence: true
-
-  enum :status, [ :pending, :completed, :approved, :rejected ]
-
   default_scope { order(created_at: :desc) }
 
   scope :current, -> { order(created_at: :desc).first }
   scope :approved, -> { where.not(approved_at: nil) }
-  scope :pending_approval, -> { where(status: :completed, approved_at: nil) }
+  scope :pending_approval, -> { where.not(created_at: nil).where(approved_at: nil) }
 
   accepts_nested_attributes_for :risk_factors,
                                allow_destroy: true,
                                reject_if: proc { |attributes| attributes["identified_at"].blank? },
                                update_only: true
 
-  def approved?
-    approved_at.present?
-  end
-
-  def completed?
-    completed_at.present?
-  end
-
-  def approve!(approver_name)
-    update!(
-      status: :approved,
-      approved_at: Time.current,
-      approver_name: approver_name
-    )
-  end
-
-  def reject!(notes = nil)
-    update!(
-      status: :rejected,
-      notes: notes
-    )
-  end
-
-  def complete!
-    calculate_and_save_scores!
-
-    update!(
-      status: :completed,
-      completed_at: Time.current
-    )
+  def approve!
+    update!(approved_at: Time.current)
   end
 
   def calculate_and_save_scores!

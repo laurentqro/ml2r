@@ -61,10 +61,7 @@ class RiskAssessmentsController < ApplicationController
 
     def risk_assessment_params
       params.require(:risk_assessment).permit(
-        :status,
         :notes,
-        :approved_at,
-        :approver_name,
         risk_factors_attributes: [
           :id,
           :risk_factor_definition_id,

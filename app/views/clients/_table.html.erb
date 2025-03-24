@@ -5,11 +5,14 @@
         <th scope="col" rowspan="2" class="w-96 py-3.5 pl-4 pr-3 text-left text-sm font-semibold sm:pl-6 first:sm:rounded-tl-lg border-r border-gray-300">
           <%= sortable "display_name", "Name" %>
         </th>
-        <th scope="col" colspan="6" class="px-3 py-2 text-center text-sm font-semibold text-gray-900 border-b border-gray-300">
+        <th scope="col" colspan="7" class="px-3 py-2 text-center text-sm font-semibold text-gray-900 border-b border-gray-300">
           Risk Assessment
         </th>
       </tr>
       <tr class="border-x border-gray-300">
+        <th scope="col" class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-2 text-center text-sm font-semibold border-r border-gray-300">
+          <%= sortable "risk_assessment_status", "Status" %>
+        </th>
         <th scope="col" class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-2 text-center text-sm font-semibold border-r border-gray-300">
           <%= sortable "country_risk_score", "Country" %>
         </th>

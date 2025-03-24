@@ -37,6 +37,7 @@ module ClientsHelper
 
   def sort_column
     %w[
+      risk_assessment_status
       display_name
       country_risk_score
       client_risk_score
