@@ -8,8 +8,10 @@
   <div class="flex items-center justify-between">
     <% if @risk_assessment.approved? %>
       <span class="text-green-500"> ✅ Approved on <%= @risk_assessment.approved_at.strftime("%d %B %Y at %H:%M") %></span>
-    <% else %>
+    <% elsif @risk_assessment.eligible_for_review? %>
       <span class="text-orange-500"> ⏳ Pending Approval</span>
+    <% else %>
+      <span>⛔️ Superseded by a newer risk assessment</span>
     <% end %>
   </div>
 </div>
@@ -25,12 +27,12 @@
   </div>
 </div>
 
-<% if @risk_assessment.approved_at.blank? %>
+<% if @risk_assessment.eligible_for_review? %>
   <div class="mt-4">
     <%= button_to "Approve Risk Assessment",
         approve_client_risk_assessment_path(@client, @risk_assessment),
         method: :patch,
         class: "rounded-md px-3.5 py-2.5 text-white bg-green-600 hover:bg-green-500 font-medium cursor-pointer",
-        data: { turbo_confirm: "Are you sure you want to approve this risk assessment?" } %>
+        data: { turbo_confirm: "Are you sure you want to approve this risk assessment for #{@client.display_name}?" } %>
   </div>
 <% end %>

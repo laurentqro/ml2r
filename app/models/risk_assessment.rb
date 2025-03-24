@@ -17,16 +17,16 @@ class RiskAssessment < ApplicationRecord
     update!(approved_at: Time.current)
   end
 
-  def status
-    approved_at.present? ? "Approved" : "Pending Approval"
-  end
-
   def approved?
     approved_at.present?
   end
 
-  def pending_approval?
-    !approved?
+  def superseded?
+    !approved? && !latest?
+  end
+
+  def eligible_for_review?
+    latest? && !approved?
   end
 
   def calculate_and_save_scores!
@@ -124,5 +124,9 @@ class RiskAssessment < ApplicationRecord
       distribution_channel_risk_score,
       transaction_risk_score
     ].all?(&:present?)
+  end
+
+  def latest?
+    client.risk_assessments.current == self
   end
 end
