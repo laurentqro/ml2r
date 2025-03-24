@@ -1,14 +1,15 @@
 <div class="bg-white shadow rounded-lg p-6">
   <h2>Screenings</h2>
-  <p class="text-sm text-gray-500">
+
+  <p class="text-sm text-gray-500 mb-6">
     Screening for PEPs, sanctions, criminal activity, and more.
   </p>
 
-  <div id="screenings_list" class="space-y-2 mb-6">
+  <%= render "screenings/form", screenable: clientable %>
+
+  <div id="screenings_list" class="space-y-2 my-6">
     <% clientable.screenings.order(created_at: :desc).each do |screening| %>
       <%= render screening %>
     <% end %>
   </div>
-
-  <%= render "screenings/form", screenable: clientable %>
 </div> 

@@ -9,6 +9,9 @@
      ].to_json %>"
      data-chart-total-score-value="<%= client.total_risk_score %>">
   <h2>Risk Profile</h2>
+  <p class="text-sm text-gray-500">
+    Visual representation of the risk associated with a client, based on the scores of the risk factors in the risk assessment.
+  </p>
 
   <div class="w-full max-w-lg mx-auto">
     <canvas id="riskRadarChart" data-chart-target="canvas"></canvas>

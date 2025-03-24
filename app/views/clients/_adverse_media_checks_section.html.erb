@@ -9,7 +9,7 @@
 
   <%= render "adverse_media_checks/form", adverse_media_checkable: clientable %>
 
-  <div id="adverse_media_checks_list" class="space-y-2 mb-6">
+  <div id="adverse_media_checks_list" class="space-y-2 my-6">
     <%= turbo_frame_tag "adverse_media_checks" do %>
       <% clientable.adverse_media_checks.order(created_at: :desc).each do |check| %>
         <%= render check %>
