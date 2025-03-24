@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   resources :prospects, only: :index
 
-  resources :clients, except: [ :new, :destroy ] do
+  resources :clients, except: [ :new, :update, :destroy ] do
     resources :company_relationships, only: [ :index, :new, :create, :edit, :update, :destroy ]
     resources :risk_assessments, except: [ :index ] do
       patch :approve, on: :member
