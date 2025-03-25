@@ -1,10 +1,11 @@
 <div class="container mx-auto px-4 py-8 max-w-[1600px]">
-    <div class="mb-6">
-      <h1>Risk Factor Definitions</h1>
-    </div>
-    <div class="flex justify-center mb-8">
-      <%= link_to "New Risk Factor Definition", new_admin_risk_factor_definition_path, class: "btn btn-primary" %>
-    </div>
+  <div class="text-center mb-8">
+    <h1>Risk Factor Definitions</h1>
+  </div>
+
+  <div class="flex justify-center mb-8">
+    <%= link_to "New Risk Factor Definition", new_admin_risk_factor_definition_path, class: "btn btn-primary" %>
+  </div>
 
   <!-- Group all risk factor definitions by category -->
   <%
@@ -14,17 +15,23 @@
   %>
 
   <!-- Section headers -->
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
-    <h2>Person Risk Factors</h2>
-    <h2>Company Risk Factors</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 mb-6">
+    <div class="text-center">
+      <h2>Persons</h2>
+    </div>
+    <div class="text-center">
+      <h2>Companies</h2>
+    </div>
   </div>
 
     <!-- Categories -->
     <% all_categories.each do |category| %>
       <div class="mb-8">
-        <h3><%= category.humanize.titleize %></h3>
+        <div class="text-center mb-8">
+          <h3><%= category.humanize.titleize %></h3>
+        </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <!-- Person Risk Factors -->
           <div class="min-w-0">
             <% person_definitions = person_definitions_by_category[category] || [] %>
