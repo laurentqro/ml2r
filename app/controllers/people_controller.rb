@@ -70,6 +70,7 @@ class PeopleController < ApplicationController
       params.require(:person).permit(
         :first_name,
         :last_name,
+        :nationality,
         :country_of_birth,
         :country_of_residence,
         :country_of_profession,

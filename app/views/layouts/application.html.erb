@@ -24,7 +24,10 @@
       <div class="drawer-content flex flex-col">
         <%= render 'shared/header' %>
         <%= render 'shared/navbar' %>
-        <%= render 'shared/flash_messages' %>
+
+        <div class="h-6 flex items-center justify-center">
+          <%= render 'shared/flash_messages' %>
+        </div>
 
         <main class="container mx-auto px-4 py-6">
           <%= yield %>
