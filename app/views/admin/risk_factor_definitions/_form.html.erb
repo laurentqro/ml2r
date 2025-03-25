@@ -1,6 +1,5 @@
 <%= form_with(model: [:admin, risk_factor_definition], class: "space-y-8") do |form| %>
   <div class="pb-8">
-    <h2 class="text-xl font-bold">Risk Factor Definition</h2>
     <p class="mt-1 text-sm text-base-content/60">Configure risk factors that will be used to assess AML risk levels.</p>
 
     <% if risk_factor_definition.errors.any? %>
@@ -22,7 +21,7 @@
 
     <div class="mt-8 space-y-6">
       <div class="form-control w-full max-w-md">
-        <%= form.label :entity_type, class: "label" do %>
+        <%= form.label :entity_type, class: "label pb-1" do %>
           <span class="label-text">Entity Type</span>
         <% end %>
         <div class="relative">
@@ -34,7 +33,7 @@
       </div>
 
       <div class="form-control w-full max-w-md">
-        <%= form.label :category, class: "label" do %>
+        <%= form.label :category, class: "label pb-1" do %>
           <span class="label-text">Category</span>
         <% end %>
         <div class="relative">
@@ -51,14 +50,14 @@
       </div>
 
       <div class="form-control w-full max-w-xs">
-        <%= form.label :score, class: "label" do %>
+        <%= form.label :score, class: "label pb-1" do %>
           <span class="label-text">Score</span>
         <% end %>
         <%= form.number_field :score, min: 0, class: "input input-bordered w-full" %>
       </div>
 
       <div class="form-control w-full">
-        <%= form.label :description, class: "label" do %>
+        <%= form.label :description, class: "label pb-1" do %>
           <span class="label-text">Description</span>
         <% end %>
         <%= form.text_area :description, rows: 3, class: "textarea textarea-bordered w-full" %>

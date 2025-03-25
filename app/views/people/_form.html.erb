@@ -10,7 +10,7 @@
         </div>
     <% end %>
 
-    <div>
+    <div class="mb-8">
       <h2 class="text-xl font-bold">
         Personal Information
       </h2>
@@ -18,40 +18,42 @@
 
     <div class="space-y-8">
       <div class="divider"></div>
-          <div>
+          <div class="space-y-6">
             <p class="text-sm text-neutral-content">
               Please provide accurate information for AML compliance purposes.
             </p>
 
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 mt-6">
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <div class="form-control">
-                <%= f.label :first_name, class: "label" do %>
+                <%= f.label :first_name, class: "label pb-1" do %>
                   <span class="label-text">First Name</span>
                 <% end %>
                 <%= f.text_field :first_name, required: true, class: "input input-bordered w-full" %>
               </div>
 
               <div class="form-control">
-                <%= f.label :last_name, class: "label" do %>
+                <%= f.label :last_name, class: "label pb-1" do %>
                   <span class="label-text">Last Name</span>
                 <% end %>
                 <%= f.text_field :last_name, required: true, class: "input input-bordered w-full" %>
               </div>
             </div>
 
-            <%= render "shared/searchable_country_field", f: f, field_name: :nationality %>
-            <%= render "shared/searchable_country_field", f: f, field_name: :country_of_residence %>
-            <%= render "shared/searchable_country_field", f: f, field_name: :country_of_profession %>
-            <%= render "shared/searchable_country_field", f: f, field_name: :country_of_birth %>
+            <div class="space-y-6">
+              <%= render "shared/searchable_country_field", f: f, field_name: :nationality %>
+              <%= render "shared/searchable_country_field", f: f, field_name: :country_of_residence %>
+              <%= render "shared/searchable_country_field", f: f, field_name: :country_of_profession %>
+              <%= render "shared/searchable_country_field", f: f, field_name: :country_of_birth %>
+            </div>
 
-            <div class="mt-6">
+            <div>
                 <%= render "profession_field", f: f %>
             </div>
 
-              <div class="mt-6">
+            <div>
                 <div class="pb-4">
-                  <h3 class="text-lg font-semibold">Identification Documents</h3>
-                  <div data-controller="document-form">
+                  <h3 class="text-lg font-semibold mb-4">Identification Documents</h3>
+                  <div data-controller="document-form" class="space-y-4">
                     <template data-document-form-target="template">
                       <%= f.fields_for :identification_documents, IdentificationDocument.new, child_index: 'NEW_RECORD' do |doc| %>
                         <%= render 'identification_document_fields', f: doc %>
@@ -62,7 +64,7 @@
                       <%= render 'identification_document_fields', f: doc %>
                     <% end %>
 
-                    <button type="button" data-action="document-form#add" class="btn btn-outline btn-sm mt-4">
+                    <button type="button" data-action="document-form#add" class="btn btn-outline btn-sm">
                       Add Document
                     </button>
                   </div>
@@ -72,7 +74,7 @@
       </div>
     </div>
 
-    <div class="mt-6 flex items-center justify-end gap-x-6">
+    <div class="mt-8 flex items-center justify-end gap-x-6">
       <%= link_to "Cancel", clients_path,
           class: "btn btn-ghost" %>
 

@@ -18,7 +18,7 @@
 
     <div class="space-y-6">
       <div class="form-control w-full max-w-lg">
-        <%= form.label :person_id, "Person", class: "label" %>
+        <%= form.label :person_id, "Person", class: "label pb-1" %>
         <div>
           <%= form.collection_select :person_id, 
               Person.all, 
@@ -31,7 +31,7 @@
       </div>
 
       <div class="form-control w-full max-w-lg">
-        <%= form.label :relationship_type, class: "label" %>
+        <%= form.label :relationship_type, class: "label pb-1" %>
         <div>
           <%= form.select :relationship_type, 
               CompanyRelationship.relationship_types.keys.map { |type| [type.humanize, type] }, 
@@ -43,7 +43,7 @@
       </div>
 
       <div class="form-control w-full max-w-xs" data-relationship-type-target="ownershipField">
-        <%= form.label :ownership_percentage, "Ownership Percentage (%)", class: "label" %>
+        <%= form.label :ownership_percentage, "Ownership Percentage (%)", class: "label pb-1" %>
         <div>
           <%= form.number_field :ownership_percentage, 
               step: 0.01, 
@@ -55,7 +55,7 @@
       </div>
 
       <div class="form-control w-full">
-        <%= form.label :notes, class: "label" %>
+        <%= form.label :notes, class: "label pb-1" %>
         <div>
           <%= form.text_area :notes, 
               rows: 3, 

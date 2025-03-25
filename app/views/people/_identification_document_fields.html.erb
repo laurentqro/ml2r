@@ -1,7 +1,7 @@
 <div class="document-fields bg-base-200 p-4 rounded-lg mt-4" data-new-record="<%= f.object.new_record? %>">
   <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
     <div class="form-control">
-      <%= f.label :document_type, class: "label" do %>
+      <%= f.label :document_type, class: "label pb-1" do %>
         <span class="label-text">Document Type</span>
       <% end %>
       <div class="relative">
@@ -14,14 +14,14 @@
     </div>
 
     <div class="form-control">
-      <%= f.label :number, class: "label" do %>
+      <%= f.label :number, class: "label pb-1" do %>
         <span class="label-text">Document Number</span>
       <% end %>
       <%= f.text_field :number, required: true, class: "input input-bordered w-full" %>
     </div>
 
     <div class="form-control">
-      <%= f.label :expiration_date, class: "label" do %>
+      <%= f.label :expiration_date, class: "label pb-1" do %>
         <span class="label-text">Expiration Date</span>
       <% end %>
       <%= f.date_field :expiration_date, required: true, class: "input input-bordered w-full" %>

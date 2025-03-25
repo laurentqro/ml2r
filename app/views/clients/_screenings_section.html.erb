@@ -7,9 +7,35 @@
 
   <%= render "screenings/form", screenable: clientable %>
 
-  <div id="screenings_list" class="space-y-2 my-6">
-    <% clientable.screenings.order(created_at: :desc).each do |screening| %>
-      <%= render screening %>
-    <% end %>
+  <div id="screenings_list" class="overflow-x-auto mt-6">
+    <table class="table table-zebra w-full">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th class="text-right">Results</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% clientable.screenings.order(created_at: :desc).each do |screening| %>
+          <tr class="hover">
+            <td>
+              <%= screening.created_at.strftime("%B %d, %Y at %I:%M:%S %p") %>
+            </td>
+            <td class="text-right">
+              <%= link_to screening_path(screening), class: "link link-primary" do %>
+                <%= pluralize(screening.matches.count, 'match') %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+        <% if clientable.screenings.empty? %>
+          <tr>
+            <td colspan="3" class="text-center text-base-content/60">
+              No screenings yet
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
 </div> 
