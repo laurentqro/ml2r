@@ -4,17 +4,14 @@
   themes: all;
 }
 
-@layer components {
-  h1 {
-    @apply text-2xl font-bold;
-  }
-  h2 {
-    @apply text-xl font-bold;
-  }
-  h3 {
-    @apply text-lg font-bold;
-  }
-  h4 {
-    @apply text-base font-bold;
-  }
+@utility h1 {
+  @apply text-4xl font-bold;
+}
+
+@utility h2 {
+  @apply text-3xl font-bold;
+}
+
+@utility h3 {
+  @apply text-2xl font-bold;
 }
