@@ -23,38 +23,74 @@
   </td>
 
   <td class="w-24 min-w-[6rem] max-w-[6rem] text-center">
-    <span class="badge <%= risk_badge_class(client_risk_summary.country_risk_score) %>">
-      <%= client_risk_summary.country_risk_score %>
-    </span>
+    <% if client_risk_summary.country_risk_score %>
+      <span class="badge <%= risk_badge_class(client_risk_summary.country_risk_score) %>">
+        <%= client_risk_summary.country_risk_score %>
+      </span>
+    <% else %>
+      <span class="text-base-content/60">
+        -
+      </span>
+    <% end %>
   </td>
 
   <td class="w-24 min-w-[6rem] max-w-[6rem] text-center">
-    <span class="badge <%= risk_badge_class(client_risk_summary.client_risk_score) %>">
-      <%= client_risk_summary.client_risk_score %>
-    </span>
+    <% if client_risk_summary.client_risk_score %>
+      <span class="badge <%= risk_badge_class(client_risk_summary.client_risk_score) %>">
+        <%= client_risk_summary.client_risk_score %>
+      </span>
+    <% else %>
+      <span class="text-base-content/60">
+        -
+      </span>
+    <% end %>
   </td>
 
   <td class="w-24 min-w-[6rem] max-w-[6rem] text-center">
-    <span class="badge <%= risk_badge_class(client_risk_summary.products_and_services_risk_score) %>">
-      <%= client_risk_summary.products_and_services_risk_score %>
-    </span>
+    <% if client_risk_summary.products_and_services_risk_score %>
+      <span class="badge <%= risk_badge_class(client_risk_summary.products_and_services_risk_score) %>">
+        <%= client_risk_summary.products_and_services_risk_score %>
+      </span>
+    <% else %>
+      <span class="text-base-content/60">
+        -
+      </span>
+    <% end %>
   </td>
 
   <td class="w-24 min-w-[6rem] max-w-[6rem] text-center">
-    <span class="badge <%= risk_badge_class(client_risk_summary.distribution_channel_risk_score) %>">
-      <%= client_risk_summary.distribution_channel_risk_score %>
-    </span>
+    <% if client_risk_summary.distribution_channel_risk_score %>
+      <span class="badge <%= risk_badge_class(client_risk_summary.distribution_channel_risk_score) %>">
+        <%= client_risk_summary.distribution_channel_risk_score %>
+      </span>
+    <% else %>
+      <span class="text-base-content/60">
+        -
+      </span>
+    <% end %>
   </td>
 
   <td class="w-24 min-w-[6rem] max-w-[6rem] text-center">
-    <span class="badge <%= risk_badge_class(client_risk_summary.transaction_risk_score) %>">
-      <%= client_risk_summary.transaction_risk_score %>
-    </span>
+    <% if client_risk_summary.transaction_risk_score %>
+      <span class="badge <%= risk_badge_class(client_risk_summary.transaction_risk_score) %>">
+        <%= client_risk_summary.transaction_risk_score %>
+      </span>
+    <% else %>
+      <span class="text-base-content/60">
+        -
+      </span>
+    <% end %>
   </td>
 
-  <td class="min-w-[6rem] max-w-[6rem] text-center">
-    <span class="badge <%= risk_badge_class(client_risk_summary.total_risk_score) %>">
-      <%= client_risk_summary.total_risk_score %>
-    </span>
+  <td class="w-24 min-w-[6rem] max-w-[6rem] text-center">
+    <% if client_risk_summary.total_risk_score.positive? %>
+      <span class="badge <%= risk_badge_class(client_risk_summary.total_risk_score) %>">
+        <%= client_risk_summary.total_risk_score %>
+      </span>
+    <% else %>
+      <span class="text-base-content/60">
+        -
+      </span>
+    <% end %>
   </td>
 </tr>
