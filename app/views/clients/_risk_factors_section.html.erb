@@ -3,7 +3,7 @@
   <% category_score = client.category_risk_score(category) %>
 
   <% if risk_factors.any? %>
-    <div class="card bg-base-100 shadow-xl p-6 space-y-6">
+    <div class="card bg-base-100 p-6 space-y-6">
       <div class="flex items-center justify-between">
         <h2 class="card-title"><%= category.titleize %> Assessment</h2>
       </div>

@@ -3,7 +3,7 @@
   <% category_score = @risk_assessment.send("#{category}_score") %>
 
   <% if risk_factors.any? %>
-    <div class="card bg-base-100 shadow-xl mt-4">
+    <div class="card bg-base-100 mt-4">
       <div class="card-body">
         <div class="flex items-center justify-between">
           <h2 class="card-title"><%= category.titleize %> Assessment</h2>

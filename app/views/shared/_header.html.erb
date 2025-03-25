@@ -1,4 +1,4 @@
-<div class="navbar bg-base-300 border-b border-base-100 text-neutral-content shadow-lg p-4">
+<div class="navbar bg-base-300 border-b border-base-100 text-base-content shadow-lg p-4">
   <%= link_to root_path do %>
     <div class="flex flex-row items-center">
       <div class="flex flex-col items-center">
@@ -6,8 +6,12 @@
       </div>
       <div class="flex flex-col items-start pl-4">
         <span class="text-lg font-bold">Money Laundering Risk Radar</span><br>
-        <span class="text-xs">AML/CFT Compliance Monitoring System</span>
+        <span class="text-xs opacity-80">AML/CFT Compliance Monitoring System</span>
       </div>
     </div>
   <% end %>
+
+  <div class="flex-grow"></div>
+
+  <%= render "shared/dark_mode_toggle" %>
 </div>
