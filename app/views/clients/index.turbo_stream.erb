@@ -1,5 +1,5 @@
 <%= turbo_stream.update "clients_table" do %>
-  <%= render partial: "clients_table", locals: { clients: @clients } %>
+  <%= render "clients/table", clients: @clients %>
 <% end %>
 
 <%= turbo_stream.update "clients_pagination" do %>

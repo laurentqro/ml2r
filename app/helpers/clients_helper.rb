@@ -23,7 +23,7 @@ module ClientsHelper
   def sortable(column, title = nil)
     title ||= column.titleize
     direction = (column == sort_column && sort_direction == "asc") ? "desc" : "asc"
-    css_class = "#{column == sort_column ? 'text-blue-900' : 'text-gray-900'} w-full flex justify-center"
+    css_class = "#{column == sort_column ? 'text-base-content' : 'text-base-content/50'} w-full flex justify-center"
 
     # Keep all params except page
     preserved_params = request.params.except(:page).merge(sort: column, direction: direction)
