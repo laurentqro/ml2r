@@ -1,18 +1,20 @@
 <%= turbo_frame_tag "note" do %>
-  <div class="p-4 bg-white rounded-md shadow mb-4">
-    <div class="flex justify-between items-start">
-      <h3>Notes</h3>
-      <%= link_to "Edit", edit_notes_client_path(client, format: :turbo_stream),
-                  class: "px-3 py-1 text-sm text-blue-600 hover:text-blue-800 hover:underline",
+  <div class="card bg-base-100 shadow-xl mb-4">
+    <div class="card-body">
+      <div class="flex justify-between items-start">
+        <h3 class="card-title">Notes</h3>
+        <%= link_to "Edit", edit_notes_client_path(client, format: :turbo_stream),
+                  class: "link link-primary",
                   data: { turbo_prefetch: false } %>
-    </div>
+      </div>
 
-    <div class="prose max-w-none">
-      <% if client.notes.present? %>
-        <p class="text-gray-700 whitespace-pre-wrap"><%= client.notes %></p>
-      <% else %>
-        <p class="text-gray-500 italic">No notes available</p>
-      <% end %>
+      <div class="prose max-w-none">
+        <% if client.notes.present? %>
+          <p class="whitespace-pre-wrap"><%= client.notes %></p>
+        <% else %>
+          <p class="italic text-base-content/60">No notes available</p>
+        <% end %>
+      </div>
     </div>
   </div>
 <% end %>

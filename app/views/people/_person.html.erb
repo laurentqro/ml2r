@@ -1,16 +1,18 @@
-<div>
-  <p>
-    <strong>First name:</strong>
-    <%= person.first_name %>
-  </p>
+<div class="grid gap-4">
+  <div class="grid grid-cols-2">
+    <div class="stat">
+      <div class="stat-title">First name</div>
+      <div class="stat-value text-lg"><%= person.first_name %></div>
+    </div>
 
-  <p>
-    <strong>Last name:</strong>
-    <%= person.last_name %>
-  </p>
+    <div class="stat">
+      <div class="stat-title">Last name</div>
+      <div class="stat-value text-lg"><%= person.last_name %></div>
+    </div>
+  </div>
 
-  <p>
-    <strong>Profession:</strong>
-    <%= Occupation.find_by(unit: person.profession)&.description&.strip&.singularize %>
-  </p>
+  <div class="stat">
+    <div class="stat-title">Profession</div>
+    <div class="stat-value text-lg"><%= Occupation.find_by(unit: person.profession)&.description&.strip&.singularize %></div>
+  </div>
 </div>

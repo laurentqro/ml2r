@@ -1,60 +1,62 @@
-<div class="bg-white shadow-sm rounded-lg p-6">
-  <h2>Risk Assessments</h2>
+<div class="card bg-base-100 shadow-xl p-6">
+  <h2 class="card-title">Risk Assessments</h2>
 
   <div class="mb-6">
-    <p class="text-sm text-gray-500">
+    <p class="text-sm text-base-content/60">
       Risk assessments are used to evaluate the risk associated with a client.
     </p>
   </div>
 
   <div class="mb-4">
-    <%= link_to new_client_risk_assessment_path(client), class: "btn-primary" do %>
+    <%= link_to new_client_risk_assessment_path(client), class: "btn btn-primary btn-sm" do %>
       Create Risk Assessment
     <% end %>
   </div>
 
   <% if client.risk_assessments.any? %>
-    <table class="min-w-full divide-y divide-gray-200">
-      <thead class="bg-gray-50">
-        <tr>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created</th>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Score</th>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
-        </tr>
-      </thead>
-
-      <tbody class="bg-white divide-y divide-gray-200 mt-4">
-        <% client.risk_assessments.order(created_at: :asc).each do |risk_assessment| %>
+    <div class="overflow-x-auto">
+      <table class="table table-zebra w-full">
+        <thead>
           <tr>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-              <%= risk_assessment.created_at.strftime("%d %B %Y at %H:%M") %>
-            </td>
-
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-              <% if risk_assessment.approved_at %>
-                <span class="text-green-500">Approved on <%= risk_assessment.approved_at.strftime("%d %B %Y at %H:%M") %></span>
-              <% elsif risk_assessment.eligible_for_review? %>
-                <span class="text-orange-500">Pending Approval</span>
-              <% elsif risk_assessment.superseded? %>
-                <span class="text-gray-500">Superseded by a newer risk assessment</span>
-              <% end %>
-            </td>
-
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-              <%= risk_assessment.total_risk_score %>
-            </td>
-
-            <td class="px-6 py-4 whitespace-nowrap text-sm">
-              <% if risk_assessment.eligible_for_review? %>
-                <%= link_to "Review", client_risk_assessment_path(client, risk_assessment), class: "text-blue-600 hover:text-blue-800" %>
-              <% else %>
-                <%= link_to "View", client_risk_assessment_path(client, risk_assessment), class: "text-blue-600 hover:text-blue-800" %>
-              <% end %>
-            </td>
+            <th>Created</th>
+            <th>Status</th>
+            <th>Score</th>
+            <th>Action</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+
+        <tbody>
+          <% client.risk_assessments.order(created_at: :asc).each do |risk_assessment| %>
+            <tr>
+              <td class="whitespace-nowrap">
+                <%= risk_assessment.created_at.strftime("%d %B %Y at %H:%M") %>
+              </td>
+
+              <td class="whitespace-nowrap">
+                <% if risk_assessment.approved_at %>
+                  <span class="text-success">Approved on <%= risk_assessment.approved_at.strftime("%d %B %Y at %H:%M") %></span>
+                <% elsif risk_assessment.eligible_for_review? %>
+                  <span class="text-warning">Pending Approval</span>
+                <% elsif risk_assessment.superseded? %>
+                  <span class="text-base-content/60">Superseded by a newer risk assessment</span>
+                <% end %>
+              </td>
+
+              <td class="whitespace-nowrap">
+                <%= risk_assessment.total_risk_score %>
+              </td>
+
+              <td class="whitespace-nowrap">
+                <% if risk_assessment.eligible_for_review? %>
+                  <%= link_to "Review", client_risk_assessment_path(client, risk_assessment), class: "link link-primary" %>
+                <% else %>
+                  <%= link_to "View", client_risk_assessment_path(client, risk_assessment), class: "link link-primary" %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   <% end %>
 </div>

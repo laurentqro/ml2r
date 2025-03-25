@@ -58,7 +58,7 @@ export default class extends Controller {
     // Show loading state
     this.optionsTarget.innerHTML = ""
     const loadingElement = document.createElement("div")
-    loadingElement.classList.add("px-4", "py-2", "text-sm", "text-gray-500", "italic")
+    loadingElement.classList.add("px-4", "py-2", "text-sm", "text-base-content/60", "italic")
     loadingElement.textContent = "Searching..."
     this.optionsTarget.appendChild(loadingElement)
     this.showDropdown()
@@ -76,7 +76,7 @@ export default class extends Controller {
       filteredOptions.forEach(option => {
         const element = document.createElement("div")
         element.classList.add(
-          "px-4", "py-2", "cursor-pointer", "hover:bg-indigo-50", "text-sm"
+          "px-4", "py-2", "cursor-pointer", "hover:bg-base-200", "text-sm"
         )
         element.textContent = option.text
         element.dataset.value = option.value
@@ -94,7 +94,7 @@ export default class extends Controller {
       } else {
         // No results
         const element = document.createElement("div")
-        element.classList.add("px-4", "py-2", "text-sm", "text-gray-500", "italic")
+        element.classList.add("px-4", "py-2", "text-sm", "text-base-content/60", "italic")
         element.textContent = "No results found"
         this.optionsTarget.appendChild(element)
         this.showDropdown()
@@ -108,7 +108,7 @@ export default class extends Controller {
     this.allOptions.forEach(option => {
       const element = document.createElement("div")
       element.classList.add(
-        "px-4", "py-2", "cursor-pointer", "hover:bg-indigo-50", "text-sm"
+        "px-4", "py-2", "cursor-pointer", "hover:bg-base-200", "text-sm"
       )
       element.textContent = option.text
       element.dataset.value = option.value

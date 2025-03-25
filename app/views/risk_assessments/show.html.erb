@@ -1,5 +1,9 @@
 <% content_for :title, "Risk assessment - #{@risk_assessment.client.display_name}" %>
 
-<h1>Risk assessment for <%= link_to @risk_assessment.client.display_name, client_path(@risk_assessment.client) %></h1>
+<div class="card bg-base-300 shadow-xl">
+  <div class="card-body">
+    <h1 class="card-title text-2xl">Risk assessment for <%= link_to @risk_assessment.client.display_name, client_path(@risk_assessment.client), class: "link link-primary" %></h1>
 
-<%= render @risk_assessment %>
+    <%= render @risk_assessment %>
+  </div>
+</div>

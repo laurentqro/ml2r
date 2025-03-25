@@ -1,12 +1,12 @@
-<%= form_with(model: [@client, @risk_assessment], data: { turbo: false }) do |f| %>
-  <div class="mb-8">
-    <p class="text-sm text-gray-600 mb-6">Select all applicable risk factors for this assessment.</p>
+<%= form_with(model: [@client, @risk_assessment], data: { turbo: false }, class: "card bg-base-100 shadow-xl") do |f| %>
+  <div class="card-body">
+    <p class="text-sm text-base-content/70 mb-6">Select all applicable risk factors for this assessment.</p>
 
     <% RiskFactorDefinition.categories.each do |category| %>
       <div class="mb-6">
-        <h3><%= RiskFactorDefinition.format_category_name(category) %></h3>
+        <h3 class="text-lg font-medium"><%= RiskFactorDefinition.format_category_name(category) %></h3>
 
-        <div class="space-y-3">
+        <div class="space-y-3 mt-4">
           <% RiskFactorDefinition.for_category(category).for_entity_type(@client.clientable_type).each do |definition| %>
             <% risk_factor = @risk_assessment.risk_factors.find_or_initialize_by(risk_factor_definition: definition) %>
 
@@ -17,35 +17,33 @@
                 <%= rf.hidden_field :id %>
                 <%= rf.hidden_field :_destroy, value: "1", class: "destroy-flag" %>
               <% end %>
-              <div class="relative flex items-start">
-                <div class="flex h-6 items-center">
+              <div class="form-control">
+                <label class="label cursor-pointer justify-start gap-2">
                   <%= rf.check_box :identified_at, { 
                     checked: risk_factor.persisted?, 
-                    class: "h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600 risk-factor-checkbox",
+                    class: "checkbox checkbox-primary risk-factor-checkbox",
                     id: "risk_factor_#{definition.id}",
                     data: { destroy_target: rf.object_name.gsub(/\[\d+\]/, "[#{rf.index}]") + "[_destroy]" }
                   }, Time.current, nil %>
-                </div>
-                <div class="ml-3 text-sm/6 leading-6">
-                  <label for="risk_factor_<%= definition.id %>" class="font-medium text-gray-900">
-                    <%= definition.description %>
-                  </label>
-                </div>
+                  <div class="ml-2">
+                    <span class="label-text"><%= definition.description %></span>
+                  </div>
+                </label>
               </div>
             <% end %>
           <% end %>
         </div>
       </div>
     <% end %>
-  </div>
 
-  <div class="mb-4">
-    <%= f.label :notes, "Notes", class: "block text-sm font-medium text-gray-700" %>
-    <%= f.text_area :notes, class: "mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md shadow-sm" %>
-  </div>
+    <div class="form-control mt-4">
+      <%= f.label :notes, "Notes", class: "label" %>
+      <%= f.text_area :notes, class: "textarea textarea-bordered" %>
+    </div>
 
-  <div class="mb-4">
-    <%= f.submit "Save", class: "inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" %>
+    <div class="card-actions justify-end mt-6">
+      <%= f.submit "Save", class: "btn btn-primary" %>
+    </div>
   </div>
 <% end %>
 

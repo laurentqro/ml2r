@@ -1,6 +1,8 @@
-<div class="sm:col-span-3">
-  <%= f.label field_name, class: "block text-sm/6 font-bold text-gray-900" %>
-  <div class="mt-2 relative" data-controller="searchable-select">
+<div class="form-control w-full">
+  <%= f.label field_name, class: "label" do %>
+    <span class="label-text font-bold"><%= field_name.to_s.humanize %></span>
+  <% end %>
+  <div class="relative" data-controller="searchable-select">
     <%= f.collection_select field_name,
         ISO3166::Country.all.sort_by(&:common_name), :alpha2, :common_name,
         { prompt: "Select country" },
@@ -11,13 +13,13 @@
     <div class="relative">
       <input type="text" 
              placeholder="Search for a country..." 
-             class="block w-full rounded-md bg-white px-3 py-1.5 text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+             class="input input-bordered w-full"
              data-searchable-select-target="searchInput"
              data-action="input->searchable-select#search focus->searchable-select#showOptions click->searchable-select#showOptions" />
 
       <div class="absolute inset-y-0 right-0 flex items-center pr-8">
         <button type="button" 
-                class="text-gray-400 hover:text-gray-500 focus:outline-none"
+                class="btn btn-circle btn-ghost btn-xs"
                 data-action="click->searchable-select#clearSearch">
           <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -25,14 +27,16 @@
         </button>
       </div>
 
-      <svg class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 size-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
-        <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-      </svg>
+      <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+        <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+        </svg>
+      </div>
     </div>
 
-    <div class="absolute z-10 mt-1 w-full rounded-md bg-white shadow-lg hidden max-h-60 overflow-y-auto"
+    <div class="menu dropdown-content z-10 mt-1 w-full bg-base-100 rounded-box shadow-lg max-h-60 overflow-y-auto hidden"
          data-searchable-select-target="dropdown">
-      <div data-searchable-select-target="options" class="py-1"></div>
+      <div data-searchable-select-target="options" class="menu-list"></div>
     </div>
   </div>
 </div> 

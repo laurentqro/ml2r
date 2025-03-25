@@ -1,0 +1,10 @@
+<div class="mb-8">
+  <details class="collapse collapse-arrow bg-base-200">
+    <summary class="collapse-title text-xl font-medium">
+      View Raw Match Data
+    </summary>
+    <div class="collapse-content">
+      <pre class="text-xs font-mono whitespace-pre-wrap"><%= JSON.pretty_generate(data) rescue data.to_s %></pre>
+    </div>
+  </details>
+</div> 

@@ -1,271 +1,39 @@
-<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-white">
-  <div class="flex items-center justify-between mb-6">
-    <div>
-      <h1><%= @match.caption %></h1>
+<div class="container mx-auto px-4 py-8">
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h1 class="card-title text-2xl"><%= @match.caption %></h1>
 
-      <div class="mt-2 flex flex-wrap gap-2">
-        <% if @match.schema.present? %>
-          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-            <%= @match.schema %>
-          </span>
-        <% end %>
-
-        <% @match.topics.each do |topic| %>
-          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium <%= topic_badge_classes(topic) %>">
-            <%= topic_description(topic) %>
-          </span>
-        <% end %>
-
-        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium <%= match_score_classes(@match.external_score) %>">
-          Match Score: <%= @match.external_score %>
-        </span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Main data table -->
-  <div class="overflow-hidden mb-8">
-    <table class="min-w-full divide-y divide-gray-200">
-      <tbody class="bg-white divide-y divide-gray-200">
-        <tr>
-          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">Type</td>
-          <td class="px-6 py-4 text-sm text-gray-900"><%= @match.schema %></td>
-        </tr>
-
-        <% if @match.name.present? %>
-          <tr>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">Name</td>
-            <td class="px-6 py-4 text-sm text-gray-900"><%= @match.name.join(" · ") %>
-          </tr>
-        <% end %>
-
-        <% if @match.father_name.present? %>
-          <tr>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">Patronymic</td>
-            <td class="px-6 py-4 text-sm text-gray-900"><%= @match.father_name.join(" · ") %></td>
-          </tr>
-        <% end %>
-
-        <% if @match.second_name.present? %>
-          <tr>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">Second name</td>
-            <td class="px-6 py-4 text-sm text-gray-900"><%= @match.second_name.join(" · ") %></td>
-          </tr>
-        <% end %>
-
-        <% if @match.aliases.any? %>
-          <tr>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">Aliases</td>
-          <td class="px-6 py-4 text-sm text-gray-900"><%= @match.aliases.join(" · ") %></td>
-        </tr>
-        <% end %>
-
-        <% if @match.weak_aliases.any? %>
-          <tr>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">Weak aliases</td>
-            <td class="px-6 py-4 text-sm text-gray-900"><%= @match.weak_aliases.join(" · ") %></td>
-          </tr>
-        <% end %>
-
-        <% if @match.birth_date.present? %>
-          <tr>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">Birth date</td>
-            <td class="px-6 py-4 text-sm text-gray-900"><%= @match.birth_date.join(" · ") %></td>
-          </tr>
-        <% end %>
-
-        <% if @match.birth_place.present? %>
-          <tr>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">Place of birth</td>
-            <td class="px-6 py-4 text-sm text-gray-900"><%= @match.birth_place.join(" · ") %></td>
-          </tr>
-        <% end %>
-
-        <% if @match.gender.present? %>
-          <tr>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">Gender</td>
-            <td class="px-6 py-4 text-sm text-gray-900"><%= @match.gender.join(" · ") %></td>
-          </tr>
-        <% end %>
-
-        <% if @match.nationality.present? %>
-          <tr>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">Nationality</td>
-            <td class="px-6 py-4 text-sm text-gray-900"><%= @match.nationality.join(" · ") %></td>
-          </tr>
-        <% end %>
-
-        <% if @match.country.present? %>
-          <tr>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">Country</td>
-            <td class="px-6 py-4 text-sm text-gray-900"><%= @match.country.join(" · ") %></td>
-          </tr>
-        <% end %>
-
-        <% if @match.citizenship.present? %>
-          <tr>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">Citizenship</td>
-            <td class="px-6 py-4 text-sm text-gray-900"><%= @match.citizenship.join(" · ") %></td>
-          </tr>
-        <% end %>
-
-        <% if @match.first_name.present? %>
-          <tr>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">First name</td>
-            <td class="px-6 py-4 text-sm text-gray-900"><%= @match.first_name.join(" · ") %></td>
-          </tr>
-        <% end %>
-
-        <% if @match.last_name.present? %>
-          <tr>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">Last name</td>
-            <td class="px-6 py-4 text-sm text-gray-900"><%= @match.last_name.join(" · ") %></td>
-          </tr>
-        <% end %>
-
-        <% if @match.title.present? %>
-          <tr>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">Title</td>
-            <td class="px-6 py-4 text-sm text-gray-900"><%= @match.title.join(" · ") %></td>
-          </tr>
-        <% end %>
-
-        <% if @match.website.present? %>
-          <tr>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">Website</td>
-            <td class="px-6 py-4 text-sm text-gray-900">
-              <% @match.website.each do |website| %>
-                <a href="<%= website %>" class="text-indigo-600 hover:text-indigo-800" rel="noreferrer" target="_blank"><%= website %></a>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-
-        <% if @match.wikidata_id.present? %>
-          <tr>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">Wikidata ID</td>
-            <td class="px-6 py-4 text-sm text-gray-900">
-              <% @match.wikidata_id.each do |wikidata_id| %>
-                <a href="https://www.wikidata.org/wiki/<%= wikidata_id %>" class="text-indigo-600 hover:text-indigo-800" rel="noreferrer" target="_blank"><%= wikidata_id %></a>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-
-        <% if @match.position.present? %>
-          <tr>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">Position</td>
-            <td class="px-6 py-4 text-sm text-gray-900"><%= @match.position.join(" · ") %></td>
-          </tr>
-        <% end %>
-
-        <% if @match.education.present? %>
-          <tr>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">Education</td>
-            <td class="px-6 py-4 text-sm text-gray-900"><%= @match.education.join(" · ") %></td>
-          </tr>
-        <% end %>
-
-        <% if @match.religion.present? %>
-          <tr>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">Religion</td>
-            <td class="px-6 py-4 text-sm text-gray-900"><%= @match.religion.join(" · ") %></td>
-          </tr>
-        <% end %>
-
-        <% if @match.ethnicity.present? %>
-          <tr>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">Ethnicity</td>
-            <td class="px-6 py-4 text-sm text-gray-900"><%= @match.ethnicity.join(" · ") %></td>
-          </tr>
-        <% end %>
-
-        <% if @match.source_url.present? %>
-          <tr>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">Source URL</td>
-            <td class="px-6 py-4 text-sm text-gray-900">
-              <% @match.source_url.each do |source_url| %>
-                <li>
-                  <a href="<%= source_url %>" class="text-indigo-600 hover:text-indigo-800" rel="noreferrer" target="_blank"><%= source_url %></a>
-                </li>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-
-        <% if @match.address.present? %>
-          <tr>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">Address</td>
-            <td class="px-6 py-4 text-sm text-gray-900"><%= @match.address.join(" · ") %></td>
-          </tr>
-        <% end %>
-
-        <% if @match.first_seen.present? %>
-          <tr>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">First processed</td>
-            <td class="px-6 py-4 text-sm text-gray-900"><%= @match.first_seen.strftime("%d-%m-%Y %H:%M:%S") %></td>
-          </tr>
-        <% end %>
-
-
-        <% if @match.last_seen.present? %>
-          <tr>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">Last processed</td>
-            <td class="px-6 py-4 text-sm text-gray-900"><%= @match.last_seen.strftime("%d-%m-%Y %H:%M:%S") %></td>
-          </tr>
-        <% end %>
-
-        <% if @match.last_change.present? %>
-          <tr>
-            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">Last change</td>
-            <td class="px-6 py-4 text-sm text-gray-900"><%= @match.last_change.strftime("%d-%m-%Y %H:%M:%S") %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Sanctions Section -->
-  <% if @match.sanctions.any? %>
-    <div class="mb-8">
-      <h2>Sanctions</h2>
-      <div class="overflow-hidden border border-gray-200 rounded-lg">
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-gray-50">
-            <tr>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Authority</th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Program</th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Start date</th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">End date</th>
-            </tr>
-          </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
-            <% @match.sanctions.each do |sanction| %>
-              <tr>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"><%= sanction %></td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">-</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">-</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">-</td>
-              </tr>
+          <div class="mt-2 flex flex-wrap gap-2">
+            <% if @match.schema.present? %>
+              <span class="badge">
+                <%= @match.schema %>
+              </span>
             <% end %>
-          </tbody>
-        </table>
+
+            <% @match.topics.each do |topic| %>
+              <span class="badge <%= topic_badge_classes(topic).include?('red') ? 'badge-error' : topic_badge_classes(topic).include?('yellow') ? 'badge-warning' : topic_badge_classes(topic).include?('green') ? 'badge-success' : 'badge-info' %>">
+                <%= topic_description(topic) %>
+              </span>
+            <% end %>
+
+            <span class="badge <%= match_score_classes(@match.external_score).include?('red') ? 'badge-error' : match_score_classes(@match.external_score).include?('yellow') ? 'badge-warning' : match_score_classes(@match.external_score).include?('green') ? 'badge-success' : 'badge-info' %>">
+              Match Score: <%= @match.external_score %>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <%= render "table", match: @match %>
+
+      <%= render "sanctions_table", sanctions: @match.sanctions %>
+
+      <%= render "raw_data", data: @match.external_data %>
+
+      <div class="flex justify-end mt-8">
+        <%= link_to "Back", @screening.screenable, class: "btn btn-primary" %>
       </div>
     </div>
-  <% end %>
-
-  <div class="mb-8">
-    <details class="w-full">
-      <summary class="text-xl font-semibold text-gray-900 mb-4 cursor-pointer hover:text-indigo-600">
-        View Raw Match Data
-      </summary>
-      <div class="border border-gray-200 rounded-lg p-4 bg-gray-50 overflow-auto max-h-96">
-        <pre class="text-xs text-gray-800"><%= JSON.pretty_generate(@match.external_data) rescue @match.external_data.to_s %></pre>
-      </div>
-    </details>
-  </div>
-
-  <div class="flex justify-end space-x-3 mt-8">
-    <%= link_to "Back", @screening.screenable, class: "btn-primary" %>
   </div>
 </div> 

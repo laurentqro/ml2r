@@ -1,58 +1,59 @@
-<tr class="hover:bg-gray-50 border-x border-gray-300">
-  <td class="w-96 py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-    <div class="max-w-md flex items-center justify-between">
+<tr class="hover">
+  <td class="w-96">
+    <div class="flex items-center justify-between">
       <%= link_to client_risk_summary.display_name, client_path(client_risk_summary.client_id),
-          class: "text-blue-600 hover:text-blue-800 line-clamp-2", data: { turbo: false } %>
-      <div class="flex gap-2 flex-shrink-0 ml-2">
+          class: "link link-primary line-clamp-2", data: { turbo: false } %>
+
+      <div class="flex gap-2 ml-2">
         <% if client_risk_summary.pep %>
-          <span class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">
+          <span class="badge badge-warning badge-sm">
             PEP
           </span>
         <% end %>
         <% if client_risk_summary.sanctioned %>
-          <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-800 ring-1 ring-inset ring-red-600/20">
+          <span class="badge badge-error badge-sm">
             Sanctioned
           </span>
         <% end %>
       </div>
     </div>
   </td>
-  <td class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-4 text-xs text-gray-500 text-center">
+  <td class="w-24 min-w-[6rem] max-w-[6rem] text-center text-xs">
     <%= client_risk_summary.risk_assessment_status %>
   </td>
 
-  <td class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-4 text-sm text-gray-500 text-center">
-    <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(client_risk_summary.country_risk_score) %>">
+  <td class="w-24 min-w-[6rem] max-w-[6rem] text-center">
+    <span class="badge <%= risk_badge_class(client_risk_summary.country_risk_score) %>">
       <%= client_risk_summary.country_risk_score %>
     </span>
   </td>
 
-  <td class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-4 text-sm text-gray-500 text-center">
-    <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(client_risk_summary.client_risk_score) %>">
+  <td class="w-24 min-w-[6rem] max-w-[6rem] text-center">
+    <span class="badge <%= risk_badge_class(client_risk_summary.client_risk_score) %>">
       <%= client_risk_summary.client_risk_score %>
     </span>
   </td>
 
-  <td class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-4 text-sm text-gray-500 text-center">
-    <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(client_risk_summary.products_and_services_risk_score) %>">
+  <td class="w-24 min-w-[6rem] max-w-[6rem] text-center">
+    <span class="badge <%= risk_badge_class(client_risk_summary.products_and_services_risk_score) %>">
       <%= client_risk_summary.products_and_services_risk_score %>
     </span>
   </td>
 
-  <td class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-4 text-sm text-gray-500 text-center">
-    <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(client_risk_summary.distribution_channel_risk_score) %>">
+  <td class="w-24 min-w-[6rem] max-w-[6rem] text-center">
+    <span class="badge <%= risk_badge_class(client_risk_summary.distribution_channel_risk_score) %>">
       <%= client_risk_summary.distribution_channel_risk_score %>
     </span>
   </td>
 
-  <td class="w-24 min-w-[6rem] max-w-[6rem] px-3 py-4 text-sm text-gray-500 text-center">
-    <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(client_risk_summary.transaction_risk_score) %>">
+  <td class="w-24 min-w-[6rem] max-w-[6rem] text-center">
+    <span class="badge <%= risk_badge_class(client_risk_summary.transaction_risk_score) %>">
       <%= client_risk_summary.transaction_risk_score %>
     </span>
   </td>
 
-  <td class="min-w-[6rem] max-w-[6rem] px-3 py-4 text-sm text-gray-500 text-center">
-    <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(client_risk_summary.total_risk_score) %>">
+  <td class="min-w-[6rem] max-w-[6rem] text-center">
+    <span class="badge <%= risk_badge_class(client_risk_summary.total_risk_score) %>">
       <%= client_risk_summary.total_risk_score %>
     </span>
   </td>

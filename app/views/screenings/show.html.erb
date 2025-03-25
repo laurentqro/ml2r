@@ -1,10 +1,10 @@
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="container mx-auto py-8">
   <div class="flex items-center justify-between">
     <div>
-      <h2 class="text-2xl font-bold text-gray-900 sm:text-3xl">
+      <h2 class="text-3xl font-bold">
         Screening results for <%= @screening.screenable.display_name %>
       </h2>
-      <p class="mt-2 text-sm text-gray-600">
+      <p class="text-sm text-base-content/60 mt-2">
         Screening run on <%= @screening.created_at.strftime("%B %d, %Y at %I:%M%p") %>
       </p>
     </div>

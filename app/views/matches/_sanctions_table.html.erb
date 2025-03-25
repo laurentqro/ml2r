@@ -1,0 +1,27 @@
+<% if sanctions.any? %>
+  <div class="mb-8">
+    <h2 class="text-xl font-semibold mb-4">Sanctions</h2>
+    <div class="overflow-x-auto">
+      <table class="table table-zebra">
+        <thead>
+          <tr>
+            <th>Authority</th>
+            <th>Program</th>
+            <th>Start date</th>
+            <th>End date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% sanctions.each do |sanction| %>
+            <tr>
+              <td><%= sanction %></td>
+              <td>-</td>
+              <td>-</td>
+              <td>-</td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% end %> 

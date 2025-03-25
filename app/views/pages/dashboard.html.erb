@@ -1,51 +1,63 @@
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-  <h1 class="text-2xl font-bold text-gray-900 mb-8 text-center">Risk Assessment Matrices</h1>
+<div class="container mx-auto py-8 px-4">
+  <h1 class="text-2xl font-bold mb-8 text-center">Risk Assessment Matrices</h1>
 
   <!-- Legend -->
-  <div class="my-6 flex items-center justify-center space-x-4">
+  <div class="my-6 flex items-center justify-center gap-4">
     <div class="flex items-center">
-      <div class="w-4 h-4 bg-green-100 rounded mr-2"></div>
-      <span class="text-sm text-gray-600">Low Risk</span>
+      <div class="badge badge-success badge-sm mr-2"></div>
+      <span class="text-sm text-base-content/60">Low Risk</span>
     </div>
     <div class="flex items-center">
-      <div class="w-4 h-4 bg-yellow-100 rounded mr-2"></div>
-      <span class="text-sm text-gray-600">Medium Risk</span>
+      <div class="badge badge-warning badge-sm mr-2"></div>
+      <span class="text-sm text-base-content/60">Medium Risk</span>
     </div>
     <div class="flex items-center">
-      <div class="w-4 h-4 bg-red-100 rounded mr-2"></div>
-      <span class="text-sm text-gray-600">High Risk</span>
+      <div class="badge badge-error badge-sm mr-2"></div>
+      <span class="text-sm text-base-content/60">High Risk</span>
     </div>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-    <div class="p-6">
-      <h2 class="text-xl font-bold text-gray-900 mb-4 text-center pb-6">Client</h2>
-      <%= render "risk_matrix", risk_matrix: @client_risk_matrix %>
+    <div class="card bg-base-100 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title justify-center pb-6">Client</h2>
+        <%= render "risk_matrix", risk_matrix: @client_risk_matrix %>
+      </div>
     </div>
 
-    <div class="p-6">
-      <h2 class="text-xl font-bold text-gray-900 mb-4 text-center pb-6">Country</h2>
-      <%= render "risk_matrix", risk_matrix: @country_risk_matrix %>
+    <div class="card bg-base-100 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title justify-center pb-6">Country</h2>
+        <%= render "risk_matrix", risk_matrix: @country_risk_matrix %>
+      </div>
     </div>
 
-    <div class="p-6">
-      <h2 class="text-xl font-bold text-gray-900 mb-4 text-center pb-6">Products & Services</h2>
-      <%= render "risk_matrix", risk_matrix: @products_risk_matrix %>
+    <div class="card bg-base-100 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title justify-center pb-6">Products & Services</h2>
+        <%= render "risk_matrix", risk_matrix: @products_risk_matrix %>
+      </div>
     </div>
 
-    <div class="p-6">
-      <h2 class="text-xl font-bold text-gray-900 mb-4 text-center pb-6">Distribution Channel</h2>
-      <%= render "risk_matrix", risk_matrix: @distribution_risk_matrix %>
+    <div class="card bg-base-100 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title justify-center pb-6">Distribution Channel</h2>
+        <%= render "risk_matrix", risk_matrix: @distribution_risk_matrix %>
+      </div>
     </div>
 
-    <div class="p-6">
-      <h2 class="text-xl font-bold text-gray-900 mb-4 text-center pb-6">Transaction</h2>
-      <%= render "risk_matrix", risk_matrix: @transaction_risk_matrix %>
+    <div class="card bg-base-100 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title justify-center pb-6">Transaction</h2>
+        <%= render "risk_matrix", risk_matrix: @transaction_risk_matrix %>
+      </div>
     </div>
 
-    <div class="p-6">
-      <h2 class="text-xl font-bold text-gray-900 mb-4 text-center pb-6">Overall Risk</h2>
-      <%= render "risk_matrix", risk_matrix: @total_risk_matrix %>
+    <div class="card bg-base-100 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title justify-center pb-6">Overall Risk</h2>
+        <%= render "risk_matrix", risk_matrix: @total_risk_matrix %>
+      </div>
     </div>
   </div>
 </div>

@@ -1,45 +1,41 @@
-<div class="document-fields bg-gray-50 p-4 rounded-lg mt-4" data-new-record="<%= f.object.new_record? %>">
-  <div class="grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6">
-    <div class="sm:col-span-2">
-      <%= f.label :document_type, class: "block text-sm/6 font-medium text-gray-900" %>
-      <div class="mt-2 grid grid-cols-1">
+<div class="document-fields bg-base-200 p-4 rounded-lg mt-4" data-new-record="<%= f.object.new_record? %>">
+  <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+    <div class="form-control">
+      <%= f.label :document_type, class: "label" do %>
+        <span class="label-text">Document Type</span>
+      <% end %>
+      <div class="relative">
         <%= f.select :document_type,
             Person::DOCUMENT_TYPES,
             { prompt: "Select type" },
             { required: true,
-              class: "col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 px-3 text-gray-900 outline-1 -outline-offset-1 outline-gray-300 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" } %>
-        <svg class="pointer-events-none col-start-1 row-start-1 mr-3 size-5 self-center justify-self-end text-gray-500" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-        </svg>
+              class: "select select-bordered w-full" } %>
       </div>
     </div>
 
-    <div class="sm:col-span-2">
-      <%= f.label :number, class: "block text-sm/6 font-medium text-gray-900" %>
-      <div class="mt-2">
-        <%= f.text_field :number, required: true,
-            class: "block w-full rounded-md bg-white px-3 py-1.5 text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" %>
-      </div>
+    <div class="form-control">
+      <%= f.label :number, class: "label" do %>
+        <span class="label-text">Document Number</span>
+      <% end %>
+      <%= f.text_field :number, required: true, class: "input input-bordered w-full" %>
     </div>
 
-    <div class="sm:col-span-2">
-      <%= f.label :expiration_date, class: "block text-sm/6 font-medium text-gray-900" %>
-      <div class="mt-2">
-        <%= f.date_field :expiration_date, required: true,
-            class: "block w-full rounded-md bg-white px-3 py-1.5 text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" %>
-      </div>
+    <div class="form-control">
+      <%= f.label :expiration_date, class: "label" do %>
+        <span class="label-text">Expiration Date</span>
+      <% end %>
+      <%= f.date_field :expiration_date, required: true, class: "input input-bordered w-full" %>
     </div>
 
-    <div class="sm:col-span-5">
-      <div class="flex items-center gap-x-3">
-        <%= f.check_box :is_copy,
-            class: "h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" %>
-        <%= f.label :is_copy, "This is a copy", class: "text-sm/6 font-medium text-gray-900" %>
-      </div>
+    <div class="col-span-1 sm:col-span-2 flex items-center">
+      <label class="label cursor-pointer justify-start gap-2">
+        <%= f.check_box :is_copy, class: "checkbox checkbox-primary" %>
+        <span class="label-text">This is a copy</span>
+      </label>
     </div>
 
-    <div class="sm:col-span-1 flex items-end justify-end">
-      <button type="button" data-action="document-form#remove" class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-red-900 shadow-sm ring-1 ring-inset ring-red-300 hover:bg-red-50">
+    <div class="flex items-end justify-end">
+      <button type="button" data-action="document-form#remove" class="btn btn-error btn-sm">
         Remove
       </button>
     </div>

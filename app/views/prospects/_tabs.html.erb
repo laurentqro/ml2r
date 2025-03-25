@@ -1,8 +1,6 @@
-<div class="border-b border-gray-200">
-  <nav class="flex space-x-8" aria-label="Tabs">
-    <%= link_to "Persons", prospects_path(nature: 'person'),
-        class: "#{params[:nature].nil? || params[:nature] == 'person' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium" %>
-    <%= link_to "Companies", prospects_path(nature: 'company'),
-        class: "#{params[:nature] == 'company' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'} whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium" %>
-  </nav>
+<div class="tabs tabs-bordered">
+  <%= link_to "Persons", prospects_path(nature: 'person'),
+      class: "tab #{params[:nature].nil? || params[:nature] == 'person' ? 'tab-active' : ''}" %>
+  <%= link_to "Companies", prospects_path(nature: 'company'),
+      class: "tab #{params[:nature] == 'company' ? 'tab-active' : ''}" %>
 </div>

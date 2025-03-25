@@ -1,0 +1,202 @@
+<!-- Main data table -->
+<div class="overflow-x-auto mb-8">
+  <table class="table table-zebra">
+    <tbody>
+      <tr>
+        <td class="font-medium text-base-content/70">Type</td>
+        <td><%= match.schema %></td>
+      </tr>
+
+      <% if match.name.present? %>
+        <tr>
+          <td class="font-medium text-base-content/70">Name</td>
+          <td><%= match.name.join(" · ") %></td>
+        </tr>
+      <% end %>
+
+      <% if match.father_name.present? %>
+        <tr>
+          <td class="font-medium text-base-content/70">Patronymic</td>
+          <td><%= match.father_name.join(" · ") %></td>
+        </tr>
+      <% end %>
+
+      <% if match.second_name.present? %>
+        <tr>
+          <td class="font-medium text-base-content/70">Second name</td>
+          <td><%= match.second_name.join(" · ") %></td>
+        </tr>
+      <% end %>
+
+      <% if match.aliases.any? %>
+        <tr>
+          <td class="font-medium text-base-content/70">Aliases</td>
+          <td><%= match.aliases.join(" · ") %></td>
+        </tr>
+      <% end %>
+
+      <% if match.weak_aliases.any? %>
+        <tr>
+          <td class="font-medium text-base-content/70">Weak aliases</td>
+          <td><%= match.weak_aliases.join(" · ") %></td>
+        </tr>
+      <% end %>
+
+      <% if match.birth_date.present? %>
+        <tr>
+          <td class="font-medium text-base-content/70">Birth date</td>
+          <td><%= match.birth_date.join(" · ") %></td>
+        </tr>
+      <% end %>
+
+      <% if match.birth_place.present? %>
+        <tr>
+          <td class="font-medium text-base-content/70">Place of birth</td>
+          <td><%= match.birth_place.join(" · ") %></td>
+        </tr>
+      <% end %>
+
+      <% if match.gender.present? %>
+        <tr>
+          <td class="font-medium text-base-content/70">Gender</td>
+          <td><%= match.gender.join(" · ") %></td>
+        </tr>
+      <% end %>
+
+      <% if match.nationality.present? %>
+        <tr>
+          <td class="font-medium text-base-content/70">Nationality</td>
+          <td><%= match.nationality.join(" · ") %></td>
+        </tr>
+      <% end %>
+
+      <% if match.country.present? %>
+        <tr>
+          <td class="font-medium text-base-content/70">Country</td>
+          <td><%= match.country.join(" · ") %></td>
+        </tr>
+      <% end %>
+
+      <% if match.citizenship.present? %>
+        <tr>
+          <td class="font-medium text-base-content/70">Citizenship</td>
+          <td><%= match.citizenship.join(" · ") %></td>
+        </tr>
+      <% end %>
+
+      <% if match.first_name.present? %>
+        <tr>
+          <td class="font-medium text-base-content/70">First name</td>
+          <td><%= match.first_name.join(" · ") %></td>
+        </tr>
+      <% end %>
+
+      <% if match.last_name.present? %>
+        <tr>
+          <td class="font-medium text-base-content/70">Last name</td>
+          <td><%= match.last_name.join(" · ") %></td>
+        </tr>
+      <% end %>
+
+      <% if match.title.present? %>
+        <tr>
+          <td class="font-medium text-base-content/70">Title</td>
+          <td><%= match.title.join(" · ") %></td>
+        </tr>
+      <% end %>
+
+      <% if match.website.present? %>
+        <tr>
+          <td class="font-medium text-base-content/70">Website</td>
+          <td>
+            <% match.website.each do |website| %>
+              <a href="<%= website %>" class="link link-primary" rel="noreferrer" target="_blank"><%= website %></a>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+
+      <% if match.wikidata_id.present? %>
+        <tr>
+          <td class="font-medium text-base-content/70">Wikidata ID</td>
+          <td>
+            <% match.wikidata_id.each do |wikidata_id| %>
+              <a href="https://www.wikidata.org/wiki/<%= wikidata_id %>" class="link link-primary" rel="noreferrer" target="_blank"><%= wikidata_id %></a>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+
+      <% if match.position.present? %>
+        <tr>
+          <td class="font-medium text-base-content/70">Position</td>
+          <td><%= match.position.join(" · ") %></td>
+        </tr>
+      <% end %>
+
+      <% if match.education.present? %>
+        <tr>
+          <td class="font-medium text-base-content/70">Education</td>
+          <td><%= match.education.join(" · ") %></td>
+        </tr>
+      <% end %>
+
+      <% if match.religion.present? %>
+        <tr>
+          <td class="font-medium text-base-content/70">Religion</td>
+          <td><%= match.religion.join(" · ") %></td>
+        </tr>
+      <% end %>
+
+      <% if match.ethnicity.present? %>
+        <tr>
+          <td class="font-medium text-base-content/70">Ethnicity</td>
+          <td><%= match.ethnicity.join(" · ") %></td>
+        </tr>
+      <% end %>
+
+      <% if match.source_url.present? %>
+        <tr>
+          <td class="font-medium text-base-content/70">Source URL</td>
+          <td>
+            <ul class="list-disc pl-5">
+              <% match.source_url.each do |source_url| %>
+                <li>
+                  <a href="<%= source_url %>" class="link link-primary" rel="noreferrer" target="_blank"><%= source_url %></a>
+                </li>
+              <% end %>
+            </ul>
+          </td>
+        </tr>
+      <% end %>
+
+      <% if match.address.present? %>
+        <tr>
+          <td class="font-medium text-base-content/70">Address</td>
+          <td><%= match.address.join(" · ") %></td>
+        </tr>
+      <% end %>
+
+      <% if match.first_seen.present? %>
+        <tr>
+          <td class="font-medium text-base-content/70">First processed</td>
+          <td><%= match.first_seen.strftime("%d-%m-%Y %H:%M:%S") %></td>
+        </tr>
+      <% end %>
+
+      <% if match.last_seen.present? %>
+        <tr>
+          <td class="font-medium text-base-content/70">Last processed</td>
+          <td><%= match.last_seen.strftime("%d-%m-%Y %H:%M:%S") %></td>
+        </tr>
+      <% end %>
+
+      <% if match.last_change.present? %>
+        <tr>
+          <td class="font-medium text-base-content/70">Last change</td>
+          <td><%= match.last_change.strftime("%d-%m-%Y %H:%M:%S") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div> 

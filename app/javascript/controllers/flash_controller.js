@@ -18,8 +18,8 @@ export default class extends Controller {
   }
 
   dismiss() {
-    // Fade out and remove the flash message
-    this.element.classList.add("opacity-0", "transition-opacity", "duration-300")
+    // Add transition classes from DaisyUI
+    this.element.classList.add("transition-opacity", "duration-300", "opacity-0")
 
     // Remove the element after the transition completes
     setTimeout(() => {

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="h-full bg-gray-100">
+<html data-theme="nord" class="h-full">
   <head>
     <title><%= content_for(:title) || "ML2R - Money Laundering Risk Radar" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -18,86 +18,18 @@
     <%= javascript_include_tag "https://cdn.jsdelivr.net/npm/chart.js", "data-turbo-track": "reload" %>
   </head>
 
-  <body class="font-mono h-full">
-    <div class="min-h-full">
-      <nav class="bg-gray-800">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div class="flex h-24 items-center justify-between">
-            <div class="flex items-center">
-              <div class="">
-                <%= link_to root_path do %>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 100" width="200">
-                    <!-- Radar outline -->
-                    <circle cx="50" cy="50" r="40" fill="none" stroke="#A5D6A7" stroke-width="2"/>
+  <body class="font-mono min-h-screen bg-base-200">
+    <div class="drawer">
+      <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
+      <div class="drawer-content flex flex-col">
+        <%= render 'shared/header' %>
+        <%= render 'shared/navbar' %>
+        <%= render 'shared/flash_messages' %>
 
-                    <!-- Radar scanning lines -->
-                    <circle cx="50" cy="50" r="30" fill="none" stroke="#A5D6A7" stroke-width="1"/>
-                    <circle cx="50" cy="50" r="20" fill="none" stroke="#A5D6A7" stroke-width="1"/>
-
-                    <!-- Radar sweep line -->
-                    <line x1="50" y1="50" x2="50" y2="10" stroke="#A5D6A7" stroke-width="2"/>
-                    <path d="M50 50 L50 10 A40 40 0 0 1 85 65" fill="none" stroke="#A5D6A7" stroke-width="1" opacity="0.6"/>
-
-                    <!-- Checkmark symbol in bright white -->
-                    <path d="M35 50 L45 60 L65 40" fill="none" stroke="white" stroke-width="3" stroke-linecap="round"/>
-
-                    <!-- App name in light colors -->
-                    <text x="110" y="45" font-family="Arial" font-size="22" font-weight="bold" fill="#E8F5E9">
-                      ML Risk Radar
-                    </text>
-
-                    <text x="110" y="70" font-family="Arial" font-size="12" font-weight="bold" fill="#E8F5E9">
-                      AML/CFT Compliance Monitoring System
-                    </text>
-                  </svg>
-                <% end %>
-              </div>
-              <div class="hidden md:block">
-                <div class="ml-10 flex items-baseline space-x-4">
-                  <%= link_to "Prospects", prospects_path,
-                      class: "rounded-md px-3 py-2 text-sm font-medium #{current_page?(prospects_path) || current_page?(root_path) ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white'}",
-                      aria: { current: (current_page?(prospects_path) || current_page?(new_person_path) || current_page?(new_company_path)) ? "page" : nil } %>
-
-                  <%= link_to "Clients", clients_path,
-                      class: "rounded-md px-3 py-2 text-sm font-medium #{current_page?(clients_path) ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white'}",
-                      aria: { current: (current_page?(clients_path) || current_page?(new_person_path) || current_page?(new_company_path)) ? "page" : nil } %>
-
-                  <%= link_to "Dashboard", dashboard_path,
-                      class: "rounded-md px-3 py-2 text-sm font-medium #{current_page?(dashboard_path) ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white'}",
-                      aria: { current: (current_page?(dashboard_path) || current_page?(new_person_path) || current_page?(new_company_path)) ? "page" : nil } %>
-
-                  <%= link_to "Settings", admin_risk_factor_definitions_path,
-                      class: "rounded-md px-3 py-2 text-sm font-medium #{current_page?(admin_risk_factor_definitions_path) ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white'}",
-                      aria: { current: (current_page?(admin_risk_factor_definitions_path) || current_page?(new_person_path) || current_page?(new_company_path)) ? "page" : nil } %>
-                </div>
-              </div>
-            </div>
-            <div class="-mr-2 flex md:hidden">
-              <!-- Mobile menu button -->
-              <button type="button" class="relative inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" aria-controls="mobile-menu" aria-expanded="false">
-                <span class="absolute -inset-0.5"></span>
-                <span class="sr-only">Open main menu</span>
-                <!-- Menu open: "hidden", Menu closed: "block" -->
-                <svg class="block size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                </svg>
-                <!-- Menu open: "block", Menu closed: "hidden" -->
-                <svg class="hidden size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      <%= render 'shared/flash_messages' %>
-
-      <main>
-        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+        <main class="container mx-auto px-4 py-6">
           <%= yield %>
-        </div>
-      </main>
+        </main>
+      </div>
     </div>
   </body>
 </html>

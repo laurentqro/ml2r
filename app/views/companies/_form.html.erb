@@ -1,40 +1,41 @@
-<div class="max-w-3xl mx-auto p-6">
-  <%= form_with(model: company, data: { turbo: false }) do |f| %>
-    <% if company.errors.any? %>
-        <div class="mb-8">
-            <div class="flex justify-between border-b border-gray-200">
-                <h2>
-                    <%= pluralize(company.errors.count, "error") %> prohibited this company from being saved:
-                </h2>
-            </div>
-        </div>
-    <% end %>
+<div class="max-w-3xl mx-auto">
+  <%= form_with(model: company, data: { turbo: false }, class: "card bg-base-100 shadow-xl") do |f| %>
+    <div class="card-body">
+      <% if company.errors.any? %>
+          <div class="alert alert-error mb-5">
+              <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <div>
+                <%= pluralize(company.errors.count, "error") %> prohibited this company from being saved
+              </div>
+          </div>
+      <% end %>
 
-    <div class="space-y-12">
-      <div class="border-b border-gray-900/10 pb-12">
+      <div class="space-y-8">
         <div>
-          <h2>
+          <h2 class="card-title">
             Company Information
           </h2>
-          <p class="mt-1 text-sm/6 text-gray-600">
+          <p class="text-sm text-gray-600">
             Please provide accurate information for AML compliance purposes.
           </p>
 
-          <div class="mt-6 space-y-2">
-            <%= f.label :name, class: "block text-sm/6 font-bold text-gray-900" %>
-            <%= f.text_field :name, class: "mt-2 block w-full rounded-md bg-white px-3 py-1.5 text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" %>
+          <div class="form-control w-full mt-6">
+            <%= f.label :name, class: "label font-bold" %>
+            <%= f.text_field :name, class: "input input-bordered w-full" %>
+          </div>
 
+          <div class="form-control w-full mt-3">
             <%= render "shared/searchable_country_field", f: f, field_name: :country %>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="mt-6 flex items-center justify-end gap-x-6">
-      <%= link_to "Cancel", clients_path,
-          class: "text-sm/6 font-semibold text-gray-900" %>
+      <div class="card-actions justify-end mt-8">
+        <%= link_to "Cancel", clients_path,
+            class: "btn btn-ghost" %>
 
-      <%= f.submit class: "rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" %>
+        <%= f.submit class: "btn btn-primary" %>
+      </div>
     </div>
   <% end %>
 </div> 

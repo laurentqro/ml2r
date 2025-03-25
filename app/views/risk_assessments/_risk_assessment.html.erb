@@ -1,5 +1,5 @@
 <div class="flex items-center justify-between">
-  <div class="mb-4 text-sm text-gray-500">
+  <div class="mb-4 text-sm text-base-content/70">
     <p>Created on <%= @risk_assessment.created_at.strftime("%d %B %Y at %H:%M") %></p>
   </div>
 </div>
@@ -7,11 +7,20 @@
 <div class="mb-6">
   <div class="flex items-center justify-between">
     <% if @risk_assessment.approved? %>
-      <span class="text-green-500"> ✅ Approved on <%= @risk_assessment.approved_at.strftime("%d %B %Y at %H:%M") %></span>
+      <div class="badge badge-success gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+        Approved on <%= @risk_assessment.approved_at.strftime("%d %B %Y at %H:%M") %>
+      </div>
     <% elsif @risk_assessment.eligible_for_review? %>
-      <span class="text-orange-500"> ⏳ Pending Approval</span>
+      <div class="badge badge-warning gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+        Pending Approval
+      </div>
     <% else %>
-      <span>⛔️ Superseded by a newer risk assessment</span>
+      <div class="badge badge-error gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-4 h-4 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        Superseded by a newer risk assessment
+      </div>
     <% end %>
   </div>
 </div>
@@ -21,9 +30,11 @@
 <%= render "total_risk_score", risk_assessment: @risk_assessment %>
 
 <div class="mt-4">
-  <div class="bg-white shadow rounded-lg p-6">
-    <h3>Notes</h3>
-    <%= @risk_assessment.notes %>
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+      <h3 class="card-title">Notes</h3>
+      <%= @risk_assessment.notes %>
+    </div>
   </div>
 </div>
 
@@ -32,7 +43,7 @@
     <%= button_to "Approve Risk Assessment",
         approve_client_risk_assessment_path(@client, @risk_assessment),
         method: :patch,
-        class: "rounded-md px-3.5 py-2.5 text-white bg-green-600 hover:bg-green-500 font-medium cursor-pointer",
+        class: "btn btn-success",
         data: { turbo_confirm: "Are you sure you want to approve this risk assessment for #{@client.display_name}?" } %>
   </div>
 <% end %>

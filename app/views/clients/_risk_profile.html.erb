@@ -1,4 +1,4 @@
-<div class="bg-white shadow rounded-lg p-6" 
+<div class="card bg-base-100 shadow-xl p-6" 
      data-controller="chart"
      data-chart-scores-value="<%= [
        client.country_risk_score,
@@ -8,8 +8,8 @@
        client.transaction_risk_score
      ].to_json %>"
      data-chart-total-score-value="<%= client.total_risk_score %>">
-  <h2>Risk Profile</h2>
-  <p class="text-sm text-gray-500">
+  <h2 class="card-title">Risk Profile</h2>
+  <p class="text-base-content/60 text-sm">
     Visual representation of the risk associated with a client, based on the scores of the risk factors in the risk assessment.
   </p>
 

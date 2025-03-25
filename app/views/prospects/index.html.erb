@@ -1,32 +1,29 @@
 <% content_for :title, "Prospects" %>
 
-<div class="sm:flex sm:items-center">
-  <div class="sm:flex-auto">
-    <h1>Prospects</h1>
+<div class="container mx-auto p-4">
+  <h1 class="mb-4">Prospects</h1>
+
+  <%= render "shared/statistics", clear_count: @clear_count, pep_count: @pep_count, sanctioned_count: @sanctioned_count, with_adverse_media_count: @with_adverse_media_count %>
+
+  <%= render "tabs" %>
+
+  <div class="mb-6">
+    <%= render "search" %>
   </div>
-  <% if Prospect.any? %>
-    <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none space-x-4">
-      <%= link_to "Create Person Prospect", new_person_path, class: "btn-primary" %>
-      <%= link_to "Create Company Prospect", new_company_path, class: "btn-primary" %>
-    </div>
-  <% end %>
-</div>
 
-<%= render "shared/statistics", clear_count: @clear_count, pep_count: @pep_count, sanctioned_count: @sanctioned_count, with_adverse_media_count: @with_adverse_media_count %>
+  <div class="mt-4">
+    <%= turbo_frame_tag "search_results" do %>
+      <div id="prospects_pagination">
+        <%= render 'shared/pagination', collection: @prospects %>
+      </div>
 
-<%= render "tabs" %>
-<%= render "search" %>
+      <div id="prospects_table">
+        <%= render "table", prospects: @prospects %>
+      </div>
 
-<div class="mt-4 flow-root">
-  <%= turbo_frame_tag "search_results" do %>
-    <div id="prospects_pagination">
-      <%= render 'shared/pagination', collection: @prospects %>
-    </div>
-
-    <%= render "table", prospects: @prospects %>
-
-    <div id="prospects_pagination">
-      <%= render 'shared/pagination', collection: @prospects %>
-    </div>
-  <% end %>
+      <div id="prospects_pagination">
+        <%= render 'shared/pagination', collection: @prospects %>
+      </div>
+    <% end %>
+  </div>
 </div>

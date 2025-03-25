@@ -1,24 +1,29 @@
 <% content_for :title, "Clients" %>
 
-<h1>Clients</h1>
+<div class="container mx-auto p-4">
+  <h1 class="mb-4">Clients</h1>
 
-<%= render "shared/statistics", clear_count: @clear_count, pep_count: @pep_count, sanctioned_count: @sanctioned_count, with_adverse_media_count: @with_adverse_media_count %>
+  <%= render "shared/statistics", clear_count: @clear_count, pep_count: @pep_count, sanctioned_count: @sanctioned_count, with_adverse_media_count: @with_adverse_media_count %>
 
-<%= render "tabs" %>
-<%= render "search" %>
+  <%= render "tabs" %>
 
-<div class="mt-4 flow-root">
-  <%= turbo_frame_tag "search_results" do %>
-    <div id="clients_pagination">
-      <%= render 'shared/pagination', collection: @client_risk_summaries %>
-    </div>
+  <div class="mb-6">
+    <%= render "search" %>
+  </div>
 
-    <div id="clients_table">
-      <%= render "table", client_risk_summaries: @client_risk_summaries %>
-    </div>
+  <div class="mt-4">
+    <%= turbo_frame_tag "search_results" do %>
+      <div id="clients_pagination">
+        <%= render 'shared/pagination', collection: @client_risk_summaries %>
+      </div>
 
-    <div id="clients_pagination">
-      <%= render 'shared/pagination', collection: @client_risk_summaries %>
-    </div>
-  <% end %>
+      <div id="clients_table">
+        <%= render "table", client_risk_summaries: @client_risk_summaries %>
+      </div>
+
+      <div id="clients_pagination">
+        <%= render 'shared/pagination', collection: @client_risk_summaries %>
+      </div>
+    <% end %>
+  </div>
 </div>

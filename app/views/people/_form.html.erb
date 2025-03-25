@@ -1,8 +1,8 @@
 <div class="max-w-3xl mx-auto p-6">
   <%= form_with(model: person, data: { turbo: false }) do |f| %>
     <% if person.errors.any? %>
-        <div class="mb-8">
-            <div class="flex justify-between border-b border-gray-200">
+        <div class="alert alert-error mb-6">
+            <div>
                 <h2>
                     <%= pluralize(person.errors.count, "error") %> prohibited this person from being saved:
                 </h2>
@@ -11,33 +11,31 @@
     <% end %>
 
     <div>
-      <h2>
+      <h2 class="text-xl font-bold">
         Personal Information
       </h2>
     </div>
 
-    <div class="space-y-12">
-      <div class="border-b border-gray-900/10 pb-12">
+    <div class="space-y-8">
+      <div class="divider"></div>
           <div>
-            <p class="mt-1 text-sm/6 text-gray-600">
+            <p class="text-sm text-neutral-content">
               Please provide accurate information for AML compliance purposes.
             </p>
 
-            <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              <div class="sm:col-span-3">
-                <%= f.label :first_name, class: "block text-sm/6 font-medium text-gray-900" %>
-                <div class="mt-2">
-                  <%= f.text_field :first_name, required: true,
-                      class: "block w-full rounded-md bg-white px-3 py-1.5 text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" %>
-                </div>
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 mt-6">
+              <div class="form-control">
+                <%= f.label :first_name, class: "label" do %>
+                  <span class="label-text">First Name</span>
+                <% end %>
+                <%= f.text_field :first_name, required: true, class: "input input-bordered w-full" %>
               </div>
 
-              <div class="sm:col-span-3">
-                <%= f.label :last_name, class: "block text-sm/6 font-medium text-gray-900" %>
-                <div class="mt-2">
-                    <%= f.text_field :last_name, required: true,
-                        class: "block w-full rounded-md bg-white px-3 py-1.5 text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" %>
-                </div>
+              <div class="form-control">
+                <%= f.label :last_name, class: "label" do %>
+                  <span class="label-text">Last Name</span>
+                <% end %>
+                <%= f.text_field :last_name, required: true, class: "input input-bordered w-full" %>
               </div>
             </div>
 
@@ -52,7 +50,7 @@
 
               <div class="mt-6">
                 <div class="pb-4">
-                  <h3>Identification Documents</h3>
+                  <h3 class="text-lg font-semibold">Identification Documents</h3>
                   <div data-controller="document-form">
                     <template data-document-form-target="template">
                       <%= f.fields_for :identification_documents, IdentificationDocument.new, child_index: 'NEW_RECORD' do |doc| %>
@@ -64,7 +62,7 @@
                       <%= render 'identification_document_fields', f: doc %>
                     <% end %>
 
-                    <button type="button" data-action="document-form#add" class="mt-4 rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                    <button type="button" data-action="document-form#add" class="btn btn-outline btn-sm mt-4">
                       Add Document
                     </button>
                   </div>
@@ -76,9 +74,9 @@
 
     <div class="mt-6 flex items-center justify-end gap-x-6">
       <%= link_to "Cancel", clients_path,
-          class: "text-sm/6 font-semibold text-gray-900" %>
+          class: "btn btn-ghost" %>
 
-      <%= f.submit class: "rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" %>
+      <%= f.submit class: "btn btn-primary" %>
     </div>
   <% end %>
 </div>

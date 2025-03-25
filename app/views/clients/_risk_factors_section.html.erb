@@ -3,9 +3,9 @@
   <% category_score = client.category_risk_score(category) %>
 
   <% if risk_factors.any? %>
-    <div class="bg-white shadow rounded-lg p-6 space-y-6">
+    <div class="card bg-base-100 shadow-xl p-6 space-y-6">
       <div class="flex items-center justify-between">
-        <h2><%= category.titleize %> Assessment</h2>
+        <h2 class="card-title"><%= category.titleize %> Assessment</h2>
       </div>
 
       <div class="space-y-4">
@@ -13,31 +13,32 @@
           <div class="flex items-start gap-x-3 justify-between">
             <div class="flex items-start gap-x-3">
               <div class="flex-shrink-0">
-                <svg class="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                <svg class="h-5 w-5 text-error" viewBox="0 0 20 20" fill="currentColor">
                   <path fill-rule="evenodd" d="M10.339 2.237a.75.75 0 00-1.178 0L2.18 11.66A.75.75 0 002.756 13h13.988a.75.75 0 00.576-1.34L10.339 2.237zM10 7a.75.75 0 01.75.75v2a.75.75 0 01-1.5 0v-2A.75.75 0 0110 7zm0 5a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" />
                 </svg>
               </div>
               <div>
-                <p class="text-sm text-gray-900">
+                <p class="text-sm">
                   <%= RiskFactorDefinition.description_for(risk_factor.category, risk_factor.identifier) %>
                 </p>
                 <% if risk_factor.notes.present? %>
-                  <p class="mt-1 text-sm text-gray-500">
+                  <p class="mt-1 text-sm text-base-content/60">
                     <%= risk_factor.notes %>
                   </p>
                 <% end %>
               </div>
             </div>
-            <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(25) %>">
+            <span class="badge badge-sm <%= risk_badge_class(25) %>">
               <%= RiskFactorDefinition.score_for(risk_factor.category, risk_factor.identifier) %>
             </span>
           </div>
         <% end %>
       </div>
-      <div class="border-t pt-4 mt-4">
+      <div class="divider"></div>
+      <div>
         <div class="flex items-center justify-between">
-          <span class="text-base font-bold text-gray-900">Total</span>
-          <span class="inline-flex items-center rounded-md px-3 py-1.5 text-sm font-medium <%= risk_badge_class(category_score) %>">
+          <span class="text-base font-bold">Total</span>
+          <span class="badge <%= risk_badge_class(category_score) %>">
             <%= category_score %>
           </span>
         </div>

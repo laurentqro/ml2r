@@ -1,67 +1,69 @@
-<div class="bg-white shadow rounded-lg p-6 mt-4">
-  <h2>Country Risk Assessment</h2>
+<div class="card bg-base-100 shadow-xl mt-4">
+  <div class="card-body">
+    <h2 class="card-title">Country Risk Assessment</h2>
 
-  <div class="space-y-4">
-    <% if client.country_of_residence.present? %>
-      <div class="flex items-center justify-between">
-        <div>
-          <p class="text-sm font-bold">
-            <%= client.clientable_type == "Company" ? "Country of Incorporation" : "Country of Residence" %>:
-            <span class="text-sm text-gray-500"><%= country_name(client.country_of_residence) %></span>
-          </p>
+    <div class="space-y-4">
+      <% if client.country_of_residence.present? %>
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="font-bold">
+              <%= client.clientable_type == "Company" ? "Country of Incorporation" : "Country of Residence" %>:
+              <span class="text-base-content/70"><%= country_name(client.country_of_residence) %></span>
+            </p>
+          </div>
+          <span class="badge <%= risk_badge_class(CountryRiskScorer.calculate_risk_score(client.country_of_residence)).include?('red') ? 'badge-error' : risk_badge_class(CountryRiskScorer.calculate_risk_score(client.country_of_residence)).include?('yellow') ? 'badge-warning' : 'badge-success' %>">
+            <%= CountryRiskScorer.calculate_risk_score(client.country_of_residence) %>
+          </span>
         </div>
-        <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(CountryRiskScorer.calculate_risk_score(client.country_of_residence)) %>">
-          <%= CountryRiskScorer.calculate_risk_score(client.country_of_residence) %>
-        </span>
-      </div>
-    <% end %>
+      <% end %>
 
-    <% if client.nationality.present? %>
-      <div class="flex items-center justify-between">
-        <div>
-          <p class="text-sm font-bold">
-            Country of Nationality:
-            <span class="text-sm text-gray-500"><%= country_name(client.nationality) %></span>
-          </p>
+      <% if client.nationality.present? %>
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="font-bold">
+              Country of Nationality:
+              <span class="text-base-content/70"><%= country_name(client.nationality) %></span>
+            </p>
+          </div>
+          <span class="badge <%= risk_badge_class(CountryRiskScorer.calculate_risk_score(client.nationality)).include?('red') ? 'badge-error' : risk_badge_class(CountryRiskScorer.calculate_risk_score(client.nationality)).include?('yellow') ? 'badge-warning' : 'badge-success' %>">
+            <%= CountryRiskScorer.calculate_risk_score(client.nationality) %>
+          </span>
         </div>
-        <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(CountryRiskScorer.calculate_risk_score(client.nationality)) %>">
-          <%= CountryRiskScorer.calculate_risk_score(client.nationality) %>
-        </span>
-      </div>
-    <% end %>
+      <% end %>
 
-    <% if client.country_of_profession.present? %>
-      <div class="flex items-center justify-between">
-        <div>
-          <p class="text-sm font-bold">
-            Country of Profession:
-            <span class="text-sm text-gray-500"><%= country_name(client.country_of_profession) %></span>
-          </p>
+      <% if client.country_of_profession.present? %>
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="font-bold">
+              Country of Profession:
+              <span class="text-base-content/70"><%= country_name(client.country_of_profession) %></span>
+            </p>
+          </div>
+          <span class="badge <%= risk_badge_class(CountryRiskScorer.calculate_risk_score(client.country_of_profession)).include?('red') ? 'badge-error' : risk_badge_class(CountryRiskScorer.calculate_risk_score(client.country_of_profession)).include?('yellow') ? 'badge-warning' : 'badge-success' %>">
+            <%= CountryRiskScorer.calculate_risk_score(client.country_of_profession) %>
+          </span>
         </div>
-        <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(CountryRiskScorer.calculate_risk_score(client.country_of_profession)) %>">
-          <%= CountryRiskScorer.calculate_risk_score(client.country_of_profession) %>
-        </span>
-      </div>
-    <% end %>
+      <% end %>
 
-    <% if client.country_of_birth.present? %>
-      <div class="flex items-center justify-between">
-        <div>
-          <p class="text-sm font-bold">
-            Country of Birth:
-            <span class="text-sm text-gray-500"><%= country_name(client.country_of_birth) %></span>
-          </p>
+      <% if client.country_of_birth.present? %>
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="font-bold">
+              Country of Birth:
+              <span class="text-base-content/70"><%= country_name(client.country_of_birth) %></span>
+            </p>
+          </div>
+          <span class="badge <%= risk_badge_class(CountryRiskScorer.calculate_risk_score(client.country_of_birth)).include?('red') ? 'badge-error' : risk_badge_class(CountryRiskScorer.calculate_risk_score(client.country_of_birth)).include?('yellow') ? 'badge-warning' : 'badge-success' %>">
+            <%= CountryRiskScorer.calculate_risk_score(client.country_of_birth) %>
+          </span>
         </div>
-        <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium <%= risk_badge_class(CountryRiskScorer.calculate_risk_score(client.country_of_birth)) %>">
-          <%= CountryRiskScorer.calculate_risk_score(client.country_of_birth) %>
-        </span>
-      </div>
-    <% end %>
+      <% end %>
 
-    <div class="border-t pt-4 mt-4">
+      <div class="divider"></div>
+
       <div class="flex items-center justify-between">
-        <span class="text-base font-bold text-gray-900">Total</span>
-        <span class="inline-flex items-center rounded-md px-3 py-1.5 text-sm font-medium <%= risk_badge_class(client.country_risk_score) %>">
+        <span class="font-bold">Total</span>
+        <span class="badge <%= risk_badge_class(client.country_risk_score).include?('red') ? 'badge-error' : risk_badge_class(client.country_risk_score).include?('yellow') ? 'badge-warning' : 'badge-success' %> badge-lg">
           <%= client.country_risk_score %>
         </span>
       </div>
