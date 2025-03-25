@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "prospects#index"
 
-  resources :people
+  resources :people, except: [ :index ]
 
   resources :companies do
     resources :company_relationships
