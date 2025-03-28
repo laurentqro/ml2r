@@ -25,5 +25,10 @@ class ProspectsController < ApplicationController
     @with_adverse_media_count = Prospect.with_adverse_media.count
 
     @prospects = paginate(scope)
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 end
