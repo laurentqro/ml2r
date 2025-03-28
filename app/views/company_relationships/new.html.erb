@@ -1,8 +1,8 @@
-<div class="card bg-base-100 shadow-xl">
-  <div class="card-body">
-    <h2 class="card-title">New Company Relationship</h2>
-    <p class="text-base-content/70">Add a new relationship between <%= @company.name %> and a person.</p>
-
-    <%= render 'form', company_relationship: @company_relationship %>
+<div class="py-6">
+  <div class="mb-6">
+    <h1 class="text-2xl font-bold text-base-content">New Company Relationship</h1>
+    <p class="text-base-content/60">Add a new relationship between <%= @company.name %> and a person.</p>
   </div>
-</div> 
+
+  <%= render 'form', company_relationship: @company_relationship %>
+</div>

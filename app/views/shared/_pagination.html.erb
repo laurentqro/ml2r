@@ -29,34 +29,6 @@
       </button>
     <% end %>
 
-    <% if collection.total_pages > 1 %>
-      <% page_window = 2 %>
-      <% start_page = [1, collection.current_page - page_window].max %>
-      <% end_page = [collection.total_pages, collection.current_page + page_window].min %>
-      
-      <% if start_page > 1 %>
-        <%= link_to "1", url_for(request.params.merge(page: 1)), class: "join-item btn btn-sm" %>
-        <% if start_page > 2 %>
-          <button class="join-item btn btn-sm btn-disabled">...</button>
-        <% end %>
-      <% end %>
-      
-      <% (start_page..end_page).each do |page| %>
-        <% if page == collection.current_page %>
-          <button class="join-item btn btn-sm btn-active"><%= page %></button>
-        <% else %>
-          <%= link_to page.to_s, url_for(request.params.merge(page: page)), class: "join-item btn btn-sm" %>
-        <% end %>
-      <% end %>
-      
-      <% if end_page < collection.total_pages %>
-        <% if end_page < collection.total_pages - 1 %>
-          <button class="join-item btn btn-sm btn-disabled">...</button>
-        <% end %>
-        <%= link_to collection.total_pages.to_s, url_for(request.params.merge(page: collection.total_pages)), class: "join-item btn btn-sm" %>
-      <% end %>
-    <% end %>
-
     <% if collection.next_page %>
       <%= link_to url_for(request.params.merge(page: collection.next_page)),
           class: "join-item btn btn-sm" do %>

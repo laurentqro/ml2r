@@ -7,6 +7,31 @@ module ClientsHelper
     else "bg-red-100 text-red-800"
     end
   end
+  
+  # Helper method to render risk score cell
+  def render_risk_score_cell(score)
+    if score
+      badge_class = risk_badge_class(score)
+      bg_class = case badge_class
+                 when "bg-green-100 text-green-800" then "bg-success/10"
+                 when "bg-yellow-100 text-yellow-800" then "bg-warning/10"
+                 when "bg-orange-100 text-orange-800", "bg-red-100 text-red-800" then "bg-error/10"
+                 else "bg-base-200"
+                 end
+      text_class = case badge_class
+                   when "bg-green-100 text-green-800" then "text-success"
+                   when "bg-yellow-100 text-yellow-800" then "text-warning"
+                   when "bg-orange-100 text-orange-800", "bg-red-100 text-red-800" then "text-error"
+                   else "text-base-content"
+                   end
+      
+      content_tag(:div, class: "flex justify-center") do
+        content_tag(:div, score, class: "#{bg_class} #{text_class} w-8 h-8 rounded-full flex items-center justify-center font-medium")
+      end
+    else
+      content_tag(:span, "-", class: "text-base-content/40")
+    end
+  end
 
   def edit_clientable_path(clientable)
     if clientable.is_a?(Company)

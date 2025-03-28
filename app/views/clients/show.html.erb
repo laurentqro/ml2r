@@ -69,15 +69,12 @@
   <% end %>
 
   <!-- Client Information Sections -->
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  <div class="grid grid-cols-1 gap-6">
     <div class="space-y-6">
       <%= render "header", clientable: @clientable %>
       <%= render "notes/show", client: @client %>
       <%= render "risk_profile", client: @client %>
       <%= render "company_relationships/index", company: @clientable if @clientable.is_a?(Company) %>
-    </div>
-    
-    <div class="space-y-6">
       <%= render "risk_assessment_section", client: @client %>
       <%= render "adverse_media_checks_section", clientable: @clientable %>
       <%= render "screenings_section", clientable: @clientable %>

@@ -1,76 +1,99 @@
 <%= form_with(model: [:admin, risk_factor_definition], class: "space-y-8") do |form| %>
-  <div class="pb-8">
-    <p class="mt-1 text-sm text-base-content/60">Configure risk factors that will be used to assess AML risk levels.</p>
+  <div class="card bg-base-100 shadow-sm">
+    <div class="card-body">
+      <div class="flex items-center gap-2 mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-base-content/70" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+        </svg>
+        <p class="text-sm text-base-content/70">Configure risk factors that will be used to assess AML risk levels.</p>
+      </div>
 
-    <% if risk_factor_definition.errors.any? %>
-      <div class="alert alert-error mt-6">
-        <div>
-          <h3 class="font-medium">
-            <%= pluralize(risk_factor_definition.errors.count, "error") %> prohibited this risk factor definition from being saved:
-          </h3>
-          <div class="mt-2">
-            <ul class="list-disc space-y-1 pl-5">
-              <% risk_factor_definition.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-              <% end %>
-            </ul>
+      <% if risk_factor_definition.errors.any? %>
+        <div class="alert alert-error shadow-sm mt-2 mb-6">
+          <div class="flex items-start">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+            </svg>
+            <div>
+              <h3 class="font-medium">
+                <%= pluralize(risk_factor_definition.errors.count, "error") %> prohibited this risk factor definition from being saved:
+              </h3>
+              <ul class="list-disc space-y-1 pl-5 mt-2 text-sm">
+                <% risk_factor_definition.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="divider"></div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="form-control w-full">
+          <%= form.label :entity_type, class: "label" do %>
+            <span class="label-text font-medium">Entity Type</span>
+          <% end %>
+          <div class="relative">
+            <%= form.select :entity_type,
+                         [['Person', 'Person'], ['Company', 'Company']],
+                         { include_blank: 'Select type' },
+                         class: "select select-bordered w-full" %>
+          </div>
+        </div>
+
+        <div class="form-control w-full">
+          <%= form.label :category, class: "label" do %>
+            <span class="label-text font-medium">Category</span>
+          <% end %>
+          <div class="relative">
+            <%= form.select :category,
+                         [
+                           ['Client Risk', 'client_risk'], 
+                           ['Products and Services Risk', 'products_and_services_risk'],
+                           ['Distribution Channel Risk', 'distribution_channel_risk'],
+                           ['Transaction Risk', 'transaction_risk']
+                         ],
+                         { include_blank: 'Select category' },
+                         class: "select select-bordered w-full" %>
+          </div>
+        </div>
+
+        <div class="form-control w-full">
+          <%= form.label :score, class: "label" do %>
+            <span class="label-text font-medium">Risk Score</span>
+          <% end %>
+          <%= form.number_field :score, min: 0, class: "input input-bordered w-full" %>
+          <div class="label">
+            <span class="label-text-alt text-base-content/60">Higher scores indicate higher risk levels</span>
           </div>
         </div>
       </div>
-    <% end %>
 
-    <div class="mt-8 space-y-6">
-      <div class="form-control w-full max-w-md">
-        <%= form.label :entity_type, class: "label pb-1" do %>
-          <span class="label-text">Entity Type</span>
-        <% end %>
-        <div class="relative">
-          <%= form.select :entity_type,
-                       [['Person', 'Person'], ['Company', 'Company']],
-                       { include_blank: 'Select type' },
-                       class: "select select-bordered w-full" %>
-        </div>
-      </div>
-
-      <div class="form-control w-full max-w-md">
-        <%= form.label :category, class: "label pb-1" do %>
-          <span class="label-text">Category</span>
-        <% end %>
-        <div class="relative">
-          <%= form.select :category,
-                       [
-                         ['Client Risk', 'client_risk'], 
-                         ['Products and Services Risk', 'products_and_services_risk'],
-                         ['Distribution Channel Risk', 'distribution_channel_risk'],
-                         ['Transaction Risk', 'transaction_risk']
-                       ],
-                       { include_blank: 'Select category' },
-                       class: "select select-bordered w-full" %>
-        </div>
-      </div>
-
-      <div class="form-control w-full max-w-xs">
-        <%= form.label :score, class: "label pb-1" do %>
-          <span class="label-text">Score</span>
-        <% end %>
-        <%= form.number_field :score, min: 0, class: "input input-bordered w-full" %>
-      </div>
-
-      <div class="form-control w-full">
-        <%= form.label :description, class: "label pb-1" do %>
-          <span class="label-text">Description</span>
+      <div class="form-control w-full mt-2">
+        <%= form.label :description, class: "label" do %>
+          <span class="label-text font-medium">Description</span>
         <% end %>
         <%= form.text_area :description, rows: 3, class: "textarea textarea-bordered w-full" %>
         <div class="label">
           <span class="label-text-alt text-base-content/60">Provide a clear description of this risk factor and when it should be applied.</span>
         </div>
       </div>
-    </div>
-  </div>
 
-  <div class="mt-6 flex items-center justify-end gap-x-6">
-    <%= link_to "Cancel", admin_risk_factor_definitions_path, 
-        class: "btn btn-ghost" %>
-    <%= form.submit class: "btn btn-primary" %>
+      <div class="divider"></div>
+
+      <div class="flex items-center justify-end gap-x-4">
+        <%= link_to admin_risk_factor_definitions_path, class: "btn btn-ghost btn-sm" do %>
+          Cancel
+        <% end %>
+        <%= form.button type: "submit", class: "btn btn-primary btn-sm" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg>
+          Save Risk Factor
+        <% end %>
+      </div>
+    </div>
   </div>
 <% end %>

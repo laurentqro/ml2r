@@ -1,19 +1,6 @@
 <tr class="hover">
   <td>
     <%= link_to prospect_path(prospect), class: "flex items-center gap-2", data: { turbo: false } do %>
-      <% if prospect.is_a?(Person) %>
-        <div class="avatar placeholder">
-          <div class="bg-neutral text-neutral-content rounded-full w-8">
-            <span><%= prospect.display_name.first.upcase %></span>
-          </div>
-        </div>
-      <% else %>
-        <div class="avatar placeholder">
-          <div class="bg-primary text-primary-content rounded w-8">
-            <span><%= prospect.display_name.first.upcase %></span>
-          </div>
-        </div>
-      <% end %>
       <div>
         <div class="font-medium"><%= prospect.display_name %></div>
         <div class="text-xs text-base-content/60">

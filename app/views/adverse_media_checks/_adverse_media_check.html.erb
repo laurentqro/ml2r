@@ -1,49 +1,60 @@
 <%= turbo_stream_from "adverse_media_check_#{adverse_media_check.id}_updates" %>
 
 <%= turbo_frame_tag "adverse_media_check_#{adverse_media_check.id}" do %>
-  <div class="card bg-base-200 mb-4">
-    <div class="card-body">
+  <div class="card bg-base-100 shadow-sm mb-6">
+    <div class="card-body p-5">
       <div class="flex justify-between items-start">
-        <div>
+        <div class="space-y-2">
           <% if adverse_media_check.in_progress? %>
-            <div class="flex items-center mb-2">
-              <div class="loading loading-spinner loading-xs text-primary mr-2"></div>
-              <span class="text-xs text-primary">Check in progress ...</span>
+            <div class="flex items-center gap-2">
+              <div class="loading loading-spinner loading-xs"></div>
+              <span class="text-sm opacity-70">Processing check...</span>
             </div>
           <% else %>
-            <div class="flex items-center mb-2">
-              <span class="badge <%= adverse_media_check.completed? ? 'badge-success' : 
-                (adverse_media_check.failed? ? 'badge-error' : 'badge-warning') %>">
-                Check <%= adverse_media_check.status %>
-              </span>
+            <div class="flex items-center gap-2">
+              <% if adverse_media_check.completed? %>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 <%= adverse_media_check.adverse_media_status == 'Adverse Media Found' ? 'text-warning' : 'text-success' %>" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+              <% elsif adverse_media_check.failed? %>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-error" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                </svg>
+              <% end %>
+              <span class="text-sm opacity-70">Status: <%= adverse_media_check.status.capitalize %></span>
             </div>
           <% end %>
 
-          <div class="font-medium">
-            <span class="<%= adverse_media_check.adverse_media_status == 'Adverse Media Found' ? 'text-error' : 'text-success' %>">
-              <%= adverse_media_check.adverse_media_status %>
-            </span>
-          </div>
+          <h3 class="text-lg font-medium">
+            <% if adverse_media_check.adverse_media_status == 'Adverse Media Found' %>
+              <span class="text-warning">Adverse Media Found</span>
+            <% elsif adverse_media_check.adverse_media_status == 'No Adverse Media Found' %>
+              <span class="text-success">No Adverse Media Found</span>
+            <% else %>
+              <span class="opacity-70">Pending</span>
+            <% end %>
+          </h3>
 
-          <div class="text-sm text-base-content/60">
-            <%= adverse_media_check.created_at.strftime("%d %B %Y %H:%M:%S") %>
+          <div class="text-sm opacity-60">
+            <%= adverse_media_check.created_at.strftime("%d %B %Y %H:%M") %>
           </div>
         </div>
 
         <% if adverse_media_check.completed? %>
           <button type="button" 
-                  class="btn btn-link btn-sm"
+                  class="btn btn-ghost btn-sm"
                   onclick="toggleDetails('<%= dom_id(adverse_media_check) %>')">
-            View Details
+            <span id="<%= dom_id(adverse_media_check) %>_button_text">View Details</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor" id="<%= dom_id(adverse_media_check) %>_icon">
+              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
           </button>
         <% end %>
       </div>
 
       <% if adverse_media_check.completed? %>
-        <div id="<%= dom_id(adverse_media_check) %>_details" class="mt-4 hidden">
-          <div class="bg-base-100 p-3 rounded-box border">
-            <%= render "adverse_media_checks/result", adverse_media_check: adverse_media_check %>
-          </div>
+        <div id="<%= dom_id(adverse_media_check) %>_details" class="mt-5 hidden border-t pt-4">
+          <%= render "adverse_media_checks/result", adverse_media_check: adverse_media_check %>
         </div>
       <% end %>
     </div>
@@ -52,10 +63,17 @@
   <script>
     function toggleDetails(id) {
       const detailsElement = document.getElementById(id + '_details');
+      const buttonText = document.getElementById(id + '_button_text');
+      const icon = document.getElementById(id + '_icon');
+      
       if (detailsElement.classList.contains('hidden')) {
         detailsElement.classList.remove('hidden');
+        buttonText.textContent = 'Hide Details';
+        icon.innerHTML = '<path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd" />';
       } else {
         detailsElement.classList.add('hidden');
+        buttonText.textContent = 'View Details';
+        icon.innerHTML = '<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />';
       }
     }
   </script>

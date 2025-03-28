@@ -1,18 +1,39 @@
-<h2 class="text-lg font-bold">Summary</h2>
+<div class="space-y-6">
+  <div>
+    <div class="flex items-center gap-2 mb-3">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-base-content/70" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+      </svg>
+      <h2 class="text-lg font-medium">Summary</h2>
+    </div>
 
-<div class="space-y-4">
-  <% adverse_media_check.content_items.each do |item| %>
-    <div class="markdown-content"><%= markdown_to_html(item) %></div>
+    <div class="prose prose-sm max-w-none">
+      <% adverse_media_check.content_items.each do |item| %>
+        <div class="markdown-content"><%= markdown_to_html(item) %></div>
+      <% end %>
+    </div>
+  </div>
+
+  <% if adverse_media_check.adverse_media_found? %>
+    <div class="divider my-4"></div>
+    
+    <div>
+      <div class="flex items-center gap-2 mb-3">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-base-content/70" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm2 10a1 1 0 10-2 0v3a1 1 0 102 0v-3zm2-3a1 1 0 011 1v5a1 1 0 11-2 0v-5a1 1 0 011-1zm4-1a1 1 0 10-2 0v7a1 1 0 102 0V8z" clip-rule="evenodd" />
+        </svg>
+        <h3 class="text-base font-medium">Sources</h3>
+      </div>
+
+      <div class="bg-base-200 rounded-lg p-4">
+        <ol class="list-decimal list-inside space-y-2">
+          <% adverse_media_check.citations.each_with_index do |citation, index| %>
+            <li class="text-sm break-all">
+              <%= link_to citation, citation, target: "_blank", rel: "noopener noreferrer", class: "link link-hover opacity-80 hover:opacity-100" %>
+            </li>
+          <% end %>
+        </ol>
+      </div>
+    </div>
   <% end %>
 </div>
-
-<% if adverse_media_check.adverse_media_found? %>
-  <div class="divider"></div>
-  <h4 class="font-semibold">Citations</h4>
-
-  <ol class="list-decimal list-inside">
-    <% adverse_media_check.citations.each_with_index do |citation, index| %>
-      <li class="py-1">[<%= index + 1 %>] <%= link_to citation, citation, target: "_blank", rel: "noopener noreferrer", class: "link link-primary" %></li>
-    <% end %>
-  </ol>
-<% end %>

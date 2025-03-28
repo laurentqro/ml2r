@@ -5,13 +5,13 @@
 }
 
 h1 {
-  @apply text-3xl font-bold mb-4;
+  @apply text-3xl font-bold mb-1;
 }
 
 h2 {
-  @apply text-2xl font-bold mb-4;
+  @apply text-2xl font-bold mb-1;
 }
 
 h3 {
-  @apply text-xl font-bold mb-4;
+  @apply text-xl font-bold mb-1;
 }

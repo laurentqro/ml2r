@@ -1,6 +1,8 @@
-<div id="<%= dom_id company %>">
-  <div class="stat">
-    <div class="stat-title">Country</div>
-    <div class="stat-value text-base"><%= ISO3166::Country[company.country]&.iso_short_name %></div>
+<div id="<%= dom_id company %>" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+  <div class="card bg-base-100 border border-base-200">
+    <div class="card-body p-4">
+      <h3 class="text-sm font-medium text-base-content/70">Country</h3>
+      <p class="text-lg font-semibold"><%= ISO3166::Country[company.country]&.iso_short_name %></p>
+    </div>
   </div>
 </div>

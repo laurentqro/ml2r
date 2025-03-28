@@ -1,10 +1,21 @@
 <div class="mb-8">
-  <details class="collapse collapse-arrow bg-base-200">
-    <summary class="collapse-title text-xl font-medium">
-      View Raw Match Data
+  <details class="collapse collapse-arrow bg-base-200 rounded-lg shadow-sm">
+    <summary class="collapse-title text-xl font-medium flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+      </svg>
+      Raw Match Data
     </summary>
     <div class="collapse-content">
-      <pre class="text-xs font-mono whitespace-pre-wrap"><%= JSON.pretty_generate(data) rescue data.to_s %></pre>
+      <div class="alert alert-info mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>This is the raw data returned from the screening service.</span>
+      </div>
+      <div class="bg-base-300 p-4 rounded-lg overflow-x-auto">
+        <pre class="text-xs font-mono whitespace-pre-wrap"><%= JSON.pretty_generate(data) rescue data.to_s %></pre>
+      </div>
     </div>
   </details>
-</div> 
+</div>

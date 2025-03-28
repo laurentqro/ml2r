@@ -1,36 +1,89 @@
 <div class="card bg-base-100 hover:shadow-2xl transition-shadow duration-200">
   <div class="card-body p-4">
-    <div class="flex justify-between items-start mb-2">
-      <%= link_to screening_match_path(@screening, match), class: "no-underline" do %>
-        <h3 class="card-title text-lg text-primary hover:text-primary-focus line-clamp-2"><%= match.caption %></h3>
+    <div class="flex justify-between items-start mb-3">
+      <%= link_to screening_match_path(@screening, match), class: "no-underline group" do %>
+        <div class="flex items-center gap-2">
+          <% if match.schema == "Person" %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+            </svg>
+          <% elsif match.schema == "Company" %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd" />
+            </svg>
+          <% else %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
+            </svg>
+          <% end %>
+          <h3 class="card-title text-lg text-primary group-hover:text-primary-focus line-clamp-2"><%= match.caption %></h3>
+        </div>
       <% end %>
 
-      <span class="badge <%= match_score_classes(match.external_score).include?('red') ? 'badge-error' : match_score_classes(match.external_score).include?('yellow') ? 'badge-warning' : match_score_classes(match.external_score).include?('green') ? 'badge-success' : 'badge-info' %>">
-        Match Score: <%= match.external_score %>
-      </span>
+      <div class="badge badge-lg <%= match_score_classes(match.external_score).include?('red') ? 'badge-error' : match_score_classes(match.external_score).include?('yellow') ? 'badge-warning' : match_score_classes(match.external_score).include?('green') ? 'badge-success' : 'badge-info' %> gap-1">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+        </svg>
+        <%= match.external_score %>
+      </div>
     </div>
 
-    <div class="flex flex-wrap items-center gap-2">
-      <span class="badge">
+    <div class="flex flex-wrap items-center gap-2 mb-2">
+      <div class="badge badge-outline gap-1">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+        </svg>
         <%= match.schema %>
-      </span>
+      </div>
 
       <% match.topics.each do |topic| %>
-        <span class="badge <%= topic_badge_classes(topic).include?('red') ? 'badge-error' : topic_badge_classes(topic).include?('yellow') ? 'badge-warning' : topic_badge_classes(topic).include?('green') ? 'badge-success' : 'badge-info' %>">
+        <span class="badge <%= topic_badge_classes(topic).include?('red') ? 'badge-error' : topic_badge_classes(topic).include?('yellow') ? 'badge-warning' : topic_badge_classes(topic).include?('green') ? 'badge-success' : 'badge-info' %> gap-1">
+          <% if topic.include?("sanction") %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M13.477 14.89A6 6 0 015.11 6.524l8.367 8.368zm1.414-1.414L6.524 5.11a6 6 0 018.367 8.367zM18 10a8 8 0 11-16 0 8 8 0 0116 0z" clip-rule="evenodd" />
+            </svg>
+          <% elsif topic.include?("pep") %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 2a1 1 0 00-1 1v1a1 1 0 002 0V3a1 1 0 00-1-1zM4 4h3a3 3 0 006 0h3a2 2 0 012 2v9a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2zm2.5 7a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm2.45 4a2.5 2.5 0 10-4.9 0h4.9zM12 9a1 1 0 100 2h3a1 1 0 100-2h-3zm-1 4a1 1 0 011-1h2a1 1 0 110 2h-2a1 1 0 01-1-1z" clip-rule="evenodd" />
+            </svg>
+          <% elsif topic.include?("criminal") %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 1.944A11.954 11.954 0 012.166 5C2.056 5.649 2 6.319 2 7c0 5.225 3.34 9.67 8 11.317C14.66 16.67 18 12.225 18 7c0-.682-.057-1.35-.166-2.001A11.954 11.954 0 0110 1.944zM11 14a1 1 0 11-2 0 1 1 0 012 0zm0-7a1 1 0 10-2 0v3a1 1 0 102 0V7z" clip-rule="evenodd" />
+            </svg>
+          <% else %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+            </svg>
+          <% end %>
           <%= topic_description(topic) %>
         </span>
       <% end %>
+    </div>
 
-      <div class="mt-2 text-sm text-base-content/70">
+    <% if match.countries.any? %>
+      <div class="flex flex-wrap items-center gap-1 text-sm text-base-content/70">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 8l2.55 3.4A1 1 0 0116 13H6a1 1 0 00-1 1v3a1 1 0 11-2 0V6z" clip-rule="evenodd" />
+        </svg>
         <% match.countries.each do |country_code| %>
           <% if country_code == "suhh" %>
-            <span class="inline-block mr-2">• Soviet Union</span>
+            <span class="badge badge-sm badge-ghost">Soviet Union</span>
           <% else %>
             <% country = ISO3166::Country[country_code] %>
-            <span class="inline-block mr-2">• <%= country ? (country.respond_to?(:common_name) ? country.common_name : country.name) : country_code %></span>
+            <span class="badge badge-sm badge-ghost"><%= country ? (country.respond_to?(:common_name) ? country.common_name : country.name) : country_code %></span>
           <% end %>
         <% end %>
       </div>
+    <% end %>
+    
+    <div class="mt-2 text-right">
+      <%= link_to screening_match_path(@screening, match), class: "btn btn-sm btn-ghost btn-outline" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+          <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+        </svg>
+        View Details
+      <% end %>
     </div>
   </div>
 </div>

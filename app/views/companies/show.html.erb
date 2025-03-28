@@ -1,88 +1,113 @@
 <% content_for :title, "#{@company.display_name}" %>
 
-<div class="card bg-base-100 shadow-xl">
-  <div class="card-body">
-    <div class="flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <h1 class="card-title"><%= @company.display_name %></h1>
+<div class="py-6 space-y-6">
+  <!-- Company Header -->
+  <div class="card bg-base-100 border border-base-200 shadow-sm">
+    <div class="card-body p-6">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div class="flex flex-col gap-2">
+          <h1 class="text-2xl font-bold text-base-content"><%= @company.display_name %></h1>
+          
+          <div class="flex flex-wrap items-center gap-2">
+            <% if @company.sanctioned? %>
+              <div class="badge badge-sm badge-outline badge-error gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                </svg>
+                Sanctioned
+              </div>
+            <% end %>
+
+            <% if @company.adverse_media_checks.any?(&:adverse_media_found?) %>
+              <div class="badge badge-sm badge-outline badge-error gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                </svg>
+                Adverse Media Found
+              </div>
+            <% end %>
+          </div>
+        </div>
 
         <div class="flex items-center gap-2">
-          <% if @company.sanctioned? %>
-            <span class="badge badge-error">Sanctioned</span>
+          <%= link_to edit_company_path(@company), class: "btn btn-outline btn-sm" do %>
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+            </svg>
+            Edit
           <% end %>
 
-          <% if @company.adverse_media_checks.any?(&:adverse_media_found?) %>
-            <span class="badge badge-error">
-              Adverse Media Found
-            </span>
+          <%= link_to clients_path(client: { clientable_id: @company.id, clientable_type: "Company" }),
+              class: "btn btn-primary btn-sm",
+              data: { turbo_method: :post, turbo_confirm: "Onboard #{@company.display_name} as a client?" } do %>
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+            </svg>
+            Onboard Prospect
           <% end %>
         </div>
       </div>
 
-      <div class="flex items-center gap-2">
-        <%= link_to edit_company_path(@company), class: "btn btn-primary btn-sm" do %>
-          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-          </svg>
-          Edit
-        <% end %>
+      <div class="divider my-2"></div>
 
-        <%= link_to clients_path(client: { clientable_id: @company.id, clientable_type: "Company" }),
-            class: "btn btn-primary btn-sm",
-            data: { turbo_method: :post, turbo_confirm: "Onboard #{@company.display_name} as a client?" } do %>
-          <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
-          </svg>
-          Onboard Prospect
+      <!-- Company Details -->
+      <div>
+        <%= render @company %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Company Relationships -->
+  <%= render "company_relationships/index", company: @company %>
+
+  <!-- Screenings Section -->
+  <div class="card bg-base-100 border border-base-200 shadow-sm">
+    <div class="card-body p-6">
+      <h2 class="text-xl font-semibold mb-4">Screenings</h2>
+
+      <div id="screenings_list" class="space-y-4 mb-6">
+        <% if @company.screenings.any? %>
+          <% @company.screenings.reverse.each do |screening| %>
+            <%= render screening %>
+          <% end %>
+        <% else %>
+          <div class="text-base-content/60 text-sm italic">No screenings yet</div>
+        <% end %>
+      </div>
+
+      <div class="border-t border-base-200 pt-4">
+        <%= render "screenings/form", screenable: @company %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Adverse Media Checks Section -->
+  <div class="card bg-base-100 border border-base-200 shadow-sm">
+    <div class="card-body p-6">
+      <h2 class="text-xl font-semibold mb-4">Adverse Media Checks</h2>
+
+      <div class="border-b border-base-200 pb-4 mb-4">
+        <%= form_with(model: AdverseMediaCheck.new(adverse_media_checkable: @company), data: { turbo: true }) do |form| %>
+          <%= form.hidden_field :adverse_media_checkable_id, value: @company.id %>
+          <%= form.hidden_field :adverse_media_checkable_type, value: @company.class.name %>
+
+          <%= form.submit "Run a new adverse media check",
+              class: "btn btn-outline btn-sm"
+          %>
+        <% end %>
+      </div>
+
+      <div id="adverse_media_checks_list" class="space-y-4">
+        <%= turbo_frame_tag "adverse_media_checks" do %>
+          <% if @company.adverse_media_checks.any? %>
+            <% @company.adverse_media_checks.order(created_at: :desc).each do |check| %>
+              <%= render check %>
+            <% end %>
+          <% else %>
+            <div class="text-base-content/60 text-sm italic">No adverse media checks yet</div>
+          <% end %>
         <% end %>
       </div>
     </div>
-
-    <div class="divider"></div>
-
-    <div>
-      <%= render @company %>
-    </div>
   </div>
 </div>
-
-<%= render "company_relationships/index", company: @company %>
-
-<div class="card bg-base-100 mt-4">
-  <div class="card-body">
-    <h2 class="card-title">Screenings</h2>
-
-    <div id="screenings_list" class="space-y-2 mb-6">
-      <% @company.screenings.reverse.each do |screening| %>
-        <%= render screening %>
-      <% end %>
-    </div>
-
-    <%= render "screenings/form", screenable: @company %>
-  </div>
-</div> 
-
-<div class="card bg-base-100 mt-4">
-  <div class="card-body">
-    <h2 class="card-title">Adverse Media Checks</h2>
-
-    <div>
-      <%= form_with(model: AdverseMediaCheck.new(adverse_media_checkable: @company), class: "mt-4", data: { turbo: true }) do |form| %>
-        <%= form.hidden_field :adverse_media_checkable_id, value: @company.id %>
-        <%= form.hidden_field :adverse_media_checkable_type, value: @company.class.name %>
-
-        <%= form.submit "Run a new adverse media check",
-            class: "btn btn-primary"
-        %>
-      <% end %>
-    </div>
-
-    <div id="adverse_media_checks_list" class="space-y-2 mt-4">
-      <%= turbo_frame_tag "adverse_media_checks" do %>
-        <% @company.adverse_media_checks.order(created_at: :desc).each do |check| %>
-          <%= render check %>
-        <% end %>
-      <% end %>
-    </div>
-  </div>
-</div> 

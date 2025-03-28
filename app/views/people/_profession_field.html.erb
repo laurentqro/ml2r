@@ -1,7 +1,13 @@
 <div class="form-control w-full">
   <%= f.label :profession, class: "label pb-1" do %>
-    <span class="label-text font-bold">Profession</span>
+    <span class="label-text font-medium flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd" />
+      </svg>
+      Profession
+    </span>
   <% end %>
+  
   <div class="relative" data-controller="searchable-select">
     <%= f.collection_select :profession,
         Occupation.all, :unit, :long_description,
@@ -11,32 +17,47 @@
           data: { searchable_select_target: "select" } } %>
 
     <div class="relative">
-      <input type="text" 
-             placeholder="Search for a profession..." 
-             class="input input-bordered w-full"
-             data-searchable-select-target="searchInput"
-             data-action="input->searchable-select#search focus->searchable-select#showOptions click->searchable-select#showOptions" />
-
-      <div class="absolute inset-y-0 right-0 flex items-center pr-8">
+      <div class="flex">
+        <div class="relative flex-grow">
+          <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-base-content/50" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          
+          <input type="text" 
+                 placeholder="Search for a profession..." 
+                 class="input input-bordered w-full pl-10"
+                 data-searchable-select-target="searchInput"
+                 data-action="input->searchable-select#search focus->searchable-select#showOptions click->searchable-select#showOptions" />
+        </div>
+        
         <button type="button"
-                class="btn btn-circle btn-ghost btn-xs"
+                class="btn btn-square btn-ghost ml-2"
                 data-action="click->searchable-select#clearSearch">
-          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
           </svg>
         </button>
       </div>
-
-      <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-        <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-        </svg>
-      </div>
     </div>
 
-    <div class="menu dropdown-content z-10 mt-1 w-full bg-base-100 rounded-box shadow-lg max-h-60 overflow-y-auto hidden"
+    <div class="menu dropdown-content z-10 mt-1 w-full bg-base-100 rounded-box shadow-lg max-h-60 overflow-y-auto hidden border border-base-300"
          data-searchable-select-target="dropdown">
-      <div data-searchable-select-target="options" class="menu-list"></div>
+      <div class="p-2 bg-base-200 text-sm font-medium flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-info" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+        </svg>
+        Click on a profession to select it
+      </div>
+      <div data-searchable-select-target="options" class="menu-list p-2"></div>
+    </div>
+    
+    <div class="text-xs text-base-content/60 mt-1 flex items-center gap-1">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+      </svg>
+      Start typing to search for a profession
     </div>
   </div>
 </div>
