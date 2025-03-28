@@ -1,6 +1,14 @@
-<div class="tabs tabs-bordered">
-  <%= link_to "Persons", prospects_path(nature: 'person'),
-      class: "tab #{params[:nature].nil? || params[:nature] == 'person' ? 'tab-active' : ''}" %>
-  <%= link_to "Companies", prospects_path(nature: 'company'),
-      class: "tab #{params[:nature] == 'company' ? 'tab-active' : ''}" %>
+<div class="tabs tabs-lifted">
+  <%= link_to prospects_path(nature: 'person'), class: "tab tab-bordered tab-lg #{params[:nature].nil? || params[:nature] == 'person' ? 'tab-active' : ''}" do %>
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+      <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" />
+    </svg>
+    Persons
+  <% end %>
+  <%= link_to prospects_path(nature: 'company'), class: "tab tab-bordered tab-lg #{params[:nature] == 'company' ? 'tab-active' : ''}" do %>
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd" />
+    </svg>
+    Companies
+  <% end %>
 </div>

@@ -1,7 +1,9 @@
 <%= turbo_stream.update "clients_table" do %>
-  <%= render "clients/table", clients: @clients %>
+  <%= render "clients/table", client_risk_summaries: @client_risk_summaries %>
 <% end %>
 
 <%= turbo_stream.update "clients_pagination" do %>
-  <%= render 'shared/pagination', collection: @clients %>
-<% end %> 
+  <div class="p-4 border-b border-base-200">
+    <%= render 'shared/pagination', collection: @client_risk_summaries %>
+  </div>
+<% end %>

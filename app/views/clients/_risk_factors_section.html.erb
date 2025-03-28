@@ -3,44 +3,81 @@
   <% category_score = client.category_risk_score(category) %>
 
   <% if risk_factors.any? %>
-    <div class="card bg-base-100 p-6 space-y-6">
-      <div class="flex items-center justify-between">
-        <h2 class="card-title"><%= category.titleize %> Assessment</h2>
-      </div>
+    <div class="card bg-base-100 shadow-md mb-6">
+      <div class="card-body">
+        <div class="flex items-center gap-2 mb-4">
+          <% case category %>
+          <% when "country" %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 8l2.55 3.4A1 1 0 0116 13H6a1 1 0 00-1 1v3a1 1 0 11-2 0V6z" clip-rule="evenodd" />
+            </svg>
+          <% when "client" %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+            </svg>
+          <% when "products_and_services" %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" />
+            </svg>
+          <% when "distribution_channel" %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M11 17a1 1 0 001.447.894l4-2A1 1 0 0017 15V9.236a1 1 0 00-1.447-.894l-4 2a1 1 0 00-.553.894V17zM15.211 6.276a1 1 0 000-1.788l-4.764-2.382a1 1 0 00-.894 0L4.789 4.488a1 1 0 000 1.788l4.764 2.382a1 1 0 00.894 0l4.764-2.382zM4.447 8.342A1 1 0 003 9.236V15a1 1 0 00.553.894l4 2A1 1 0 009 17v-5.764a1 1 0 00-.553-.894l-4-2z" />
+            </svg>
+          <% when "transaction" %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z" />
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd" />
+            </svg>
+          <% else %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-2 0a6 6 0 11-12 0 6 6 0 0112 0zm-1.5 0a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" clip-rule="evenodd" />
+            </svg>
+          <% end %>
+          <h2 class="card-title"><%= category.titleize %> Risk Assessment</h2>
+          
+          <div class="ml-auto">
+            <div class="badge badge-lg <%= risk_badge_class(category_score) %> gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 1.944A11.954 11.954 0 012.166 5C2.056 5.649 2 6.319 2 7c0 5.225 3.34 9.67 8 11.317C14.66 16.67 18 12.225 18 7c0-.682-.057-1.35-.166-2.001A11.954 11.954 0 0110 1.944zM11 14a1 1 0 11-2 0 1 1 0 012 0zm0-7a1 1 0 10-2 0v3a1 1 0 102 0V7z" clip-rule="evenodd" />
+              </svg>
+              Score: <%= category_score %>
+            </div>
+          </div>
+        </div>
 
-      <div class="space-y-4">
-        <% risk_factors.each do |risk_factor| %>
-          <div class="flex items-start gap-x-3 justify-between">
-            <div class="flex items-start gap-x-3">
-              <div class="flex-shrink-0">
-                <svg class="h-5 w-5 text-error" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M10.339 2.237a.75.75 0 00-1.178 0L2.18 11.66A.75.75 0 002.756 13h13.988a.75.75 0 00.576-1.34L10.339 2.237zM10 7a.75.75 0 01.75.75v2a.75.75 0 01-1.5 0v-2A.75.75 0 0110 7zm0 5a1 1 0 100 2 1 1 0 000-2z" clip-rule="evenodd" />
-                </svg>
-              </div>
-              <div>
-                <p class="text-sm">
-                  <%= RiskFactorDefinition.description_for(risk_factor.category, risk_factor.identifier) %>
-                </p>
-                <% if risk_factor.notes.present? %>
-                  <p class="mt-1 text-sm text-base-content/60">
-                    <%= risk_factor.notes %>
-                  </p>
-                <% end %>
+        <div class="divider">Risk Factors</div>
+
+        <div class="space-y-4">
+          <% risk_factors.each do |risk_factor| %>
+            <div class="card bg-base-200">
+              <div class="card-body p-4">
+                <div class="flex items-start gap-x-3 justify-between">
+                  <div class="flex items-start gap-x-3">
+                    <div class="flex-shrink-0">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-error" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p class="text-sm font-medium">
+                        <%= RiskFactorDefinition.description_for(risk_factor.category, risk_factor.identifier) %>
+                      </p>
+                      <% if risk_factor.notes.present? %>
+                        <div class="mt-2 p-2 bg-base-300 rounded-lg">
+                          <p class="text-sm text-base-content/80">
+                            <span class="font-semibold">Notes:</span> <%= risk_factor.notes %>
+                          </p>
+                        </div>
+                      <% end %>
+                    </div>
+                  </div>
+                  <div class="badge <%= risk_badge_class(RiskFactorDefinition.score_for(risk_factor.category, risk_factor.identifier)) %>">
+                    <%= RiskFactorDefinition.score_for(risk_factor.category, risk_factor.identifier) %>
+                  </div>
+                </div>
               </div>
             </div>
-            <span class="badge badge-sm <%= risk_badge_class(25) %>">
-              <%= RiskFactorDefinition.score_for(risk_factor.category, risk_factor.identifier) %>
-            </span>
-          </div>
-        <% end %>
-      </div>
-      <div class="divider"></div>
-      <div>
-        <div class="flex items-center justify-between">
-          <span class="text-base font-bold">Total</span>
-          <span class="badge <%= risk_badge_class(category_score) %>">
-            <%= category_score %>
-          </span>
+          <% end %>
         </div>
       </div>
     </div>

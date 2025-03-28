@@ -1,19 +1,44 @@
-<div class="card bg-base-100 p-6">
-  <h2 class="card-title">Adverse Media Checks</h2>
+<div class="card bg-base-100 shadow-md">
+  <div class="card-body">
+    <div class="flex items-center gap-2 mb-4">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-warning" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+      </svg>
+      <h2 class="card-title">Adverse Media Checks</h2>
+    </div>
 
-  <div class="mb-6">
-    <p class="text-sm text-base-content/60">
-      Run adverse media checks to see if the client is associated with any adverse media.
-    </p>
-  </div>
+    <div class="alert alert-info mb-4">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <div>
+        <p class="text-sm">
+          Run adverse media checks to see if the client is associated with any adverse media.
+        </p>
+      </div>
+    </div>
 
-  <%= render "adverse_media_checks/form", adverse_media_checkable: clientable %>
+    <div class="bg-base-200 rounded-lg p-4 mb-4">
+      <%= render "adverse_media_checks/form", adverse_media_checkable: clientable %>
+    </div>
 
-  <div id="adverse_media_checks_list" class="space-y-2 my-6">
-    <%= turbo_frame_tag "adverse_media_checks" do %>
-      <% clientable.adverse_media_checks.order(created_at: :desc).each do |check| %>
-        <%= render check %>
+    <div class="divider">Previous Checks</div>
+
+    <div id="adverse_media_checks_list" class="space-y-4">
+      <%= turbo_frame_tag "adverse_media_checks" do %>
+        <% if clientable.adverse_media_checks.any? %>
+          <% clientable.adverse_media_checks.order(created_at: :desc).each do |check| %>
+            <%= render check %>
+          <% end %>
+        <% else %>
+          <div class="alert">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="h-6 w-6 shrink-0 stroke-info">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>No adverse media checks have been run yet.</span>
+          </div>
+        <% end %>
       <% end %>
-    <% end %>
+    </div>
   </div>
-</div> 
+</div>

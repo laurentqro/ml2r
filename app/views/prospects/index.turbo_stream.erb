@@ -3,5 +3,7 @@
 <% end %>
 
 <%= turbo_stream.update "prospects_pagination" do %>
-  <%= render 'shared/pagination', collection: @prospects %>
-<% end %> 
+  <div class="p-4 border-b border-base-200">
+    <%= render 'shared/pagination', collection: @prospects %>
+  </div>
+<% end %>

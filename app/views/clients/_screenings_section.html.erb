@@ -1,41 +1,90 @@
-<div class="card bg-base-100 p-6">
-  <h2 class="card-title">Screenings</h2>
+<div class="card bg-base-100 shadow-md">
+  <div class="card-body">
+    <div class="flex items-center gap-2 mb-4">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M10 2a1 1 0 00-1 1v1a1 1 0 002 0V3a1 1 0 00-1-1zM4 4h3a3 3 0 006 0h3a2 2 0 012 2v9a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2zm2.5 7a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm2.45 4a2.5 2.5 0 10-4.9 0h4.9zM12 9a1 1 0 100 2h3a1 1 0 100-2h-3zm-1 4a1 1 0 011-1h2a1 1 0 110 2h-2a1 1 0 01-1-1z" clip-rule="evenodd" />
+      </svg>
+      <h2 class="card-title">Screenings</h2>
+    </div>
 
-  <p class="text-sm text-base-content/60 mb-6">
-    Screening for PEPs, sanctions, criminal activity, and more.
-  </p>
+    <div class="alert alert-info mb-4">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <div>
+        <p class="text-sm">
+          Run screenings to check for PEPs, sanctions, criminal activity, and more.
+        </p>
+      </div>
+    </div>
 
-  <%= render "screenings/form", screenable: clientable %>
+    <div class="bg-base-200 rounded-lg p-4 mb-6">
+      <%= render "screenings/form", screenable: clientable %>
+    </div>
 
-  <div id="screenings_list" class="overflow-x-auto mt-6">
-    <table class="table table-zebra w-full">
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th class="text-right">Results</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% clientable.screenings.order(created_at: :desc).each do |screening| %>
-          <tr class="hover">
-            <td>
-              <%= screening.created_at.strftime("%B %d, %Y at %I:%M:%S %p") %>
-            </td>
-            <td class="text-right">
-              <%= link_to screening_path(screening), class: "link link-primary" do %>
-                <%= pluralize(screening.matches.count, 'match') %>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-        <% if clientable.screenings.empty? %>
-          <tr>
-            <td colspan="3" class="text-center text-base-content/60">
-              No screenings yet
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+    <div class="divider">Screening History</div>
+
+    <div id="screenings_list" class="overflow-x-auto">
+      <% if clientable.screenings.any? %>
+        <table class="table table-zebra w-full">
+          <thead>
+            <tr>
+              <th>
+                <div class="flex items-center gap-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+                  </svg>
+                  Date
+                </div>
+              </th>
+              <th>
+                <div class="flex items-center gap-1 justify-end">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9 9a2 2 0 114 0 2 2 0 01-4 0z" />
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a4 4 0 00-3.446 6.032l-2.261 2.26a1 1 0 101.414 1.415l2.261-2.261A4 4 0 1011 5z" clip-rule="evenodd" />
+                  </svg>
+                  Results
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <% clientable.screenings.order(created_at: :desc).each do |screening| %>
+              <tr class="hover">
+                <td>
+                  <div class="font-medium">
+                    <%= screening.created_at.strftime("%B %d, %Y") %>
+                  </div>
+                  <div class="text-xs text-base-content/60">
+                    <%= screening.created_at.strftime("%I:%M:%S %p") %>
+                  </div>
+                </td>
+                <td class="text-right">
+                  <%= link_to screening_path(screening), class: "btn btn-sm #{screening.matches.any? ? 'btn-warning' : 'btn-success'} gap-2" do %>
+                    <% if screening.matches.any? %>
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                      </svg>
+                    <% else %>
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                      </svg>
+                    <% end %>
+                    <%= pluralize(screening.matches.count, 'match') %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <div class="alert">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="h-6 w-6 shrink-0 stroke-info">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <span>No screenings have been run yet.</span>
+        </div>
+      <% end %>
+    </div>
   </div>
-</div> 
+</div>
