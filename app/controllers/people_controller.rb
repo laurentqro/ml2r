@@ -54,7 +54,7 @@ class PeopleController < ApplicationController
     @person.destroy!
 
     respond_to do |format|
-      format.html { redirect_to people_path, status: :see_other, notice: "Person was successfully destroyed." }
+      format.html { redirect_to prospects_path, status: :see_other, notice: "Person was successfully destroyed." }
       format.json { head :no_content }
     end
   end
