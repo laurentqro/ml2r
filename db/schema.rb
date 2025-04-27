@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_22_134511) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_27_103818) do
   create_table "adverse_media_checks", force: :cascade do |t|
     t.string "status", default: "in progress"
     t.boolean "adverse_media_found"
@@ -116,6 +116,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_22_134511) do
     t.integer "products_and_services_risk_score"
     t.integer "distribution_channel_risk_score"
     t.integer "transaction_risk_score"
+    t.boolean "pep_confirmed"
     t.index ["approved_at"], name: "index_risk_assessments_on_approved_at"
     t.index ["client_id"], name: "index_risk_assessments_on_client_id"
   end
