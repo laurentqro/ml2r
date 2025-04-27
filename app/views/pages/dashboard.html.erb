@@ -1,3 +1,18 @@
+<div class="mx-auto py-8 px-4">
+  <div class="mb-8">
+    <h1 class="text-2xl font-bold text-center">Client Statistics</h1>
+    <p class="text-base-content/60 text-center mt-2">Number of clients in each risk category</p>
+  </div>
+
+  <!-- Statistics Cards -->
+  <%= render "shared/statistics",
+    clear_count: @clear_count,
+    pep_count: @pep_count,
+    sanctioned_count: @sanctioned_count,
+    with_adverse_media_count: @with_adverse_media_count
+  %>
+</div>
+
 <div class="container mx-auto py-8 px-4">
   <div class="mb-8">
     <h1 class="text-2xl font-bold text-center">Risk Assessment Matrices</h1>

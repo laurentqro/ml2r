@@ -19,11 +19,6 @@ class ProspectsController < ApplicationController
       end
     end
 
-    @clear_count = Prospect.clear.count
-    @pep_count = Prospect.pep.count
-    @sanctioned_count = Prospect.sanctioned.count
-    @with_adverse_media_count = Prospect.with_adverse_media.count
-
     @prospects = paginate(scope)
 
     respond_to do |format|
