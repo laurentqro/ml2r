@@ -13,5 +13,9 @@ class PagesController < ApplicationController
     @pep_count = ClientRiskSummary.pep.count
     @sanctioned_count = ClientRiskSummary.sanctioned.count
     @with_adverse_media_count = ClientRiskSummary.with_adverse_media.count
+
+    @low_risk_count = ClientRiskSummary.where(total_risk_score: 0..40).count
+    @medium_risk_count = ClientRiskSummary.where(total_risk_score: 41..80).count
+    @high_risk_count = ClientRiskSummary.where(total_risk_score: 81..100).count
   end
 end

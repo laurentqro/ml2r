@@ -23,3 +23,23 @@
     <div class="stat-desc">Clients on sanctions lists</div>
   </div>
 </div>
+
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+  <div class="stat bg-base-100 shadow rounded-box">
+    <div class="stat-title">Low Risk</div>
+    <div class="stat-value text-success"><%= low_risk_count %></div>
+    <div class="stat-desc">Clients with low risk</div>
+  </div>
+
+  <div class="stat bg-base-100 shadow rounded-box">
+    <div class="stat-title">Medium Risk</div>
+    <div class="stat-value text-warning"><%= medium_risk_count %></div>
+    <div class="stat-desc">Clients with medium risk</div>
+  </div>
+
+  <div class="stat bg-base-100 shadow rounded-box">
+    <div class="stat-title">High Risk</div>
+    <div class="stat-value text-error"><%= high_risk_count %></div>
+    <div class="stat-desc">Clients with high risk</div>
+  </div>
+</div>
