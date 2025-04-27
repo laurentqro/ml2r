@@ -69,6 +69,7 @@ class RiskAssessmentsController < ApplicationController
       params.require(:risk_assessment).permit(
         :notes,
         :pep_confirmed,
+        :adverse_media_confirmed,
         risk_factors_attributes: [
           :id,
           :risk_factor_definition_id,

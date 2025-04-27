@@ -43,6 +43,13 @@
       </label>
     </div>
 
+    <div class="form-control mt-2">
+      <label class="label cursor-pointer justify-start gap-2">
+        <%= f.check_box :adverse_media_confirmed, {}, true, false %>
+        <span class="label-text font-medium">This client has confirmed adverse media</span>
+      </label>
+    </div>
+
     <div class="form-control mt-4">
       <%= f.label :notes, "Notes", class: "label pb-1" %>
       <%= f.text_area :notes, class: "textarea textarea-bordered" %>
