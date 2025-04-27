@@ -116,6 +116,10 @@ class Client < ApplicationRecord
     risk_assessments.create!
   end
 
+  def latest_confirmed_risk_assessment
+    risk_assessments.latest_approved
+  end
+
   private
 
   def no_blacklisted_countries

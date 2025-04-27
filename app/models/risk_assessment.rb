@@ -6,6 +6,7 @@ class RiskAssessment < ApplicationRecord
 
   scope :current, -> { order(created_at: :desc).first }
   scope :approved, -> { where.not(approved_at: nil) }
+  scope :latest_approved, -> { approved.order(approved_at: :desc).first }
   scope :pending_approval, -> { where.not(created_at: nil).where(approved_at: nil) }
 
   accepts_nested_attributes_for :risk_factors,
