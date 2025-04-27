@@ -20,12 +20,18 @@
         </div>
       <% end %>
 
-      <div class="badge badge-lg <%= match_score_classes(match.external_score).include?('red') ? 'badge-error' : match_score_classes(match.external_score).include?('yellow') ? 'badge-warning' : match_score_classes(match.external_score).include?('green') ? 'badge-success' : 'badge-info' %> gap-1">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-        </svg>
-        <%= match.external_score %>
-      </div>
+      <% if match.external_score == 100 %>
+        <div class="badge badge-lg gap-1 badge-success">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+          </svg>
+          Match Score: <%= match.external_score %>
+        </div>
+      <% else %>
+        <div class="badge badge-lg gap-1 badge-outline">
+          Match Score: <%= match.external_score %>
+        </div>
+      <% end %>
     </div>
 
     <div class="flex flex-wrap items-center gap-2 mb-2">
@@ -37,7 +43,7 @@
       </div>
 
       <% match.topics.each do |topic| %>
-        <span class="badge <%= topic_badge_classes(topic).include?('red') ? 'badge-error' : topic_badge_classes(topic).include?('yellow') ? 'badge-warning' : topic_badge_classes(topic).include?('green') ? 'badge-success' : 'badge-info' %> gap-1">
+        <span class="badge <%= topic_badge_classes(topic) %> gap-1">
           <% if topic.include?("sanction") %>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M13.477 14.89A6 6 0 015.11 6.524l8.367 8.368zm1.414-1.414L6.524 5.11a6 6 0 018.367 8.367zM18 10a8 8 0 11-16 0 8 8 0 0116 0z" clip-rule="evenodd" />
@@ -75,7 +81,7 @@
         <% end %>
       </div>
     <% end %>
-    
+
     <div class="mt-2 text-right">
       <%= link_to screening_match_path(@screening, match), class: "btn btn-sm btn-ghost btn-outline" do %>
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">

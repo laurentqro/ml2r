@@ -75,6 +75,7 @@ class PeopleController < ApplicationController
         :country_of_residence,
         :country_of_profession,
         :profession,
+        :date_of_birth,
         :pep,
         :sanctioned,
         identification_documents_attributes: [
