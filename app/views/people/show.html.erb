@@ -12,7 +12,7 @@
           Back to People
         <% end %>
       </div>
-      
+
       <h1 class="text-2xl font-bold flex items-center gap-2 mt-2">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-primary" viewBox="0 0 20 20" fill="currentColor">
           <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
@@ -20,7 +20,7 @@
         <%= @person.display_name %>
       </h1>
     </div>
-    
+
     <div class="flex flex-wrap items-center gap-2 mt-4 md:mt-0">
       <% if @person.pep? %>
         <div class="badge badge-lg badge-error gap-1">
@@ -50,8 +50,7 @@
       <% end %>
     </div>
   </div>
-  
-  <!-- Action Buttons -->
+
   <div class="flex flex-wrap gap-2 mb-6">
     <%= link_to edit_person_path(@person), class: "btn btn-primary gap-2" do %>
       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -84,7 +83,7 @@
         </svg>
         Screenings
       </h2>
-      
+
       <p class="text-sm text-base-content/70 mb-6 flex items-center gap-2">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-info" viewBox="0 0 20 20" fill="currentColor">
           <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
@@ -113,7 +112,6 @@
     </div>
   </div>
 
-  <!-- Adverse Media Checks Section -->
   <div class="card bg-base-100 shadow-xl mb-6">
     <div class="card-body">
       <h2 class="card-title flex items-center gap-2">
@@ -134,7 +132,7 @@
             </svg>
             <span class="text-sm text-base-content/70">Check for adverse media mentions in news and public sources.</span>
           </div>
-          
+
           <div class="mt-4">
             <%= form.submit "Run a new adverse media check", class: "btn btn-primary gap-2" do %>
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

@@ -4,19 +4,19 @@
     <div class="stat-value text-success"><%= clear_count %></div>
     <div class="stat-desc">Clients with no risk flags</div>
   </div>
-  
+
   <div class="stat bg-base-100 shadow rounded-box">
     <div class="stat-title">Adverse Media</div>
     <div class="stat-value <%= with_adverse_media_count.positive? ? 'text-warning' : 'text-success' %>"><%= with_adverse_media_count %></div>
     <div class="stat-desc">Clients with adverse media mentions</div>
   </div>
-  
+
   <div class="stat bg-base-100 shadow rounded-box">
     <div class="stat-title">PEP</div>
     <div class="stat-value <%= pep_count.positive? ? 'text-error' : 'text-success' %>"><%= pep_count %></div>
     <div class="stat-desc">Politically exposed persons</div>
   </div>
-  
+
   <div class="stat bg-base-100 shadow rounded-box">
     <div class="stat-title">Sanctioned</div>
     <div class="stat-value <%= sanctioned_count.positive? ? 'text-error' : 'text-success' %>"><%= sanctioned_count %></div>
