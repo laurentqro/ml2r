@@ -1,4 +1,4 @@
-<div class="card bg-base-100 shadow-md">
+<div class="card bg-base-200 shadow-md border-2 border-base-300">
   <div class="card-body">
     <div class="flex items-center gap-2 mb-4">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary" viewBox="0 0 20 20" fill="currentColor">
@@ -7,7 +7,7 @@
       <h2 class="card-title">Screenings</h2>
     </div>
 
-    <div class="alert alert-info mb-4">
+    <div class="alert mb-4">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
@@ -18,13 +18,13 @@
       </div>
     </div>
 
-    <div class="bg-base-200 rounded-lg p-4 mb-6">
+    <div class="p-4">
       <%= render "screenings/form", screenable: clientable %>
     </div>
 
     <div class="divider">Screening History</div>
 
-    <div id="screenings_list" class="overflow-x-auto">
+    <div id="screenings_list" class="overflow-x-auto bg-base-100 rounded-lg p-4">
       <% if clientable.screenings.any? %>
         <table class="table table-zebra w-full">
           <thead>

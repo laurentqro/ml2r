@@ -1,8 +1,9 @@
-<div class="mx-auto py-8 px-4">
-  <div class="mb-8">
-    <h1 class="text-2xl font-bold text-center">Client Statistics</h1>
-    <p class="text-base-content/60 text-center mt-2">Number of clients in each risk category</p>
-  </div>
+<div class="space-y-6">
+  <div class="mx-auto py-8 px-4 bg-base-200 shadow-md border-2 border-base-300 rounded-lg">
+    <div class="mb-8">
+      <h1 class="text-2xl font-bold text-center">Client Statistics</h1>
+      <p class="text-base-content/60 text-center mt-2">Number of clients in each risk category</p>
+    </div>
 
   <!-- Statistics Cards -->
   <%= render "shared/statistics",
@@ -16,7 +17,7 @@
   %>
 </div>
 
-<div class="container mx-auto py-8 px-4">
+<div class="container mx-auto py-8 px-4 bg-base-200 shadow-md border-2 border-base-300 rounded-lg">
   <div class="mb-8">
     <h1 class="text-2xl font-bold text-center">Risk Assessment Matrices</h1>
     <p class="text-base-content/60 text-center mt-2">Visual representation of risk factors across different categories</p>
@@ -85,5 +86,6 @@
         <%= render "risk_matrix", risk_matrix: @total_risk_matrix %>
       </div>
     </div>
+  </div>
   </div>
 </div>

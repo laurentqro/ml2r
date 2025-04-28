@@ -16,9 +16,12 @@
         <% end %>
         <%= @client.clientable.display_name %>
       </h1>
-      <p class="text-sm text-base-content/70">Client since <%= @client.created_at.strftime("%d %B %Y") %></p>
+
+      <p class="text-sm text-base-content/70">
+        Client since <%= @client.created_at.strftime("%d %B %Y") %>
+      </p>
     </div>
-    
+
     <div class="mt-4 md:mt-0 flex gap-2">
       <%= link_to edit_clientable_path(@clientable), class: "btn btn-primary", data: { turbo: false } do %>
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -26,7 +29,7 @@
         </svg>
         Edit Client
       <% end %>
-      
+
       <%= link_to clients_path, class: "btn btn-outline" do %>
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -47,7 +50,7 @@
           Politically Exposed Person (PEP)
         </div>
       <% end %>
-      
+
       <% if @clientable.sanctioned? %>
         <div class="badge badge-lg badge-error gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -56,7 +59,7 @@
           Sanctioned
         </div>
       <% end %>
-      
+
       <% if @clientable.adverse_media_checks.any?(&:adverse_media_found?) %>
         <div class="badge badge-lg badge-warning gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

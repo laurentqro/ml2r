@@ -2,7 +2,12 @@
   <%= form.hidden_field :query, value: screenable.name.downcase %>
   <%= form.hidden_field :screenable_id, value: screenable.id %>
   <%= form.hidden_field :screenable_type, value: screenable.class.name %>
-  <%= form.submit "Run a new screening",
-    class: "btn btn-outline btn-primary"
-  %>
+  <div class="flex justify-center mb-6">
+    <%= form.button type: "submit", class: "btn btn-primary gap-2" do %>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+      </svg>
+      Run a new screening
+    <% end %>
+  </div>
 <% end %>

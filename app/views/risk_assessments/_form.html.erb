@@ -19,8 +19,8 @@
               <% end %>
               <div class="form-control">
                 <label class="label cursor-pointer justify-start gap-2">
-                  <%= rf.check_box :identified_at, { 
-                    checked: risk_factor.persisted?, 
+                  <%= rf.check_box :identified_at, {
+                    checked: risk_factor.persisted?,
                     class: "checkbox checkbox-primary risk-factor-checkbox",
                     id: "risk_factor_#{definition.id}",
                     data: { destroy_target: rf.object_name.gsub(/\[\d+\]/, "[#{rf.index}]") + "[_destroy]" }
@@ -36,18 +36,23 @@
       </div>
     <% end %>
 
-    <div class="form-control mt-4">
-      <label class="label cursor-pointer justify-start gap-2">
-        <%= f.check_box :pep_confirmed, {}, true, false %>
-        <span class="label-text font-medium">This person is a Politically Exposed Person (PEP)</span>
-      </label>
-    </div>
+    <div class="divider"></div>
+    <p class="text-sm text-base-content/70 mb-6">Confirm PEP and adverse media for this client.</p>
 
-    <div class="form-control mt-2">
-      <label class="label cursor-pointer justify-start gap-2">
-        <%= f.check_box :adverse_media_confirmed, {}, true, false %>
-        <span class="label-text font-medium">This client has confirmed adverse media</span>
-      </label>
+    <div class="space-y-4 mb-4">
+      <div class="form-control">
+        <label class="label cursor-pointer justify-start gap-2">
+          <%= f.check_box :pep_confirmed, { class: "checkbox checkbox-primary" }, true, false %>
+        <span class="label-text font-medium">Yes, this person is a Politically Exposed Person (PEP)</span>
+        </label>
+      </div>
+
+      <div class="form-control">
+        <label class="label cursor-pointer justify-start gap-2">
+          <%= f.check_box :adverse_media_confirmed, { class: "checkbox checkbox-primary" }, true, false %>
+          <span class="label-text font-medium">Yes, this client has confirmed adverse media</span>
+        </label>
+      </div>
     </div>
 
     <div class="form-control mt-4">
