@@ -84,4 +84,12 @@ class Company < ApplicationRecord
   def has_adverse_media?
     adverse_media_checks.any?(&:adverse_media_found?)
   end
+
+  def latest_screening
+    screenings.order(created_at: :desc).first
+  end
+
+  def clear?
+    !sanctioned? && !has_adverse_media?
+  end
 end

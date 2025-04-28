@@ -34,15 +34,28 @@
       <% end %>
 
       <% if prospect.has_adverse_media? %>
-        <div class="badge badge-warning gap-1">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M18 3a1 1 0 00-1.447-.894L8.763 6H5a3 3 0 000 6h.28l1.771 5.316A1 1 0 008 18h1a1 1 0 001-1v-4.382l6.553 3.276A1 1 0 0018 15V3z" clip-rule="evenodd" />
-          </svg>
-          Adverse Media
-        </div>
+        <%= link_to prospect_path(prospect, anchor: "adverse-media-checks"), data: { turbo: false } do %>
+          <div class="badge badge-warning gap-1 link">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M18 3a1 1 0 00-1.447-.894L8.763 6H5a3 3 0 000 6h.28l1.771 5.316A1 1 0 008 18h1a1 1 0 001-1v-4.382l6.553 3.276A1 1 0 0018 15V3z" clip-rule="evenodd" />
+            </svg>
+            Adverse Media
+          </div>
+        <% end %>
       <% end %>
-      
-      <% if !prospect.pep? && !prospect.sanctioned? && !prospect.has_adverse_media? %>
+
+      <% if prospect.latest_screening %>
+        <%= link_to screening_path(prospect.latest_screening), data: { turbo: false } do %>
+          <div class="badge badge-info gap-1 link">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <%= pluralize(prospect.latest_screening.matches.count, "match") %>
+          </div>
+        <% end %>
+      <% end %>
+
+      <% if prospect.clear? %>
         <div class="badge badge-success gap-1">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
