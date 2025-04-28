@@ -19,10 +19,10 @@
     <%= javascript_include_tag "https://cdn.jsdelivr.net/npm/chart.js", "data-turbo-track": "reload" %>
   </head>
 
-  <body class="min-h-screen bg-base-100">
+  <body class="bg-base-100">
     <div class="drawer">
       <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
-      <div class="drawer-content flex flex-col">
+      <div class="drawer-content flex flex-col min-h-screen">
         <%= render 'shared/header' %>
         
         <div class="bg-base-200 border-b border-base-300">
