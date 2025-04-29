@@ -6,10 +6,10 @@
             class: "link hover:link-primary font-medium line-clamp-2", data: { turbo: false } %>
       </div>
 
-      <div class="flex gap-2 ml-2">
+      <div class="flex gap-2 ml-2 text-xs">
         <% if client_risk_summary.pep %>
           <div class="tooltip tooltip-left" data-tip="Politically Exposed Person">
-            <span class="px-2 py-1 rounded text-xs bg-error/20 text-error-content font-medium">
+            <span class="px-2 py-1 rounded bg-error/20 text-error-content font-medium">
               PEP
             </span>
           </div>
@@ -17,7 +17,7 @@
 
         <% if client_risk_summary.sanctioned %>
           <div class="tooltip tooltip-left" data-tip="Subject to sanctions">
-            <span class="px-2 py-1 rounded text-xs bg-error/20 text-error-content font-medium">
+            <span class="px-2 py-1 rounded bg-error/20 text-error-content font-medium">
               Sanctioned
             </span>
           </div>
@@ -25,8 +25,8 @@
 
         <% if client_risk_summary.adverse_media %>
           <div class="tooltip tooltip-left" data-tip="Adverse media">
-            <span class="px-2 py-1 rounded text-xs bg-warning/20 text-warning-content font-medium">
-              Adverse Media
+            <span class="px-2 py-1 rounded bg-warning/20 text-warning-content font-medium">
+              AM
             </span>
           </div>
         <% end %>

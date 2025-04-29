@@ -1,0 +1,24 @@
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center p-4 rounded-lg">
+  <div>
+    <h1 class="text-2xl font-bold flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+      </svg>
+      <%= @company.display_name %>
+    </h1>
+    <p class="text-sm text-base-content/70">
+      Prospect acquired <%= @company.created_at.strftime("%d %B %Y") %>
+    </p>
+  </div>
+
+  <div>
+    <%= link_to clients_path(client: { clientable_id: @company.id, clientable_type: "Company" }),
+        class: "btn btn-primary gap-2",
+        data: { turbo_method: :post, turbo_confirm: "Onboard #{@company.display_name} as a client?" } do %>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+        <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z" />
+      </svg>
+      Onboard as Client
+    <% end %>
+  </div>
+</div>

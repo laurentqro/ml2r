@@ -16,9 +16,9 @@
       <% end %>
     </div>
 
-    <% if client.risk_assessments.any? %>
-      <div class="divider">Assessment History</div>
+    <div class="divider">Previous Assessments</div>
 
+    <% if client.risk_assessments.any? %>
       <div class="overflow-x-auto bg-base-100 rounded-lg p-4">
         <table class="table table-zebra w-full">
           <thead>
