@@ -47,10 +47,10 @@
               <tr class="hover">
                 <td>
                   <div class="font-medium">
-                    <%= screening.created_at.strftime("%B %d, %Y") %>
+                    <%= screening.created_at.strftime("%d %B %Y") %>
                   </div>
                   <div class="text-xs text-base-content/60">
-                    <%= screening.created_at.strftime("%I:%M:%S %p") %>
+                    at <%= screening.created_at.strftime("%I:%M:%S") %>
                   </div>
                 </td>
                 <td class="text-right">

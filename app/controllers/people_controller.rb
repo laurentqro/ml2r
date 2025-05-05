@@ -21,6 +21,8 @@ class PeopleController < ApplicationController
 
     respond_to do |format|
       if @person.save
+        screen_person
+        check_adverse_media
         format.html { redirect_to @person, notice: "Person was successfully created." }
         format.json { render :show, status: :created, location: @person }
       else
@@ -87,5 +89,19 @@ class PeopleController < ApplicationController
           :_destroy
         ]
       )
+    end
+
+    def screen_person
+      screening = Screening.new(screenable: @person, query: @person.display_name.downcase)
+      if screening.save
+        screening.run
+      end
+    end
+
+    def check_adverse_media
+      adverse_media_check = AdverseMediaCheck.new(adverse_media_checkable: @person)
+      if adverse_media_check.save
+        AdverseMediaCheckJob.perform_later(adverse_media_check.id)
+      end
     end
 end

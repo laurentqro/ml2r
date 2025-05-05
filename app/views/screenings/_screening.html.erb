@@ -1,6 +1,6 @@
 <div class="flex items-center justify-between">
   <div class="flex items-center">
-    <%= link_to screening.created_at.strftime("%B %d, %Y at %I:%M:%S %p"),
+    <%= link_to screening.created_at.strftime("%d %B, %Y at M:%S"),
                 screening_path(screening),
                 class: "link link-primary" %>
   </div>
