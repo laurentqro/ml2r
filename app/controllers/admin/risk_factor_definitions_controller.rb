@@ -33,7 +33,8 @@ module Admin
     end
 
     def destroy
-      @risk_factor_definition.destroy
+      @risk_factor_definition.risk_factors.delete_all
+      @risk_factor_definition.delete
       redirect_to admin_risk_factor_definitions_path, notice: "Risk factor definition was successfully deleted."
     end
 
