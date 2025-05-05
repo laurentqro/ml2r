@@ -137,7 +137,7 @@ RSpec.describe Client do
 
     it "is invalid if client has ties to blacklisted countries" do
       expect(client).not_to be_valid
-      expect(client.errors[:base]).to include("Cannot onboard clients with ties to GAFI blacklisted countries")
+      expect(client.errors[:base]).to include("Cannot onboard clients with ties to FATF blacklisted countries")
     end
 
     it "is valid without blacklisted countries" do
