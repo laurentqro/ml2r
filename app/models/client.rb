@@ -124,7 +124,7 @@ class Client < ApplicationRecord
 
   def no_blacklisted_countries
     if blacklisted?
-      errors.add(:base, "Cannot onboard clients with ties to GAFI blacklisted countries")
+      errors.add(:base, "Cannot onboard clients with ties to FATF blacklisted countries")
     end
   end
 

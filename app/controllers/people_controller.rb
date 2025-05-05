@@ -21,8 +21,12 @@ class PeopleController < ApplicationController
 
     respond_to do |format|
       if @person.save
-        screen_person
-        check_adverse_media
+        ActiveRecord::Base.transaction do
+          screen_person!
+          check_adverse_media!
+          create_client!
+        end
+
         format.html { redirect_to @person, notice: "Person was successfully created." }
         format.json { render :show, status: :created, location: @person }
       else
@@ -91,17 +95,21 @@ class PeopleController < ApplicationController
       )
     end
 
-    def screen_person
+    def screen_person!
       screening = Screening.new(screenable: @person, query: @person.display_name.downcase)
-      if screening.save
+      if screening.save!
         screening.run
       end
     end
 
-    def check_adverse_media
+    def check_adverse_media!
       adverse_media_check = AdverseMediaCheck.new(adverse_media_checkable: @person)
-      if adverse_media_check.save
+      if adverse_media_check.save!
         AdverseMediaCheckJob.perform_later(adverse_media_check.id)
       end
+    end
+
+    def create_client!
+      Client.create!(clientable: @person)
     end
 end
