@@ -1,63 +1,39 @@
-<tr class="hover">
-  <td class="w-96">
-    <div class="flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <%= link_to client_risk_summary.display_name, client_path(client_risk_summary.client_id),
-            class: "link hover:link-primary font-medium line-clamp-2", data: { turbo: false } %>
-      </div>
+<tr class="hover h-16">
+  <td class="">
+    <%= link_to client_risk_summary.display_name, client_path(client_risk_summary.client_id),
+      class: "link hover:link-primary font-medium line-clamp-2 no-underline", data: { turbo: false } %>
+  </td>
 
-      <div class="flex gap-2 ml-2 text-xs">
-        <% if client_risk_summary.pep %>
-          <div class="tooltip tooltip-left" data-tip="Politically Exposed Person">
-            <span class="px-2 py-1 rounded bg-error/20 text-error-content font-medium">
-              PEP
-            </span>
-          </div>
-        <% end %>
+  <td>
+    <%= client_risk_summary.client.created_at.strftime("%b %d, %Y") %>
+  </td>
 
-        <% if client_risk_summary.sanctioned %>
-          <div class="tooltip tooltip-left" data-tip="Subject to sanctions">
-            <span class="px-2 py-1 rounded bg-error/20 text-error-content font-medium">
-              Sanctioned
-            </span>
-          </div>
-        <% end %>
+  <td>
+    <div class="flex gap-2 ml-2 text-xs">
+      <% if client_risk_summary.pep %>
+        <div class="tooltip tooltip-left" data-tip="Politically Exposed Person">
+          <span class="px-2 py-1 rounded bg-error text-error-content font-medium">
+            PEP
+          </span>
+        </div>
+      <% end %>
 
-        <% if client_risk_summary.adverse_media %>
-          <div class="tooltip tooltip-left" data-tip="Adverse media">
-            <span class="px-2 py-1 rounded bg-warning/20 text-warning-content font-medium">
-              AM
-            </span>
-          </div>
-        <% end %>
-      </div>
+      <% if client_risk_summary.sanctioned %>
+        <div class="tooltip tooltip-left" data-tip="Subject to sanctions">
+          <span class="px-2 py-1 rounded bg-error text-error-content font-medium">
+            Sanctioned
+          </span>
+        </div>
+      <% end %>
+
+      <% if client_risk_summary.adverse_media %>
+        <div class="tooltip tooltip-left" data-tip="Adverse media">
+          <span class="px-2 py-1 rounded bg-warning text-warning-content font-medium">
+            Adverse Media
+          </span>
+        </div>
+      <% end %>
     </div>
-  </td>
-  
-  <td class="w-24 min-w-[6rem] max-w-[6rem] text-center">
-    <span class="text-xs opacity-80">
-      <%= client_risk_summary.risk_assessment_status %>
-    </span>
-  </td>
-
-  <td class="w-24 min-w-[6rem] max-w-[6rem] text-center">
-    <%= render_risk_score_cell(client_risk_summary.country_risk_score) %>
-  </td>
-
-  <td class="w-24 min-w-[6rem] max-w-[6rem] text-center">
-    <%= render_risk_score_cell(client_risk_summary.client_risk_score) %>
-  </td>
-
-  <td class="w-24 min-w-[6rem] max-w-[6rem] text-center">
-    <%= render_risk_score_cell(client_risk_summary.products_and_services_risk_score) %>
-  </td>
-
-  <td class="w-24 min-w-[6rem] max-w-[6rem] text-center">
-    <%= render_risk_score_cell(client_risk_summary.distribution_channel_risk_score) %>
-  </td>
-
-  <td class="w-24 min-w-[6rem] max-w-[6rem] text-center">
-    <%= render_risk_score_cell(client_risk_summary.transaction_risk_score) %>
   </td>
 
   <td class="w-24 min-w-[6rem] max-w-[6rem] text-center">

@@ -89,6 +89,7 @@ class RiskAssessment < ApplicationRecord
   end
 
   def total_risk_score
+    return 20
     if all_scores_present?
       country_risk_score +
       client_risk_score +
@@ -101,6 +102,28 @@ class RiskAssessment < ApplicationRecord
       calculate_products_and_services_risk_score +
       calculate_distribution_channel_risk_score +
       calculate_transaction_risk_score
+    end
+  end
+
+  def risk_level
+    case total_risk_score
+    when 0..30
+      "low"
+    when 31..60
+      "medium"
+    else
+      "high"
+    end
+  end
+
+  def due_diligence_level
+    case risk_level
+    when "low"
+      "simplified"
+    when "medium"
+      "standard"
+    when "high"
+      "enhanced"
     end
   end
 

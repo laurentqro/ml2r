@@ -26,7 +26,7 @@ module ClientsHelper
       end
 
       content_tag(:div, class: "flex justify-center") do
-        content_tag(:div, score, class: "#{bg_class} #{text_class} w-8 h-8 rounded-full flex items-center justify-center font-medium")
+        content_tag(:div, score, class: "#{bg_class} #{text_class} w-12 h-12 rounded-full flex items-center justify-center font-medium")
       end
     else
       content_tag(:span, "-", class: "text-base-content/40")
@@ -48,7 +48,7 @@ module ClientsHelper
   def sortable(column, title = nil)
     title ||= column.titleize
     direction = (column == sort_column && sort_direction == "asc") ? "desc" : "asc"
-    css_class = "#{column == sort_column ? 'text-base-content' : 'text-base-content/50'} w-full flex justify-center"
+    css_class = "#{column == sort_column ? 'text-base-content' : 'text-base-content/50'} w-full"
 
     # Keep all params except page
     preserved_params = request.params.except(:page).merge(sort: column, direction: direction)

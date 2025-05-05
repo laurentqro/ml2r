@@ -36,6 +36,7 @@
 
 <!-- Client Information Sections -->
 <div class="grid grid-cols-1 gap-6">
+  <%= render "risk_assessment_summary", client: @client %>
   <%= render "details_section", clientable: @clientable %>
   <%= render "identification_documents_section", documents: @clientable.identification_documents %>
   <%= render "notes/show", client: @client %>

@@ -1,53 +1,21 @@
 <div class="overflow-x-auto">
-  <table class="table table-zebra w-full">
-    <thead>
+  <table class="table table-zebra w-full text-lg">
+    <thead class="bg-base-300 h-24 text-xl">
       <tr>
-        <th rowspan="2" class="w-96 border-r border-base-content/5">
-          <div class="flex items-center gap-1">
-            <%= sortable "display_name", "Name" %>
-          </div>
+        <th class="w-96">
+          <%= sortable "display_name", "Name (Last, First)" %>
         </th>
-        <th colspan="7" class="text-center bg-base-200">
-          <div class="flex items-center justify-center gap-1">
-            Risk Assessment
-          </div>
-        </th>
-      </tr>
-      <tr>
+
         <th>
-          <div class="flex items-center gap-1">
-            <%= sortable "risk_assessment_status", "Status" %>
-          </div>
+          Onboarding Date
         </th>
+
         <th>
-          <div class="flex items-center gap-1">
-            <%= sortable "country_risk_score", "Country" %>
-          </div>
+          Flags
         </th>
+
         <th>
-          <div class="flex items-center gap-1">
-            <%= sortable "client_risk_score", "Client" %>
-          </div>
-        </th>
-        <th>
-          <div class="flex items-center gap-1">
-            <%= sortable "products_and_services_risk_score", "Services" %>
-          </div>
-        </th>
-        <th>
-          <div class="flex items-center gap-1">
-            <%= sortable "distribution_channel_risk_score", "Distribution" %>
-          </div>
-        </th>
-        <th>
-          <div class="flex items-center gap-1">
-            <%= sortable "transaction_risk_score", "Transaction" %>
-          </div>
-        </th>
-        <th>
-          <div class="flex items-center gap-1">
-            <%= sortable "total_risk_score", "Total" %>
-          </div>
+          <%= sortable "total_risk_score", "Overall Risk Score" %>
         </th>
       </tr>
     </thead>
