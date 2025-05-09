@@ -89,7 +89,7 @@ class RiskAssessment < ApplicationRecord
   end
 
   def total_risk_score
-    return 100 if pep_confirmed? || adverse_media_confirmed?
+    return 100 if pep_confirmed?
 
     if all_scores_present?
       country_risk_score +
@@ -107,12 +107,10 @@ class RiskAssessment < ApplicationRecord
   end
 
   def risk_level
-    return "high" if pep_confirmed? || adverse_media_confirmed?
-
     case total_risk_score
-    when 0..30
+    when 0..40
       "low"
-    when 31..60
+    when 41..60
       "medium"
     else
       "high"
@@ -120,8 +118,6 @@ class RiskAssessment < ApplicationRecord
   end
 
   def due_diligence_level
-    return "enhanced" if pep_confirmed? || adverse_media_confirmed?
-
     case risk_level
     when "low"
       "simplified"
