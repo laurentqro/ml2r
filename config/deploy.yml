@@ -8,7 +8,7 @@ image: laurentqro/ml2r
 servers:
   web:
     hosts:
-      - 65.108.244.40
+      - 91.99.106.10
   # job:
   #   hosts:
   #     - 192.168.0.1
@@ -79,7 +79,7 @@ builder:
   arch:
     - amd64
     - arm64
-  remote: ssh://root@65.108.244.40
+  remote: ssh://root@91.99.106.10
 
 
   # # Build image via remote server (useful for faster amd64 builds on arm64 computers)
