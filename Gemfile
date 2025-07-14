@@ -44,7 +44,7 @@ gem "thruster", require: false
 # gem "image_processing", "~> 1.2"
 
 gem "csv", "~> 3.3"
-gem "countries", "~> 7.1"
+gem "countries", "~> 8.0"
 gem "faker", "~> 3.5"
 gem "amatch"
 gem "faraday"
